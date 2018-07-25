@@ -9,13 +9,16 @@ struct Graphics;
 class Sprite {
 	private:
 		SDL_Surface* sprite_sheet_;
+	protected:
 		SDL_Rect source_rect_;
 	public:
 		Sprite(
 				const std::string& file_path,
 				int source_x, int source_y,
 				int width, int height);
-		~Sprite();
+		virtual ~Sprite();
+
+		virtual void update(int /*elapsed_time_ms*/) {}
 
 		void draw(Graphics& graphics, int x, int y);
 };

@@ -2,10 +2,13 @@
 #include "game.h"
 #include "graphics.h"
 #include "sprite.h"
+#include "animated_spr.h"
 
 namespace {
 	const int kFps = 60;
 }
+
+int Game::kTileSize = 32;
 
 Game::Game() {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -24,8 +27,10 @@ void Game::eventLoop() {
 	Graphics graphics;
 	SDL_Event event;
 
-	sprite_.reset(new Sprite(
-				"assets/MyChar.bmp", 0, 0, 32, 32));
+	sprite_.reset(new Animated_spr(
+				"assets/MyChar.bmp", 0, 32, kTileSize, kTileSize, 15, 3));
+
+	int last_update_time = SDL_GetTicks();
 
 	while(running) {
 		const int start_time_ms = SDL_GetTicks();
@@ -44,7 +49,9 @@ void Game::eventLoop() {
 			}
 		}
 
-		update();
+		const int current_time_ms = SDL_GetTicks();
+		update(current_time_ms - last_update_time);
+		last_update_time = current_time_ms;
 		draw(graphics);
 		
 		const int elapsed_time_ms = SDL_GetTicks() - start_time_ms;
@@ -53,8 +60,8 @@ void Game::eventLoop() {
 	}
 }
 
-void Game::update() {
-
+void Game::update(int elapsed_time_ms) {
+	sprite_->update(elapsed_time_ms);
 }
 
 void Game::draw(Graphics& graphics) {
