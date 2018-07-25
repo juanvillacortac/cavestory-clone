@@ -2,7 +2,7 @@
 	run
 
 compile:
-	g++ -o gen/cavestory src/**.cpp -lSDL -L/usr/local/lib/ -lboost_filesystem
+	g++ -o cavestory src/**.cpp -lSDL -L/usr/local/lib/ -lboost_filesystem
 
 run:
-	gen/cavestory
+	cavestory

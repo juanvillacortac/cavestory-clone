@@ -28,7 +28,7 @@ void Game::eventLoop() {
 	SDL_Event event;
 
 	sprite_.reset(new Animated_spr(
-				"assets/MyChar.bmp", 0, 32, kTileSize, kTileSize, 15, 3));
+				"assets/Char.bmp", 0, 32, kTileSize, kTileSize, 15, 3));
 
 	int last_update_time = SDL_GetTicks();
 
