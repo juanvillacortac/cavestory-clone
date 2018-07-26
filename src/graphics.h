@@ -9,7 +9,10 @@ struct SDL_Rect;
 
 class Graphics {
 	private:
-		std::map<std::string, SDL_Surface*> spr_sheets_;
+		typedef std::map<std::string, SDL_Surface*> SpriteMap;
+
+		SpriteMap spr_sheets_;
+
 		SDL_Surface* screen_;
 	public:
 		typedef SDL_Surface* SurfaceID;
