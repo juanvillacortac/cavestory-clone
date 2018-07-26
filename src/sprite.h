@@ -8,11 +8,12 @@ struct Graphics;
 
 class Sprite {
 	private:
-		SDL_Surface* sprite_sheet_;
+		SDL_Surface* spr_sheet_;
 	protected:
 		SDL_Rect source_rect_;
 	public:
 		Sprite(
+				Graphics& graphics,
 				const std::string& file_path,
 				int source_x, int source_y,
 				int width, int height);

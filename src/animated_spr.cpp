@@ -1,11 +1,12 @@
 #include "animated_spr.h"
 
 Animated_spr::Animated_spr(
+		Graphics& graphics,
 		const std::string& file_path,
 		int source_x, int source_y,
 		int width, int height,
 		int fps, int frames_num) : 
-	Sprite(file_path, source_x, source_y, width, height),
+	Sprite(graphics, file_path, source_x, source_y, width, height),
 	frame_time_(1000 / fps),
 	frames_num_(frames_num),
 	current_frame_(0),
@@ -14,7 +15,6 @@ Animated_spr::Animated_spr(
 }
 
 Animated_spr::~Animated_spr() {
-
 }
 
 void Animated_spr::update(int elapsed_time_ms) {

@@ -14,6 +14,7 @@ class Animated_spr : public Sprite {
 		void update(int elapsed_time_ms);
 	public:
 		Animated_spr(
+				Graphics& graphics,
 				const std::string& file_path,
 				int source_x, int source_y,
 				int width, int height,

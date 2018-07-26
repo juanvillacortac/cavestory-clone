@@ -11,10 +11,11 @@ namespace {
 	const float kMaxSpeedX = 0.325f; // pixels / ms
 }
 
-Player::Player(int x, int y) : x_(x), y_(y),
+Player::Player(Graphics& graphics, int x, int y) : x_(x), y_(y),
 	velocity_x_(0.0f), acceleration_x_(0.0f)
 {
 	sprite_.reset(new Animated_spr(
+				graphics,
 				"assets/Char.bmp",
 				0, 0,
 				Game::kTileSize, Game::kTileSize,
