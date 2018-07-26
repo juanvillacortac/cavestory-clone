@@ -85,7 +85,7 @@ void Game::eventLoop() {
 		
 		const int elapsed_time_ms = SDL_GetTicks() - start_time_ms;
 
-		SDL_Delay(1000/*ms*/ / kFps - elapsed_time_ms/*ms*/);
+		SDL_Delay(1000/*ms*/ / kFps);// - elapsed_time_ms/*ms*/);
 	}
 }
 
