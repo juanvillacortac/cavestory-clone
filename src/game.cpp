@@ -1,8 +1,7 @@
 #include <SDL/SDL.h>
 #include "game.h"
 #include "graphics.h"
-#include "sprite.h"
-#include "animated_spr.h"
+#include "player.h"
 #include "input.h"
 
 namespace {
@@ -29,8 +28,7 @@ void Game::eventLoop() {
 	Graphics graphics;
 	SDL_Event event;
 
-	sprite_.reset(new Animated_spr(
-				"assets/Char.bmp", 0, 32, kTileSize, kTileSize, 15, 3));
+	player_.reset(new Player(320, 240));
 
 	int last_update_time = SDL_GetTicks();
 
@@ -59,6 +57,27 @@ void Game::eventLoop() {
 			running = false;
 		}
 
+		if(input.isKeyHeld(SDLK_LEFT) && input.isKeyHeld(SDLK_RIGHT)) {
+			player_->stopMoving();
+		}
+		else if(input.isKeyHeld(SDLK_LEFT)) {
+			player_->startMovingLeft();
+		}
+		else if(input.isKeyHeld(SDLK_RIGHT)) {
+			player_->startMovingRight();
+		}
+		else {
+			player_->stopMoving();
+		}
+		// if both left and right are being pressed:
+		// 	stopMoving
+		// else if left
+		// 	startMovingLeft
+		// else if rignt
+		// 	startMovingRight
+		// else
+		// 	stopMoving
+
 		const int current_time_ms = SDL_GetTicks();
 		update(current_time_ms - last_update_time);
 		last_update_time = current_time_ms;
@@ -71,10 +90,11 @@ void Game::eventLoop() {
 }
 
 void Game::update(int elapsed_time_ms) {
-	sprite_->update(elapsed_time_ms);
+	player_->update(elapsed_time_ms);
 }
 
 void Game::draw(Graphics& graphics) {
-	sprite_->draw(graphics, 320, 240);
+	graphics.clear();
+	player_->draw(graphics);
 	graphics.flip();
 }

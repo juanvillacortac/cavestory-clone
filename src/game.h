@@ -3,8 +3,8 @@
 
 #include <boost/scoped_ptr.hpp>
 
-struct Sprite;
 struct Graphics;
+struct Player;
 
 class Game {
 	private:
@@ -12,7 +12,7 @@ class Game {
 		void update(int elapsed_time_ms);
 		void draw(Graphics& graphics);
 
-		boost::scoped_ptr<Sprite> sprite_;
+		boost::scoped_ptr<Player> player_;
 	public:
 		Game();
 		~Game();

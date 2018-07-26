@@ -16,6 +16,7 @@ class Graphics {
 				SDL_Rect* source_rectangle,
 				SDL_Rect* destination_rectangle);
 
+		void clear();
 		void flip();
 };
 
