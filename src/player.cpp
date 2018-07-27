@@ -49,7 +49,7 @@ void Player::update(int elapsed_time_ms) {
 		velocity_x_ = std::max(velocity_x_, -kMaxSpeedX);
 	} else if(acceleration_x_ > 0.0f) {
 		velocity_x_ = std::min(velocity_x_, kMaxSpeedX);
-	} else {
+	} else if(on_ground()){
 		velocity_x_ *= kSlowdownFactor;
 	}
 
