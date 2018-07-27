@@ -53,6 +53,7 @@ void Game::eventLoop() {
 			}
 		}
 
+		// Player movement
 		if(input.wasKeyPressed(SDLK_ESCAPE)) {
 			running = false;
 		}
@@ -69,14 +70,13 @@ void Game::eventLoop() {
 		else {
 			player_->stopMoving();
 		}
-		// if both left and right are being pressed:
-		// 	stopMoving
-		// else if left
-		// 	startMovingLeft
-		// else if rignt
-		// 	startMovingRight
-		// else
-		// 	stopMoving
+		// Player Jump
+		if(input.wasKeyPressed(SDLK_SPACE)) {
+			player_->startJump();
+		}
+		else if(input.wasKeyReleased(SDLK_SPACE)){
+			player_->stopJump();
+		}
 
 		const int current_time_ms = SDL_GetTicks();
 		update(current_time_ms - last_update_time);
