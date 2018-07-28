@@ -12,7 +12,6 @@ int Game::kTileSize = 32;
 
 Game::Game() {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	SDL_ShowCursor(SDL_DISABLE);
 
 	eventLoop();
 }
@@ -97,10 +96,12 @@ void Game::eventLoop() {
 		update(current_time_ms - last_update_time);
 		last_update_time = current_time_ms;
 		draw(graphics);
-		
+
+		const int ms_per_frame = 1000 / kFps;
 		const int elapsed_time_ms = SDL_GetTicks() - start_time_ms;
 
-		SDL_Delay(1000/*ms*/ / kFps);// - elapsed_time_ms/*ms*/);
+		if(elapsed_time_ms < ms_per_frame)
+			SDL_Delay(ms_per_frame - elapsed_time_ms);
 	}
 }
 
