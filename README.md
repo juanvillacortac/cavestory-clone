@@ -1,4 +1,4 @@
-# WIP: Cave Story SDL clone
+# WIP: A SDL Cave Story clone
 To compile, you must satisfy the following dependencies:
 
  - Boost C++ library (libboost-dev).
