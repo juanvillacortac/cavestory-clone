@@ -53,11 +53,11 @@ void Game::eventLoop() {
 			}
 		}
 
-		// Player movement
 		if(input.wasKeyPressed(SDLK_ESCAPE)) {
 			running = false;
 		}
 
+		// Player movement
 		if(input.isKeyHeld(SDLK_LEFT) && input.isKeyHeld(SDLK_RIGHT)) {
 			player_->stopMoving();
 		}
@@ -70,13 +70,28 @@ void Game::eventLoop() {
 		else {
 			player_->stopMoving();
 		}
+
+		// Looking
+		if(input.isKeyHeld(SDLK_UP) && input.isKeyHeld(SDLK_DOWN)) {
+			player_->lookHorizontal();
+		}
+		else if(input.isKeyHeld(SDLK_UP)) {
+			player_->lookUp();
+		}
+		else if(input.isKeyHeld(SDLK_DOWN)) {
+			player_->lookDown();
+		} else {
+			player_->lookHorizontal();
+		}
+
 		// Player Jump
-		if(input.wasKeyPressed(SDLK_SPACE)) {
+		if(input.wasKeyPressed(SDLK_q)) {
 			player_->startJump();
 		}
-		else if(input.wasKeyReleased(SDLK_SPACE)){
+		else if(input.wasKeyReleased(SDLK_q)){
 			player_->stopJump();
 		}
+
 
 		const int current_time_ms = SDL_GetTicks();
 		update(current_time_ms - last_update_time);
