@@ -28,6 +28,8 @@ class Graphics {
 
 		void clear();
 		void flip();
+
+		void setFullscreen();
 };
 
 #endif // GRAPHICS_H_

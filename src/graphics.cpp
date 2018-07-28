@@ -5,9 +5,12 @@ namespace {
 	const int kScreenWidth = 640;
 	const int kScreenHeight = 480;
 	const int kBitsPerPixel = 32;
+
+	bool fullscreen_;
 }
 
 Graphics::Graphics() {
+	fullscreen_ = false;
 	screen_ = SDL_SetVideoMode(
 			kScreenWidth,
 			kScreenHeight,
@@ -55,4 +58,22 @@ void Graphics::clear() {
 
 void Graphics::flip() {
 	SDL_Flip(screen_);
+}
+
+void Graphics::setFullscreen() {
+	if(!fullscreen_) {
+		screen_ = SDL_SetVideoMode(
+				kScreenWidth,
+				kScreenHeight,
+				kBitsPerPixel,
+				SDL_FULLSCREEN);
+		fullscreen_ = true;
+	} else {
+		screen_ = SDL_SetVideoMode(
+				kScreenWidth,
+				kScreenHeight,
+				kBitsPerPixel,
+				0);
+		fullscreen_ = false;
+	}
 }

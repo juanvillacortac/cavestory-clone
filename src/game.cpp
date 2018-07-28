@@ -91,6 +91,10 @@ void Game::eventLoop() {
 			player_->stopJump();
 		}
 
+		// Fullscreen shit
+		if(input.wasKeyPressed(SDLK_F4)) {
+			graphics.setFullscreen();
+		}
 
 		const int current_time_ms = SDL_GetTicks();
 		update(current_time_ms - last_update_time);
