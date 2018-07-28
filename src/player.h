@@ -14,7 +14,9 @@ class Player {
 	private:
 		enum MotionType {
 			STANDING,
-			WALKING
+			WALKING,
+			JUMPING,
+			FALLING
 		};
 		enum HorizontalFacing {
 			LEFT,

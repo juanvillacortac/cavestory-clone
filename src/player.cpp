@@ -105,36 +105,67 @@ void Player::initializeSprites(Graphics& graphics) {
 	// LEFT
 	sprites_[SpriteState(STANDING, LEFT)] = boost::shared_ptr<Sprite>(new Sprite(
 				graphics,
-				"assets/Char.bmp",
+				"assets/Char.pmb",
 				0, 0,
 				Game::kTileSize, Game::kTileSize));
 
 	sprites_[SpriteState(WALKING, LEFT)] = boost::shared_ptr<Sprite>(new Animated_spr(
 				graphics,
-				"assets/Char.bmp",
+				"assets/Char.pmb",
 				0, 0,
 				Game::kTileSize, Game::kTileSize,
 				15, 3));
 
+	sprites_[SpriteState(JUMPING, LEFT)] = boost::shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"assets/Char.pmb",
+				32, 0,
+				Game::kTileSize, Game::kTileSize));
+
+	sprites_[SpriteState(FALLING, LEFT)] = boost::shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"assets/Char.pmb",
+				64, 0,
+				Game::kTileSize, Game::kTileSize));
+
 	// RIGHT
 	sprites_[SpriteState(STANDING, RIGHT)] = boost::shared_ptr<Sprite>(new Sprite(
 				graphics,
-				"assets/Char.bmp",
+				"assets/Char.pmb",
 				0, 32,
 				Game::kTileSize, Game::kTileSize));
 
 	sprites_[SpriteState(WALKING, RIGHT)] = boost::shared_ptr<Sprite>(new Animated_spr(
 				graphics,
-				"assets/Char.bmp",
+				"assets/Char.pmb",
 				0, 32,
 				Game::kTileSize, Game::kTileSize,
 				15, 3));
 
+	sprites_[SpriteState(JUMPING, RIGHT)] = boost::shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"assets/Char.pmb",
+				32, 32,
+				Game::kTileSize, Game::kTileSize));
+
+	sprites_[SpriteState(FALLING, RIGHT)] = boost::shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"assets/Char.pmb",
+				64, 32,
+				Game::kTileSize, Game::kTileSize));
 }
 
 Player::SpriteState Player::getSpriteState() {
+	MotionType motion;
+
+	if(on_ground()) {
+		motion = acceleration_x_ == 0.0f ? STANDING : WALKING;
+	} else {
+		motion = velocity_y_ < 0.0f ? JUMPING : FALLING;
+	}
+
 	return SpriteState(
-			acceleration_x_ == 0.0f ? STANDING : WALKING,
+			motion,
 			horizontal_facing_
 			);
 }
