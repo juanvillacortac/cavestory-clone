@@ -41,7 +41,7 @@ Map* Map::createTestMap(Graphics& graphics) {
 				)
 			);
 
-	const int row = 11;
+	//const int row = 11;
 
 	shared_ptr<Sprite> sprite(new Sprite(
 				graphics,
@@ -50,8 +50,14 @@ Map* Map::createTestMap(Graphics& graphics) {
 				Game::kTileSize, Game::kTileSize));
 
 	for(int col = 0; col < num_cols; col++) {
-		map->foreground_sprites_[row][col] = sprite;
+		for(int row = 11; row < num_rows; row++) {
+			map->foreground_sprites_[row][col] = sprite;
+		}
 	}
+
+	map->foreground_sprites_[10][5] = sprite;
+	map->foreground_sprites_[10][7] = sprite;
+	map->foreground_sprites_[9][6] = sprite;
 
 	return map;
 }
