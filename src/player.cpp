@@ -23,8 +23,9 @@ namespace {
 	const std::string kSpriteFilePath("assets/Char.pbm");
 
 	// Sprite Frames
-	const int kCharacterFrame = 0;
+	const int kCharacterFrame = 0; // Source Y
 
+	// -----Source X
 	const int kWalkFrame = 0;
 	const int kStandFrame = 0;
 	const int kJumpFrame = 1;
