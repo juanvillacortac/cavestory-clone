@@ -2,6 +2,7 @@
 #define PLAYER_H_
 
 #include "sprite.h"
+#include "rectangle.h"
 
 //#include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
@@ -9,6 +10,7 @@
 
 struct Sprite;
 struct Graphics;
+struct Map;
 
 class Player {
 	private:
@@ -71,9 +73,15 @@ class Player {
 		void initializeSprite(Graphics& graphics, const SpriteState& sprite_state);
 		SpriteState getSpriteState();
 
-		bool on_ground() const {
-			return on_ground_;
-		}
+		Rectangle topCollision(int delta) const;
+		Rectangle bottomCollision(int delta) const;
+		Rectangle leftCollision(int delta) const;
+		Rectangle rightCollision(int delta) const;
+
+		void updateX(int elapsed_time_ms, const Map& map);
+		void updateY(int elapsed_time_ms, const Map& map);
+
+		bool on_ground() const { return on_ground_; }
 
 		int x_, y_;
 
@@ -91,7 +99,7 @@ class Player {
 	public:
 		Player(Graphics& graphics, int x, int y);
 
-		void update(int elapsed_time_ms);
+		void update(int elapsed_time_ms, const Map& map);
 		void draw(Graphics& graphics);
 
 		void startMovingLeft();

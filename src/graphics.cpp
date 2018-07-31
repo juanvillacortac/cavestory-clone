@@ -6,11 +6,10 @@ namespace {
 	const int kScreenHeight = 480;
 	const int kBitsPerPixel = 32;
 
-	bool fullscreen_;
+	bool fullscreen_ = false;
 }
 
 Graphics::Graphics() {
-	fullscreen_ = false;
 	screen_ = SDL_SetVideoMode(
 			kScreenWidth,
 			kScreenHeight,
@@ -61,19 +60,22 @@ void Graphics::flip() {
 }
 
 void Graphics::setFullscreen() {
-	if(!fullscreen_) {
-		screen_ = SDL_SetVideoMode(
-				kScreenWidth,
-				kScreenHeight,
-				kBitsPerPixel,
-				SDL_FULLSCREEN);
-		fullscreen_ = true;
-	} else {
-		screen_ = SDL_SetVideoMode(
-				kScreenWidth,
-				kScreenHeight,
-				kBitsPerPixel,
-				0);
-		fullscreen_ = false;
+	switch(fullscreen_) {
+		case false:
+			screen_ = SDL_SetVideoMode(
+					kScreenWidth,
+					kScreenHeight,
+					kBitsPerPixel,
+					SDL_FULLSCREEN);
+			fullscreen_ = true;
+			break;
+		case true:
+			screen_ = SDL_SetVideoMode(
+					kScreenWidth,
+					kScreenHeight,
+					kBitsPerPixel,
+					0);
+			fullscreen_ = false;
+			break;
 	}
 }

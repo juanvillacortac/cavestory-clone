@@ -94,10 +94,10 @@ void Game::eventLoop() {
 			player_->stopJump();
 		}
 
-		// Fullscreen shit
-		if(input.wasKeyPressed(SDLK_F4)) {
+		// TODO: Fullscreen shit
+		/*if(input.wasKeyPressed(SDLK_F4)) {
 			graphics.setFullscreen();
-		}
+		}*/
 
 		const int current_time_ms = SDL_GetTicks();
 		update(current_time_ms - last_update_time);
@@ -113,7 +113,7 @@ void Game::eventLoop() {
 }
 
 void Game::update(int elapsed_time_ms) {
-	player_->update(elapsed_time_ms);
+	player_->update(elapsed_time_ms, *map_);
 	map_->update(elapsed_time_ms);
 }
 
