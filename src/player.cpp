@@ -181,7 +181,7 @@ void Player::initializeSprite(Graphics& graphics,
 			source_x = kJumpFrame * Game::kTileSize;
 			break;
 		case FALLING:
-			source_x = kJumpFrame * Game::kTileSize;
+			source_x = kFallFrame * Game::kTileSize;
 			break;
 		case LAST_MOTION_TYPE:
 			break;

@@ -78,6 +78,8 @@ Map* Map::createTestMap(Graphics& graphics) {
 	map->tiles_[10][5] = tile;
 	map->tiles_[10][7] = tile;
 	map->tiles_[9][6] = tile;
+	map->tiles_[10][6] = tile;
+	map->tiles_[7][12] = tile;
 
 	return map;
 }
