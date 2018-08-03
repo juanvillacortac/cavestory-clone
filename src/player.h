@@ -17,6 +17,7 @@ class Player {
 		enum MotionType {
 			FIRST_MOTION_TYPE,
 			STANDING = FIRST_MOTION_TYPE,
+			INTERACTING,
 			WALKING,
 			JUMPING,
 			FALLING,
@@ -52,22 +53,10 @@ class Player {
 
 		friend bool operator < (const SpriteState& a, const SpriteState& b);
 
-		struct Jump {
-			private:
-				int time_remaining_ms_;
-				bool active_;
-			public:
-				Jump() : time_remaining_ms_(0), active_(false) {}
-
-				void update(int elapsed_time_ms);
-				void reset();
-
-				void reactivate() { active_ = time_remaining_ms_ > 0; }
-				void deactivate() { active_ = false; }
-				bool active() const { return active_; }
-		};
-
-		Jump jump_;
+		bool on_ground() const { return on_ground_; }
+		bool on_ground_;
+		bool jump_active_;
+		bool interacting_;
 
 		void initializeSprites(Graphics& graphics);
 		void initializeSprite(Graphics& graphics, const SpriteState& sprite_state);
@@ -81,17 +70,13 @@ class Player {
 		void updateX(int elapsed_time_ms, const Map& map);
 		void updateY(int elapsed_time_ms, const Map& map);
 
-		bool on_ground() const { return on_ground_; }
-
 		int x_, y_;
 
 		float velocity_x_, velocity_y_;
-		float acceleration_x_;
+		int acceleration_x_;
 
 		HorizontalFacing horizontal_facing_;
 		VerticalFacing vertical_facing_;
-
-		bool on_ground_;
 
 		//boost::scoped_ptr<Sprite> sprite_;
 		std::map<SpriteState, boost::shared_ptr<Sprite>> sprites_;
