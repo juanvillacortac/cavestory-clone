@@ -19,6 +19,15 @@ void Map::update(int elapsed_time_ms) {
 
 void Map::drawBackground(Graphics& graphics) const {
 	backdrop_->draw(graphics);
+	for(size_t row = 0; row < bkg_tiles_.size(); row++) {
+		for(size_t col = 0; col < bkg_tiles_[row].size(); col++) {
+			if(bkg_tiles_[row][col]) {
+				bkg_tiles_[row][col]->draw(
+						graphics,
+						col * Game::kTileSize, row * Game::kTileSize);
+			}
+		}
+	}
 }
 
 void Map::draw(Graphics& graphics) const {
@@ -58,10 +67,15 @@ Map* Map::createTestMap(Graphics& graphics) {
 	const int num_rows = 15; // 15 * 32 = 480
 	const int num_cols = 20; // 20 * 32 = 640
 
-	// tiles_ is num_rows x num_cols in size
+	// tiles_ && bkg_tiles_ are num_rows x num_cols in size
 	map->tiles_ = vector<vector<Tile>>(
 			num_rows, vector<Tile>(
 				num_cols, Tile()
+				)
+			);
+	map->bkg_tiles_ = vector<vector<shared_ptr<Sprite>>>(
+			num_rows, vector<shared_ptr<Sprite>>(
+				num_cols, shared_ptr<Sprite>()
 				)
 			);
 
@@ -84,6 +98,27 @@ Map* Map::createTestMap(Graphics& graphics) {
 	map->tiles_[9][6] = tile;
 	map->tiles_[10][6] = tile;
 	map->tiles_[7][12] = tile;
+
+	// Chains stuff
+	shared_ptr<Sprite> chain_top(new Sprite(
+				graphics,
+				"assets/PrtCave.pbm",
+				11 * Game::kTileSize, 2 * Game::kTileSize,
+				Game::kTileSize, Game::kTileSize));
+	shared_ptr<Sprite> chain_body(new Sprite(
+				graphics,
+				"assets/PrtCave.pbm",
+				12 * Game::kTileSize, 2 * Game::kTileSize,
+				Game::kTileSize, Game::kTileSize));
+	shared_ptr<Sprite> chain_bottom(new Sprite(
+				graphics,
+				"assets/PrtCave.pbm",
+				13 * Game::kTileSize, 2 * Game::kTileSize,
+				Game::kTileSize, Game::kTileSize));
+
+	map->bkg_tiles_[8][12] = chain_top;
+	map->bkg_tiles_[9][12] = chain_body;
+	map->bkg_tiles_[10][12] = chain_bottom;
 
 	return map;
 }

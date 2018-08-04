@@ -50,6 +50,7 @@ class Map {
 
 		boost::scoped_ptr<Backdrop> backdrop_;
 
+		std::vector<std::vector<boost::shared_ptr<Sprite>>> bkg_tiles_;
 		std::vector<std::vector<Tile>> tiles_;
 
 };
