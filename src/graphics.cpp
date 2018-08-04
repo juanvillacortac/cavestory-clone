@@ -1,9 +1,9 @@
 #include "graphics.h"
+#include "game.h"
+
 #include <SDL/SDL.h>
 
 namespace {
-	const int kScreenWidth = 640;
-	const int kScreenHeight = 480;
 	const int kBitsPerPixel = 32;
 
 	bool fullscreen_ = false;
@@ -11,8 +11,8 @@ namespace {
 
 Graphics::Graphics() {
 	screen_ = SDL_SetVideoMode(
-			kScreenWidth,
-			kScreenHeight,
+			Game::kScreenWidth,
+			Game::kScreenHeight,
 			kBitsPerPixel,
 			0);
 
@@ -28,11 +28,14 @@ Graphics::~Graphics() {
 	SDL_FreeSurface(screen_);
 }
 
-Graphics::SurfaceID Graphics::loadImage(const std::string& file_path) {
+Graphics::SurfaceID Graphics::loadImage(const std::string& file_path, bool black_to_alpha) {
 	// If we haven't loaded in the spritesheet
 	if(spr_sheets_.count(file_path) == 0) {
 		// Load it
 		spr_sheets_[file_path] = SDL_LoadBMP(file_path.c_str());
+		if(black_to_alpha) {
+			SDL_SetColorKey(spr_sheets_[file_path], SDL_SRCCOLORKEY, 0/*black*/);
+		}
 		// Error handler
 		if(spr_sheets_[file_path] == NULL) {
 			// Could not load the image for whatever reason, print to stderr.
@@ -63,16 +66,16 @@ void Graphics::setFullscreen() {
 	switch(fullscreen_) {
 		case false:
 			screen_ = SDL_SetVideoMode(
-					kScreenWidth,
-					kScreenHeight,
+					Game::kScreenWidth,
+					Game::kScreenHeight,
 					kBitsPerPixel,
 					SDL_FULLSCREEN);
 			fullscreen_ = true;
 			break;
 		case true:
 			screen_ = SDL_SetVideoMode(
-					kScreenWidth,
-					kScreenHeight,
+					Game::kScreenWidth,
+					Game::kScreenHeight,
 					kBitsPerPixel,
 					0);
 			fullscreen_ = false;

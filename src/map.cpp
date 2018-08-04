@@ -17,6 +17,10 @@ void Map::update(int elapsed_time_ms) {
 	}
 }
 
+void Map::drawBackground(Graphics& graphics) const {
+	backdrop_->draw(graphics);
+}
+
 void Map::draw(Graphics& graphics) const {
 	for(size_t row = 0; row < tiles_.size(); row++) {
 		for(size_t col = 0; col < tiles_[row].size(); col++) {
@@ -49,6 +53,8 @@ vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle& rectangle) co
 Map* Map::createTestMap(Graphics& graphics) {
 	Map* map = new Map();
 
+	map->backdrop_.reset(new FixedBackdrop("assets/bkBlue.pbm", graphics));
+
 	const int num_rows = 15; // 15 * 32 = 480
 	const int num_cols = 20; // 20 * 32 = 640
 
@@ -58,8 +64,6 @@ Map* Map::createTestMap(Graphics& graphics) {
 				num_cols, Tile()
 				)
 			);
-
-	//const int row = 11;
 
 	shared_ptr<Sprite> sprite(new Sprite(
 				graphics,

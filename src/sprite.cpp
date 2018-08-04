@@ -6,16 +6,14 @@ Sprite::Sprite(
 		const std::string& file_path,
 		int source_x, int source_y,
 		int width, int height) {
-	spr_sheet_ = graphics.loadImage(file_path);
+	const bool black_to_alpha = true;
+
+	spr_sheet_ = graphics.loadImage(file_path, black_to_alpha);
 	source_rect_.x = source_x;
 	source_rect_.y = source_y;
 	source_rect_.w = width;
 	source_rect_.h = height;
 }
-
-//Sprite::~Sprite() {
-//	SDL_FreeSurface(spr_sheet_);
-//}
 
 void Sprite::draw(Graphics& graphics, int x, int y) {
 	SDL_Rect destination_rectangle;

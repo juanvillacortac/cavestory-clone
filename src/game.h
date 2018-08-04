@@ -20,6 +20,8 @@ class Game {
 		~Game();
 
 		static int kTileSize;
+		static int kScreenWidth;
+		static int kScreenHeight;
 };
 
 #endif // GAME_H_

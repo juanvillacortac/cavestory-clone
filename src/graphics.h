@@ -19,7 +19,7 @@ class Graphics {
 		Graphics();
 		~Graphics();
 
-		SurfaceID loadImage(const std::string& file_path);
+		SurfaceID loadImage(const std::string& file_path, bool black_to_alpha = false);
 
 		void blitSurface(
 				SurfaceID source,
