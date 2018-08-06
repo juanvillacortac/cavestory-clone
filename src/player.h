@@ -3,6 +3,7 @@
 
 #include "sprite.h"
 #include "rectangle.h"
+#include "units.h"
 
 //#include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
@@ -67,12 +68,12 @@ class Player {
 		Rectangle leftCollision(int delta) const;
 		Rectangle rightCollision(int delta) const;
 
-		void updateX(int elapsed_time_ms, const Map& map);
-		void updateY(int elapsed_time_ms, const Map& map);
+		void updateX(units::MS elapsed_time_ms, const Map& map);
+		void updateY(units::MS elapsed_time_ms, const Map& map);
 
 		int x_, y_;
 
-		float velocity_x_, velocity_y_;
+		units::Velocity velocity_x_, velocity_y_;
 		int acceleration_x_;
 
 		HorizontalFacing horizontal_facing_;
@@ -84,7 +85,7 @@ class Player {
 	public:
 		Player(Graphics& graphics, int x, int y);
 
-		void update(int elapsed_time_ms, const Map& map);
+		void update(units::MS elapsed_time_ms, const Map& map);
 		void draw(Graphics& graphics);
 
 		void startMovingLeft();

@@ -9,21 +9,21 @@
 
 namespace {
 	// Walk Motion
-	const float kWalkingAcceleration = 0.00083007812f; // (pixels / ms) / ms
-	const float kMaxSpeedX = 0.15859375f; // pixels / ms
-	const float kFriction = 0.00049804687; // (pixels / ms) / ms
+	const units::Acceleration kWalkingAcceleration = Game::gameUnitsToPixels(0.00083007812f);
+	const units::Velocity kMaxSpeedX = Game::gameUnitsToPixels(0.15859375f);
+	const units::Acceleration kFriction = Game::gameUnitsToPixels(0.00049804687);
 	
 	// Fall Motion
-	const float kGravity = 0.00078125f; // (pixels / ms) / ms
-	const float kMaxSpeedY = 0.2998046875f; // pixels / ms
+	const units::Acceleration kGravity = Game::gameUnitsToPixels(0.00078125f);
+	const units::Velocity kMaxSpeedY = Game::gameUnitsToPixels(0.2998046875f);
 
 	// Jump Motion
-	const float kJumpSpeed = 0.25f; // pixels / ms
-	const float kAirAcceleration = 0.0003125f; // ms
-	const float kJumpGravity = 0.0003125f;
+	const units::Velocity kJumpSpeed = Game::gameUnitsToPixels(0.25f);
+	const units::Acceleration kAirAcceleration = Game::gameUnitsToPixels(0.0003125f);
+	const units::Acceleration kJumpGravity = Game::gameUnitsToPixels(0.0003125f);
 
 	// Sprites
-	const std::string kSpriteFilePath("assets/Char.pbm");
+	const std::string kSpriteFilePath("assets/MyChar.bmp");
 
 	// Sprite Frames
 	const int kCharacterFrame = 0; // Source Y
@@ -39,11 +39,21 @@ namespace {
 
 	// Walk Animation
 	const int kNumWalkFrames = 3;
-	const int kWalkFps = 15;
+	const units::FPS kWalkFps = 15;
 
 	// Collision Rectangle
-	const Rectangle kCollisionX(6, 10, 20, 12);
-	const Rectangle kCollisionY(10, 2, 12, 30);
+	const Rectangle kCollisionX( // X, Y, Width, Height
+			Game::gameUnitsToPixels(6),
+			Game::gameUnitsToPixels(10),
+			Game::gameUnitsToPixels(20),
+			Game::gameUnitsToPixels(12)
+			);
+	const Rectangle kCollisionY( // Same
+			Game::gameUnitsToPixels(10),
+			Game::gameUnitsToPixels(2),
+			Game::gameUnitsToPixels(12),
+			Game::gameUnitsToPixels(30)
+			);
 
 	struct CollisionInfo{
 		bool collided;
@@ -92,7 +102,7 @@ Player::Player(Graphics& graphics, int x, int y) : x_(x), y_(y),
 	initializeSprites(graphics);
 }
 
-void Player::update(int elapsed_time_ms, const Map& map) {
+void Player::update(units::MS elapsed_time_ms, const Map& map) {
 	sprites_[getSpriteState()]->update(elapsed_time_ms);
 
 	updateX(elapsed_time_ms, map);
@@ -295,9 +305,9 @@ Rectangle Player::rightCollision(int delta) const {
 			);
 }
 
-void Player::updateX(int elapsed_time_ms, const Map& map) {
+void Player::updateX(units::MS elapsed_time_ms, const Map& map) {
 	// Update velocity
-	float acceleration_x = 0.0f;
+	units::Acceleration acceleration_x = 0.0f;
 
 	if(acceleration_x_ < 0)
 		acceleration_x = on_ground() ? -kWalkingAcceleration : -kAirAcceleration;
@@ -360,9 +370,9 @@ void Player::updateX(int elapsed_time_ms, const Map& map) {
 	}
 }
 
-void Player::updateY(int elapsed_time_ms, const Map& map) {
+void Player::updateY(units::MS elapsed_time_ms, const Map& map) {
 	// Update velocity
-	const float gravity = jump_active_ && velocity_y_ < 0.0f ? kJumpGravity : kGravity;
+	const units::Acceleration gravity = jump_active_ && velocity_y_ < 0.0f ? kJumpGravity : kGravity;
 
 	velocity_y_ = std::min(velocity_y_ + gravity * elapsed_time_ms, kMaxSpeedY);
 

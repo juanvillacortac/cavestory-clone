@@ -7,7 +7,7 @@
 using boost::shared_ptr;
 using std::vector;
 
-void Map::update(int elapsed_time_ms) {
+void Map::update(units::MS elapsed_time_ms) {
 	for(size_t row = 0; row < tiles_.size(); row++) {
 		for(size_t col = 0; col < tiles_[row].size(); col++) {
 			if(tiles_[row][col].sprite) {
@@ -62,7 +62,7 @@ vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle& rectangle) co
 Map* Map::createTestMap(Graphics& graphics) {
 	Map* map = new Map();
 
-	map->backdrop_.reset(new FixedBackdrop("assets/bkBlue.pbm", graphics));
+	map->backdrop_.reset(new FixedBackdrop("assets/bkBlue.bmp", graphics));
 
 	const int num_rows = 15; // 15 * 32 = 480
 	const int num_cols = 20; // 20 * 32 = 640
@@ -81,7 +81,7 @@ Map* Map::createTestMap(Graphics& graphics) {
 
 	shared_ptr<Sprite> sprite(new Sprite(
 				graphics,
-				"assets/PrtCave.pbm",
+				"assets/PrtCave.bmp",
 				Game::kTileSize, 0,
 				Game::kTileSize, Game::kTileSize));
 
@@ -102,17 +102,17 @@ Map* Map::createTestMap(Graphics& graphics) {
 	// Chains stuff
 	shared_ptr<Sprite> chain_top(new Sprite(
 				graphics,
-				"assets/PrtCave.pbm",
+				"assets/PrtCave.bmp",
 				11 * Game::kTileSize, 2 * Game::kTileSize,
 				Game::kTileSize, Game::kTileSize));
 	shared_ptr<Sprite> chain_body(new Sprite(
 				graphics,
-				"assets/PrtCave.pbm",
+				"assets/PrtCave.bmp",
 				12 * Game::kTileSize, 2 * Game::kTileSize,
 				Game::kTileSize, Game::kTileSize));
 	shared_ptr<Sprite> chain_bottom(new Sprite(
 				graphics,
-				"assets/PrtCave.pbm",
+				"assets/PrtCave.bmp",
 				13 * Game::kTileSize, 2 * Game::kTileSize,
 				Game::kTileSize, Game::kTileSize));
 

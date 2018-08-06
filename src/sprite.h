@@ -1,6 +1,8 @@
 #ifndef SPRITE_H_
 #define SPRITE_H_
 
+#include "units.h"
+
 #include <string>
 #include <SDL/SDL.h>
 
@@ -18,7 +20,7 @@ class Sprite {
 				int source_x, int source_y,
 				int width, int height);
 
-		virtual void update(int /*elapsed_time_ms*/) {}
+		virtual void update(units::MS) {}
 
 		void draw(Graphics& graphics, int x, int y);
 };

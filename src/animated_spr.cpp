@@ -5,7 +5,7 @@ Animated_spr::Animated_spr(
 		const std::string& file_path,
 		int source_x, int source_y,
 		int width, int height,
-		int fps, int frames_num) : 
+		units::FPS fps, int frames_num) : 
 	Sprite(graphics, file_path, source_x, source_y, width, height),
 	frame_time_(1000 / fps),
 	frames_num_(frames_num),
@@ -17,7 +17,7 @@ Animated_spr::Animated_spr(
 Animated_spr::~Animated_spr() {
 }
 
-void Animated_spr::update(int elapsed_time_ms) {
+void Animated_spr::update(units::MS elapsed_time_ms) {
 	elapsed_time_ += elapsed_time_ms;
 
 	if(elapsed_time_ > frame_time_) {

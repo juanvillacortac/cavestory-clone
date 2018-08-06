@@ -2,6 +2,7 @@
 #define MAP_H_
 
 #include "backdrop.h"
+#include "units.h"
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
@@ -33,7 +34,7 @@ class Map {
 
 		std::vector<CollisionTile> getCollidingTiles(const Rectangle& rectangle) const;
 
-		void update(int elapsed_time_ms);
+		void update(units::MS elapsed_time_ms);
 		void drawBackground(Graphics& graphics) const;
 		void draw(Graphics& graphics) const;
 	private:
@@ -52,7 +53,6 @@ class Map {
 
 		std::vector<std::vector<boost::shared_ptr<Sprite>>> bkg_tiles_;
 		std::vector<std::vector<Tile>> tiles_;
-
 };
 
 #endif // MAP_H_
