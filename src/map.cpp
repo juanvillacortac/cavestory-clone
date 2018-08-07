@@ -24,7 +24,7 @@ void Map::drawBackground(Graphics& graphics) const {
 			if(bkg_tiles_[row][col]) {
 				bkg_tiles_[row][col]->draw(
 						graphics,
-						col * Game::kTileSize, row * Game::kTileSize);
+						units::tileToGame(col), units::tileToGame(row));
 			}
 		}
 	}
@@ -36,22 +36,22 @@ void Map::draw(Graphics& graphics) const {
 			if(tiles_[row][col].sprite) {
 				tiles_[row][col].sprite->draw(
 						graphics,
-						col * Game::kTileSize, row * Game::kTileSize);
+						units::tileToGame(col), units::tileToGame(row));
 			}
 		}
 	}
 }
 
 vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle& rectangle) const {
-	const int first_row = rectangle.top() / Game::kTileSize;
-	const int last_row = rectangle.bottom() / Game::kTileSize;
-	const int first_col = rectangle.left() / Game::kTileSize;
-	const int last_col = rectangle.right() / Game::kTileSize;
+	const units::Tile first_row = units::gameToTile(rectangle.top());
+	const units::Tile last_row = units::gameToTile(rectangle.bottom());
+	const units::Tile first_col = units::gameToTile(rectangle.left());
+	const units::Tile last_col = units::gameToTile(rectangle.right());
 
 	vector<CollisionTile> collision_tiles;
 
-	for(int row = first_row; row <= last_row; row++) {
-		for(int col = first_col; col <= last_col; col++) {
+	for(units::Tile row = first_row; row <= last_row; row++) {
+		for(units::Tile col = first_col; col <= last_col; col++) {
 			collision_tiles.push_back(CollisionTile(row, col, tiles_[row][col].tile_type));
 		}
 	}
@@ -64,8 +64,8 @@ Map* Map::createTestMap(Graphics& graphics) {
 
 	map->backdrop_.reset(new FixedBackdrop("assets/bkBlue.bmp", graphics));
 
-	const int num_rows = 15; // 15 * 32 = 480
-	const int num_cols = 20; // 20 * 32 = 640
+	const units::Tile num_rows = 15; // 15 * 32 = 480
+	const units::Tile num_cols = 20; // 20 * 32 = 640
 
 	// tiles_ && bkg_tiles_ are num_rows x num_cols in size
 	map->tiles_ = vector<vector<Tile>>(
@@ -76,19 +76,19 @@ Map* Map::createTestMap(Graphics& graphics) {
 	map->bkg_tiles_ = vector<vector<shared_ptr<Sprite>>>(
 			num_rows, vector<shared_ptr<Sprite>>(
 				num_cols, shared_ptr<Sprite>()
-				)
-			);
+				));
 
 	shared_ptr<Sprite> sprite(new Sprite(
 				graphics,
 				"assets/PrtCave.bmp",
-				Game::kTileSize, 0,
-				Game::kTileSize, Game::kTileSize));
+				units::tileToPixel(1), 0,
+				units::tileToPixel(1), units::tileToPixel(1)
+				));
 
 	Tile tile(WALL_TILE, sprite);
 
-	for(int col = 0; col < num_cols; col++) {
-		for(int row = 11; row < num_rows; row++) {
+	for(units::Tile col = 0; col < num_cols; col++) {
+		for(units::Tile row = 11; row < num_rows; row++) {
 			map->tiles_[row][col] = tile;
 		}
 	}
@@ -103,18 +103,21 @@ Map* Map::createTestMap(Graphics& graphics) {
 	shared_ptr<Sprite> chain_top(new Sprite(
 				graphics,
 				"assets/PrtCave.bmp",
-				11 * Game::kTileSize, 2 * Game::kTileSize,
-				Game::kTileSize, Game::kTileSize));
+				units::tileToPixel(11), units::tileToPixel(2),
+				units::tileToPixel(1), units::tileToPixel(1)
+				));
 	shared_ptr<Sprite> chain_body(new Sprite(
 				graphics,
 				"assets/PrtCave.bmp",
-				12 * Game::kTileSize, 2 * Game::kTileSize,
-				Game::kTileSize, Game::kTileSize));
+				units::tileToPixel(12), units::tileToPixel(2),
+				units::tileToPixel(1), units::tileToPixel(1)
+				));
 	shared_ptr<Sprite> chain_bottom(new Sprite(
 				graphics,
 				"assets/PrtCave.bmp",
-				13 * Game::kTileSize, 2 * Game::kTileSize,
-				Game::kTileSize, Game::kTileSize));
+				units::tileToPixel(13), units::tileToPixel(2),
+				units::tileToPixel(1), units::tileToPixel(1)
+				));
 
 	map->bkg_tiles_[8][12] = chain_top;
 	map->bkg_tiles_[9][12] = chain_body;

@@ -8,8 +8,8 @@
 class Animated_spr : public Sprite {
 	private:
 		const units::MS frame_time_;
-		const int frames_num_;
-		int current_frame_;
+		const units::Frame frames_num_;
+		units::Frame current_frame_;
 		units::MS elapsed_time_; // Elapsed time since last frame change.
 
 		void update(units::MS elapsed_time_ms);
@@ -17,9 +17,9 @@ class Animated_spr : public Sprite {
 		Animated_spr(
 				Graphics& graphics,
 				const std::string& file_path,
-				int source_x, int source_y,
-				int width, int height,
-				units::FPS fps, int frames_num);
+				units::Pixel source_x, units::Pixel source_y,
+				units::Pixel width, units::Pixel height,
+				units::FPS fps, units::Frame frames_num);
 		~Animated_spr();
 };
 

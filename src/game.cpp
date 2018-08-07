@@ -9,9 +9,8 @@ namespace {
 	const units::FPS kFps = 60;
 }
 
-int Game::kTileSize = 32;
-int Game::kScreenWidth = 20 * Game::kTileSize;
-int Game::kScreenHeight = 15 * Game::kTileSize;
+units::Tile Game::kScreenWidth = 20;
+units::Tile Game::kScreenHeight = 15;
 
 Game::Game() {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -30,7 +29,7 @@ void Game::eventLoop() {
 	Graphics graphics;
 	SDL_Event event;
 
-	player_.reset(new Player(graphics, Game::kScreenWidth / 2, Game::kScreenWidth / 2));
+	player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2), units::tileToGame(kScreenWidth / 2)));
 
 	map_.reset(Map::createTestMap(graphics));
 

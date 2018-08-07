@@ -11,8 +11,8 @@ namespace {
 
 Graphics::Graphics() {
 	screen_ = SDL_SetVideoMode(
-			Game::kScreenWidth,
-			Game::kScreenHeight,
+			units::tileToPixel(Game::kScreenWidth),
+			units::tileToPixel(Game::kScreenHeight),
 			kBitsPerPixel,
 			0);
 
@@ -66,16 +66,16 @@ void Graphics::setFullscreen() {
 	switch(fullscreen_) {
 		case false:
 			screen_ = SDL_SetVideoMode(
-					Game::kScreenWidth,
-					Game::kScreenHeight,
+					units::tileToPixel(Game::kScreenWidth),
+					units::tileToPixel(Game::kScreenHeight),
 					kBitsPerPixel,
 					SDL_FULLSCREEN);
 			fullscreen_ = true;
 			break;
 		case true:
 			screen_ = SDL_SetVideoMode(
-					Game::kScreenWidth,
-					Game::kScreenHeight,
+					units::tileToPixel(Game::kScreenWidth),
+					units::tileToPixel(Game::kScreenHeight),
 					kBitsPerPixel,
 					0);
 			fullscreen_ = false;

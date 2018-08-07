@@ -7,6 +7,7 @@ namespace units {
 	typedef float Game; // Float for extra precision. Intrinsic units of position.
 	typedef float Pixel; // Integer for dicrete units. Pixels values can be + or -.
 	typedef unsigned int Tile; // Also discreted, but non-negative.
+	typedef unsigned int Frame; // Discrete. Non-negative.
 
 	typedef unsigned int MS; // Discrete Milliseconds. Unsigned int matches SDL.
 	typedef unsigned int FPS; // Frames per second (Hz or 1 / second).
@@ -15,13 +16,13 @@ namespace units {
 	typedef float Acceleration; // Game / MS / MS.
 
 	namespace {
-		Game kTileSize = 32.0f;
+		const Game kTileSize = 32.0f;
 	}
 
 	// Game to pixel
 	inline Pixel gameToPixel(Game game) {
 		// TODO: quit assuming 16x16
-		return Pixel(round(game / 2));
+		return Pixel(round(game)); // game / 2 for 16x16
 	}
 
 	// Game to tile
