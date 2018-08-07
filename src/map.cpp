@@ -62,7 +62,7 @@ vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle& rectangle) co
 Map* Map::createTestMap(Graphics& graphics) {
 	Map* map = new Map();
 
-	map->backdrop_.reset(new FixedBackdrop("assets/bkBlue.bmp", graphics));
+	map->backdrop_.reset(new FixedBackdrop("assets/bkBlue.pbm", graphics));
 
 	const units::Tile num_rows = 15; // 15 * 32 = 480
 	const units::Tile num_cols = 20; // 20 * 32 = 640
@@ -80,7 +80,7 @@ Map* Map::createTestMap(Graphics& graphics) {
 
 	shared_ptr<Sprite> sprite(new Sprite(
 				graphics,
-				"assets/PrtCave.bmp",
+				"assets/PrtCave.pbm",
 				units::tileToPixel(1), 0,
 				units::tileToPixel(1), units::tileToPixel(1)
 				));
@@ -102,19 +102,19 @@ Map* Map::createTestMap(Graphics& graphics) {
 	// Chains stuff
 	shared_ptr<Sprite> chain_top(new Sprite(
 				graphics,
-				"assets/PrtCave.bmp",
+				"assets/PrtCave.pbm",
 				units::tileToPixel(11), units::tileToPixel(2),
 				units::tileToPixel(1), units::tileToPixel(1)
 				));
 	shared_ptr<Sprite> chain_body(new Sprite(
 				graphics,
-				"assets/PrtCave.bmp",
+				"assets/PrtCave.pbm",
 				units::tileToPixel(12), units::tileToPixel(2),
 				units::tileToPixel(1), units::tileToPixel(1)
 				));
 	shared_ptr<Sprite> chain_bottom(new Sprite(
 				graphics,
-				"assets/PrtCave.bmp",
+				"assets/PrtCave.pbm",
 				units::tileToPixel(13), units::tileToPixel(2),
 				units::tileToPixel(1), units::tileToPixel(1)
 				));

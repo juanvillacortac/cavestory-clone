@@ -22,7 +22,7 @@ namespace units {
 	// Game to pixel
 	inline Pixel gameToPixel(Game game) {
 		// TODO: quit assuming 16x16
-		return Pixel(round(game)); // game / 2 for 16x16
+		return Pixel(round(game / 2)); // game / 2 for 16x16
 	}
 
 	// Game to tile

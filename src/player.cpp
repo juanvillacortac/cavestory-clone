@@ -23,7 +23,7 @@ namespace {
 	const units::Acceleration kJumpGravity = 0.0003125f;
 
 	// Sprites
-	const std::string kSpriteFilePath("assets/MyChar.bmp");
+	const std::string kSpriteFilePath("assets/MyChar.pbm");
 
 	// Sprite Frames
 	const units::Frame kCharacterFrame = 0; // Source Y
