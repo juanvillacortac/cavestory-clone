@@ -96,8 +96,9 @@ void Game::eventLoop() {
 		}
 
 		if(input.wasKeyPressed(SDLK_F4)) {
-			graphics.setFullscreen();
-			player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2), units::tileToGame(0)));
+			graphics.setVideo();
+			player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2),
+						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)));
 		}
 
 		const units::MS current_time_ms = SDL_GetTicks();

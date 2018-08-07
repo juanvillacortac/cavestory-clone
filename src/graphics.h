@@ -11,6 +11,8 @@ class Graphics {
 	private:
 		typedef std::map<std::string, SDL_Surface*> SpriteMap;
 
+		bool fullscreen_;
+
 		SpriteMap spr_sheets_;
 
 		SDL_Surface* screen_;
@@ -29,7 +31,7 @@ class Graphics {
 		void clear();
 		void flip();
 
-		void setFullscreen();
+		void setVideo();
 };
 
 #endif // GRAPHICS_H_
