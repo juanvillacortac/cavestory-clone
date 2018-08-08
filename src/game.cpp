@@ -1,8 +1,9 @@
 #include <SDL/SDL.h>
 #include "game.h"
 #include "graphics.h"
-#include "player.h"
 #include "input.h"
+#include "player.h"
+#include "bat.h"
 #include "map.h"
 
 namespace {
@@ -31,6 +32,7 @@ void Game::eventLoop() {
 	SDL_Event event;
 
 	player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2), units::tileToGame(kScreenWidth / 2)));
+	bat_.reset(new Bat(graphics, units::tileToGame(15), units::tileToGame((kScreenWidth / 2) - 2)));
 
 	map_.reset(Map::createTestMap(graphics));
 
@@ -119,6 +121,7 @@ void Game::eventLoop() {
 
 void Game::update(units::MS elapsed_time_ms) {
 	player_->update(elapsed_time_ms, *map_);
+	bat_->update(elapsed_time_ms);
 	map_->update(elapsed_time_ms);
 }
 
@@ -126,6 +129,7 @@ void Game::draw(Graphics& graphics) {
 	graphics.clear();
 	map_->drawBackground(graphics);
 	player_->draw(graphics);
+	bat_->draw(graphics);
 	map_->draw(graphics);
 	graphics.flip();
 }
