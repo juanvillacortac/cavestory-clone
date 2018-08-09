@@ -9,14 +9,18 @@ namespace units {
 	typedef unsigned int Tile; // Also discreted, but non-negative.
 	typedef unsigned int Frame; // Discrete. Non-negative.
 
+	typedef float Degrees;
+
 	typedef unsigned int MS; // Discrete Milliseconds. Unsigned int matches SDL.
 	typedef unsigned int FPS; // Frames per second (Hz or 1 / second).
 
 	typedef float Velocity; // Game / MS.
 	typedef float Acceleration; // Game / MS / MS.
+	typedef float AngularVelocity; // Degrees / MS.
 
 	namespace {
 		const Game kTileSize = 32.0f;
+		const double kPi = atan(1) * 4;
 	}
 
 	// Game to pixel
@@ -38,6 +42,10 @@ namespace units {
 	// Tile to pixel
 	inline Pixel tileToPixel(Tile tile) {
 		return gameToPixel(tileToGame(tile));
+	}
+
+	inline double degreesToRadians(Degrees degrees) {
+		return degrees * kPi / 180.0f;
 	}
 }
 

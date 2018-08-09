@@ -12,6 +12,8 @@ class Bat {
 	private:
 		units::Game x_, y_;
 
+		units::Degrees flight_angle_;
+
 		boost::shared_ptr<Sprite> sprite_;
 	public:
 		Bat(Graphics& graphics, units::Game x, units::Game y);

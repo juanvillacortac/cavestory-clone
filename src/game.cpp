@@ -32,7 +32,7 @@ void Game::eventLoop() {
 	SDL_Event event;
 
 	player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2), units::tileToGame(kScreenWidth / 2)));
-	bat_.reset(new Bat(graphics, units::tileToGame(15), units::tileToGame((kScreenWidth / 2) - 2)));
+	bat_.reset(new Bat(graphics, units::tileToGame(15), units::tileToGame((kScreenWidth / 2) - 3)));
 
 	map_.reset(Map::createTestMap(graphics));
 
