@@ -59,6 +59,9 @@ class Player {
 		bool jump_active_;
 		bool interacting_;
 
+		units::MS invincible_time_;
+		bool invincible_;
+
 		void initializeSprites(Graphics& graphics);
 		void initializeSprite(Graphics& graphics, const SpriteState& sprite_state);
 		SpriteState getSpriteState();
@@ -98,6 +101,8 @@ class Player {
 		void lookUp();
 		void lookDown();
 		void lookHorizontal();
+
+		void takeDamage();
 
 		Rectangle damageRectangle() const;
 

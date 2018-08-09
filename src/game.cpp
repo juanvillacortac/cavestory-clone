@@ -125,9 +125,7 @@ void Game::update(units::MS elapsed_time_ms) {
 	bat_->update(elapsed_time_ms, player_->center_x());
 	
 	if(bat_->damageRectangle().collideWith(player_->damageRectangle()))
-		printf("\tOuch, do damage to Quote!\n");
-	else
-		printf("Checking collisions...\n");
+		player_->takeDamage();
 }
 
 void Game::draw(Graphics& graphics) {
