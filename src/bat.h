@@ -2,6 +2,7 @@
 #define BAT_H_
 
 #include "units.h"
+#include "rectangle.h"
 
 #include <boost/shared_ptr.hpp>
 #include <map>
@@ -31,6 +32,8 @@ class Bat {
 		void initializeSprite(Graphics& graphics, const SpriteState& sprite_state);
 		SpriteState getSpriteState() const;
 
+		const units::Game center_y_;
+
 		units::Game x_, y_;
 
 		units::Degrees flight_angle_;
@@ -43,6 +46,14 @@ class Bat {
 
 		void update(units::MS elapsed_time_ms, units::Game player_x);
 		void draw(Graphics& graphics) const;
+
+		Rectangle damageRectangle() const {
+			return Rectangle(
+					x_ + units::tileToGame(1) / 2.0f,
+					y_ + units::tileToGame(1) / 2.0f,
+					0, 0
+					);
+		}
 };
 
 #endif // BAT_H_

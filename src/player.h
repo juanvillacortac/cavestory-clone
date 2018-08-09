@@ -99,6 +99,8 @@ class Player {
 		void lookDown();
 		void lookHorizontal();
 
+		Rectangle damageRectangle() const;
+
 		units::Game center_x() const { return x_ + units::tileToGame(1) / 2.0f; }
 };
 

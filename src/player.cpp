@@ -254,6 +254,16 @@ void Player::stopJump() {
 	// deactivate jump
 	jump_active_ = false;
 }
+
+Rectangle Player::damageRectangle() const {
+	return Rectangle(
+			x_ + kCollisionX.left(),
+			y_ + kCollisionY.top(),
+			kCollisionX.width(),
+			kCollisionY.height()
+			);
+}
+
 Rectangle Player::topCollision(units::Game delta) const {
 	assert(delta <= 0);
 

@@ -18,6 +18,13 @@ class Rectangle {
 
 		units::Game width() const { return width_; }
 		units::Game height() const { return height_; }
+
+		bool collideWith(const Rectangle& other) const {
+			return right() >= other.left() &&
+				left() <= other.right() &&
+				top() <= other.bottom() &&
+				bottom() >= other.top();
+		}
 };
 
 #endif // RECTANGLE_H_
