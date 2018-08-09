@@ -98,6 +98,8 @@ class Player {
 		void lookUp();
 		void lookDown();
 		void lookHorizontal();
+
+		units::Game center_x() const { return x_ + units::tileToGame(1) / 2.0f; }
 };
 
 #endif // PLAYER_H_

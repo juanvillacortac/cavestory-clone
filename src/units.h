@@ -21,6 +21,10 @@ namespace units {
 	namespace {
 		const Game kTileSize = 32.0f;
 		const double kPi = atan(1) * 4;
+
+		int round(double val) {
+			return (int)(val > 0.0 ? val + 0.5 : val - 0.5); 
+		}
 	}
 
 	// Game to pixel
