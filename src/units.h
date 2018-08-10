@@ -51,6 +51,8 @@ namespace units {
 	inline double degreesToRadians(Degrees degrees) {
 		return degrees * kPi / 180.0f;
 	}
+
+	const Game kHalfTile = tileToGame(1) / 2.0f;
 }
 
 #endif // UNITS_H_

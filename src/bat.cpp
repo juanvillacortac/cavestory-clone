@@ -7,6 +7,8 @@ namespace {
 	const units::FPS kFlyFps = 30;
 
 	const units::AngularVelocity kAngularVelocity = 120.0f / 1000.0f;
+
+	const units::Game kFlightAmplitude = 5 * units::kHalfTile;
 }
 
 Bat::Bat(Graphics& graphics, units::Game x, units::Game y) :
@@ -41,10 +43,11 @@ Bat::SpriteState Bat::getSpriteState() const {
 void Bat::update(units::MS elapsed_time_ms, units::Game player_x) {
 	flight_angle_ += kAngularVelocity * elapsed_time_ms;
 
-	facing_ = x_ + units::tileToGame(1) / 2.0f > player_x ?
+	facing_ = x_ + units::kHalfTile > player_x ?
 		LEFT : RIGHT;
 
-	y_ = center_y_ + units::tileToGame(5) / 2.0f *
+	y_ = center_y_ +
+		kFlightAmplitude *
 		units::Game(std::sin(units::degreesToRadians(flight_angle_)));
 
 	sprites_[getSpriteState()]->update(elapsed_time_ms);

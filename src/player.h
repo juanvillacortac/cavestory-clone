@@ -5,7 +5,7 @@
 #include "rectangle.h"
 #include "units.h"
 
-//#include <boost/scoped_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
 
@@ -62,6 +62,8 @@ class Player {
 		units::MS invincible_time_;
 		bool invincible_;
 
+		bool spriteIsVisible() const;
+
 		void initializeSprites(Graphics& graphics);
 		void initializeSprite(Graphics& graphics, const SpriteState& sprite_state);
 		SpriteState getSpriteState();
@@ -85,6 +87,9 @@ class Player {
 		//boost::scoped_ptr<Sprite> sprite_;
 		std::map<SpriteState, boost::shared_ptr<Sprite>> sprites_;
 
+		boost::scoped_ptr<Sprite> health_bar_sprite_;
+		boost::scoped_ptr<Sprite> health_fill_sprite_;
+		boost::scoped_ptr<Sprite> three_;
 	public:
 		Player(Graphics& graphics, units::Game x, units::Game y);
 
@@ -104,9 +109,11 @@ class Player {
 
 		void takeDamage();
 
+		void drawHUD(Graphics& graphics) const;
+
 		Rectangle damageRectangle() const;
 
-		units::Game center_x() const { return x_ + units::tileToGame(1) / 2.0f; }
+		units::Game center_x() const { return x_ + units::kHalfTile; }
 };
 
 #endif // PLAYER_H_

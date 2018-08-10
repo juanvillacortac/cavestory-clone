@@ -34,7 +34,8 @@ Graphics::SurfaceID Graphics::loadImage(const std::string& file_path, bool black
 		// Load it
 		spr_sheets_[file_path] = SDL_LoadBMP(file_path.c_str());
 		if(black_to_alpha) {
-			SDL_SetColorKey(spr_sheets_[file_path], SDL_SRCCOLORKEY, 0/*black*/);
+			const Uint32 black_color = SDL_MapRGB(spr_sheets_[file_path]->format, 0, 0, 0);
+			SDL_SetColorKey(spr_sheets_[file_path], SDL_SRCCOLORKEY, black_color);
 		}
 		// Error handler
 		if(spr_sheets_[file_path] == NULL) {
