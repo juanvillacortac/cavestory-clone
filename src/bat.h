@@ -49,8 +49,8 @@ class Bat {
 
 		Rectangle damageRectangle() const {
 			return Rectangle(
-					x_ + units::kHalfTile,
-					y_ + units::kHalfTile, 0, 0
+					x_, y_ + units::kHalfTile,
+					32, 0
 					);
 		}
 };

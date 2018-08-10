@@ -4,12 +4,12 @@
 #include "sprite.h"
 #include "rectangle.h"
 #include "units.h"
+#include "number_spr.h"
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #include <map>
 
-struct Sprite;
 struct Graphics;
 struct Map;
 
@@ -84,12 +84,12 @@ class Player {
 		HorizontalFacing horizontal_facing_;
 		VerticalFacing vertical_facing_;
 
-		//boost::scoped_ptr<Sprite> sprite_;
 		std::map<SpriteState, boost::shared_ptr<Sprite>> sprites_;
 
 		boost::scoped_ptr<Sprite> health_bar_sprite_;
 		boost::scoped_ptr<Sprite> health_fill_sprite_;
-		boost::scoped_ptr<Sprite> three_;
+
+		boost::scoped_ptr<NumberSpr> health_number_sprite_;
 	public:
 		Player(Graphics& graphics, units::Game x, units::Game y);
 

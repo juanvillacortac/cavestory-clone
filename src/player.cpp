@@ -68,6 +68,11 @@ namespace {
 
 	const units::Game kHealthFillSourceHeight = units::kHalfTile;
 
+	const units::Game kHealthNumberX = units::tileToGame(3) / 2;
+	const units::Game kHealthNumberY = units::tileToGame(2);
+
+	const int kHealthNumberNumDigits = 2;
+
 	struct CollisionInfo{
 		bool collided;
 		units::Tile row, col;
@@ -148,7 +153,7 @@ void Player::drawHUD(Graphics& graphics) const {
 	if (spriteIsVisible()) {
 		health_bar_sprite_->draw(graphics, kHealthBarX, kHealthBarY);
 		health_fill_sprite_->draw(graphics, kHealthFillX, kHealthFillY);
-		three_->draw(graphics, units::tileToGame(2), units::tileToGame(2));
+		health_number_sprite_->draw(graphics, kHealthNumberX, kHealthNumberY);
 	}
 }
 
@@ -158,15 +163,14 @@ void Player::initializeSprites(Graphics& graphics) {
 				graphics, "assets/TextBox.bmp",
 				units::gameToPixel(kHealthBarSourceX), units::gameToPixel(kHealthBarSourceY),
 				units::tileToPixel(kHealthBarSourceWidth), units::gameToPixel(kHealthBarSourceHeight)));
+
 	health_fill_sprite_.reset(new Sprite(
 				graphics, "assets/TextBox.bmp",
 				units::gameToPixel(kHealthFillSourceX), units::gameToPixel(kHealthFillSourceY),
 				units::gameToPixel(5 * units::kHalfTile - 2.0f),
 				units::gameToPixel(kHealthFillSourceHeight)));
-	three_.reset(new Sprite(
-				graphics, "assets/TextBox.bmp",
-				units::gameToPixel(3*units::kHalfTile), units::gameToPixel(7 * units::kHalfTile),
-				units::gameToPixel(units::kHalfTile), units::gameToPixel(units::kHalfTile)));
+
+	health_number_sprite_.reset(new NumberSpr(graphics, 3, kHealthNumberNumDigits));
 
 	for(MotionType motion_type = FIRST_MOTION_TYPE;
 			motion_type < LAST_MOTION_TYPE;
