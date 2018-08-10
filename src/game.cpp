@@ -131,8 +131,8 @@ void Game::update(units::MS elapsed_time_ms) {
 void Game::draw(Graphics& graphics) {
 	graphics.clear();
 	map_->drawBackground(graphics);
-	player_->draw(graphics);
 	bat_->draw(graphics);
+	player_->draw(graphics);
 	map_->draw(graphics);
 	graphics.flip();
 }
