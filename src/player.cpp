@@ -49,30 +49,6 @@ namespace {
 	const units::MS kInvincibleFlashTime = 50;
 	const units::MS kInvincibleTime = 3000;
 
-
-	// HUD Constants
-	const units::Game kHealthBarX = units::tileToGame(1);
-	const units::Game kHealthBarY = units::tileToGame(2);
-
-	const units::Game kHealthBarSourceX = 0;
-	const units::Game kHealthBarSourceY = 5 * units::kHalfTile;
-
-	const units::Tile kHealthBarSourceWidth = 4;
-	const units::Game kHealthBarSourceHeight = units::kHalfTile;
-
-	const units::Game kHealthFillX = 5*units::kHalfTile;
-	const units::Game kHealthFillY = units::tileToGame(2);
-
-	const units::Game kHealthFillSourceX = 0;
-	const units::Game kHealthFillSourceY = 3 * units::kHalfTile;
-
-	const units::Game kHealthFillSourceHeight = units::kHalfTile;
-
-	const units::Game kHealthNumberX = units::tileToGame(3) / 2;
-	const units::Game kHealthNumberY = units::tileToGame(2);
-
-	const int kHealthNumberNumDigits = 2;
-
 	struct CollisionInfo{
 		bool collided;
 		units::Tile row, col;
@@ -83,8 +59,8 @@ namespace {
 
 		std::vector<Map::CollisionTile> tiles(map.getCollidingTiles(rectangle));
 
-		for (size_t i = 0; i < tiles.size(); i++) {
-			if (tiles[i].tile_type == Map::WALL_TILE) {
+		for(size_t i = 0; i < tiles.size(); i++) {
+			if(tiles[i].tile_type == Map::WALL_TILE) {
 				info.collided = true;
 				info.row = tiles[i].row;
 				info.col = tiles[i].col;
@@ -117,6 +93,7 @@ Player::Player(Graphics& graphics, units::Game x, units::Game y) : x_(x), y_(y),
 	on_ground_(false),
 	jump_active_(false),
 	interacting_(false),
+	health_(graphics),
 	invincible_time_(0),
 	invincible_(false)
 {
@@ -126,10 +103,12 @@ Player::Player(Graphics& graphics, units::Game x, units::Game y) : x_(x), y_(y),
 void Player::update(units::MS elapsed_time_ms, const Map& map) {
 	sprites_[getSpriteState()]->update(elapsed_time_ms);
 
-	if (invincible_) {
+	if(invincible_) {
 		invincible_time_ += elapsed_time_ms;
 		invincible_ = invincible_time_ < kInvincibleTime;
 	}
+
+	health_.update(elapsed_time_ms);
 
 	updateX(elapsed_time_ms, map);
 	updateY(elapsed_time_ms, map);
@@ -144,34 +123,19 @@ void Player::update(units::MS elapsed_time_ms, const Map& map) {
 }
 
 void Player::draw(Graphics& graphics) {
-	if (spriteIsVisible()) {
+	if(spriteIsVisible()) {
 		sprites_[getSpriteState()]->draw(graphics, x_, y_);
 	}
 };
 
-void Player::drawHUD(Graphics& graphics) const {
-	if (spriteIsVisible()) {
-		health_bar_sprite_->draw(graphics, kHealthBarX, kHealthBarY);
-		health_fill_sprite_->draw(graphics, kHealthFillX, kHealthFillY);
-		health_number_sprite_->draw(graphics, kHealthNumberX, kHealthNumberY);
+void Player::drawHUD(Graphics& graphics) {
+	if(spriteIsVisible()) {
+		health_.draw(graphics);
 	}
 }
 
 void Player::initializeSprites(Graphics& graphics) {
 	// Do u wanna eat spaghetti?
-	health_bar_sprite_.reset(new Sprite(
-				graphics, "assets/TextBox.bmp",
-				units::gameToPixel(kHealthBarSourceX), units::gameToPixel(kHealthBarSourceY),
-				units::tileToPixel(kHealthBarSourceWidth), units::gameToPixel(kHealthBarSourceHeight)));
-
-	health_fill_sprite_.reset(new Sprite(
-				graphics, "assets/TextBox.bmp",
-				units::gameToPixel(kHealthFillSourceX), units::gameToPixel(kHealthFillSourceY),
-				units::gameToPixel(5 * units::kHalfTile - 2.0f),
-				units::gameToPixel(kHealthFillSourceHeight)));
-
-	health_number_sprite_.reset(new NumberSpr(graphics, 3, kHealthNumberNumDigits));
-
 	for(MotionType motion_type = FIRST_MOTION_TYPE;
 			motion_type < LAST_MOTION_TYPE;
 			motion_type = static_cast<MotionType>(motion_type + 1)) {
@@ -312,7 +276,9 @@ void Player::stopJump() {
 }
 
 void Player::takeDamage() {
-	if (invincible_) return;
+	if(invincible_) return;
+
+	health_.takeDamage(2);
 
 	velocity_y_ = std::min(velocity_y_, -kShortJumpSpeed);
 

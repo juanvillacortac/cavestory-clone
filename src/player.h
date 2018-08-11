@@ -4,6 +4,7 @@
 #include "sprite.h"
 #include "rectangle.h"
 #include "units.h"
+#include "varying_width_spr.h"
 #include "number_spr.h"
 
 #include <boost/scoped_ptr.hpp>
@@ -54,10 +55,35 @@ class Player {
 
 		friend bool operator < (const SpriteState& a, const SpriteState& b);
 
+		struct Health {
+			public:
+				Health(Graphics& graphics);
+
+				void update(units::MS elapsed_time);
+				void draw(Graphics& graphics);
+
+				// returns true if we have died.
+				bool takeDamage(units::HP damage);
+			private:
+				units::Game fillOffset(units::HP health) const;
+
+				units::HP damage_;
+				units::MS damage_time_;
+
+				units::HP max_health_;
+				units::HP current_health_;
+
+				Sprite health_bar_sprite_;
+				VaryingWidthSprite health_fill_sprite_;
+				VaryingWidthSprite damage_fill_sprite_;
+		};
+
 		bool on_ground() const { return on_ground_; }
 		bool on_ground_;
 		bool jump_active_;
 		bool interacting_;
+
+		Health health_;
 
 		units::MS invincible_time_;
 		bool invincible_;
@@ -109,7 +135,7 @@ class Player {
 
 		void takeDamage();
 
-		void drawHUD(Graphics& graphics) const;
+		void drawHUD(Graphics& graphics);
 
 		Rectangle damageRectangle() const;
 

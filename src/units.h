@@ -18,6 +18,8 @@ namespace units {
 	typedef float Acceleration; // Game / MS / MS.
 	typedef float AngularVelocity; // Degrees / MS.
 
+	typedef int HP;
+
 	namespace {
 		const Game kTileSize = 32.0f;
 		const double kPi = atan(1) * 4;

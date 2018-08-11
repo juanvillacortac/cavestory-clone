@@ -38,10 +38,10 @@ NumberSpr::NumberSpr(Graphics& graphics, int number, int num_digits) : padding_(
 }
 
 void NumberSpr::draw(Graphics& graphics, units::Game x, units::Game y) {
-	for (size_t i = 0; i < reversed_digits_.size(); ++i) {
+	for(size_t i = 0; i < reversed_digits_.size(); ++i) {
 		// when i == reversed_digits_.size() - 1, offset = 0
 		// when 0 == reversed_digits_.size() - 1 - i, offset = 0
 		const units::Game offset = units::kHalfTile * (reversed_digits_.size() - 1 - i);
 		reversed_digits_[i]->draw(graphics, x + offset + padding_, y);
 	}
-} 
+}
