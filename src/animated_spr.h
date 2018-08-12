@@ -4,13 +4,13 @@
 #include "sprite.h"
 #include "game.h"
 #include "units.h"
+#include "timer.h"
 
 class Animated_spr : public Sprite {
 	private:
-		const units::MS frame_time_;
+		Timer frame_timer_;
 		const units::Frame frames_num_;
 		units::Frame current_frame_;
-		units::MS elapsed_time_; // Elapsed time since last frame change.
 
 		void update(units::MS elapsed_time_ms);
 	public:

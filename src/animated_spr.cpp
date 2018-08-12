@@ -7,10 +7,9 @@ Animated_spr::Animated_spr(
 		units::Pixel width, units::Pixel height,
 		units::FPS fps, units::Frame frames_num) : 
 	Sprite(graphics, file_path, source_x, source_y, width, height),
-	frame_time_(1000 / fps),
+	frame_timer_(1000 / fps),
 	frames_num_(frames_num),
-	current_frame_(0),
-	elapsed_time_(0)
+	current_frame_(0)
 {
 }
 
@@ -18,11 +17,9 @@ Animated_spr::~Animated_spr() {
 }
 
 void Animated_spr::update(units::MS elapsed_time_ms) {
-	elapsed_time_ += elapsed_time_ms;
-
-	if(elapsed_time_ > frame_time_) {
+	if(frame_timer_.expired()) {
 		++current_frame_;
-		elapsed_time_ = 0;
+		frame_timer_.reset();
 		if(current_frame_ < frames_num_) {
 			source_rect_.x += source_rect_.w;
 		} else {

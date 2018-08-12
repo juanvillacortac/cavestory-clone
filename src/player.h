@@ -6,6 +6,7 @@
 #include "units.h"
 #include "varying_width_spr.h"
 #include "number_spr.h"
+#include "timer.h"
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
@@ -68,7 +69,7 @@ class Player {
 				units::Game fillOffset(units::HP health) const;
 
 				units::HP damage_;
-				units::MS damage_time_;
+				Timer damage_timer_;
 
 				units::HP max_health_;
 				units::HP current_health_;
@@ -85,8 +86,7 @@ class Player {
 
 		Health health_;
 
-		units::MS invincible_time_;
-		bool invincible_;
+		Timer invincible_timer_;
 
 		bool spriteIsVisible() const;
 
