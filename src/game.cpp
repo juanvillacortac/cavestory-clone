@@ -99,8 +99,15 @@ void Game::eventLoop() {
 			player_->stopJump();
 		}
 
+		// Fullscreen
 		if(input.wasKeyPressed(SDLK_F4)) {
 			graphics.setVideo();
+			player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2),
+						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)));
+		}
+
+		// Reset player
+		if(input.wasKeyPressed(SDLK_r)) {
 			player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2),
 						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)));
 		}
