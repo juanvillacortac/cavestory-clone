@@ -44,6 +44,8 @@ class Bat {
 	public:
 		Bat(Graphics& graphics, units::Game x, units::Game y);
 
+		units::HP contactDamage() const;
+
 		void update(units::MS elapsed_time_ms, units::Game player_x);
 		void draw(Graphics& graphics) const;
 

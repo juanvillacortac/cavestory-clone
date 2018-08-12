@@ -9,6 +9,8 @@ namespace {
 	const units::AngularVelocity kAngularVelocity = 120.0f / 1000.0f;
 
 	const units::Game kFlightAmplitude = 5 * units::kHalfTile;
+
+	const units::HP kContactDamage = 1;
 }
 
 Bat::Bat(Graphics& graphics, units::Game x, units::Game y) :
@@ -38,7 +40,11 @@ void Bat::initializeSprite(Graphics& graphics, const SpriteState& sprite_state) 
 
 Bat::SpriteState Bat::getSpriteState() const {
 	return SpriteState(facing_);
-} 
+}
+
+units::HP Bat::contactDamage() const {
+   return kContactDamage;
+}
 
 void Bat::update(units::MS elapsed_time_ms, units::Game player_x) {
 	flight_angle_ += kAngularVelocity * elapsed_time_ms;

@@ -27,7 +27,10 @@ class NumberSpr {
 		
 		units::Game padding_;
 
-		std::vector<boost::shared_ptr<Sprite>> reversed_sprites_;
+		std::vector<boost::shared_ptr<Sprite> > reversed_glyphs_;
+
+		units::Game width() const { return units::kHalfTile * reversed_glyphs_.size(); }
+		units::Game height() const { return units::kHalfTile; }
 	public:
 		// Ex. " 3" in white text.
 		static NumberSpr HUDNumber(Graphics& graphics, int number, int num_digits)
@@ -43,8 +46,8 @@ class NumberSpr {
 
 		void draw(Graphics& graphics, units::Game x, units::Game y);
 
-		units::Game width() const { return units::kHalfTile * reversed_sprites_.size(); }
-		units::Game height() const { return units::kHalfTile; }
+		void drawCentered(Graphics& graphics, units::Game x, units::Game y)
+		{ draw(graphics, x - width() / 2, y - height() / 2); }
 };
 
 #endif // NUMBER_SPRITE_H_ 

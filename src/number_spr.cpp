@@ -14,6 +14,8 @@ namespace {
 
 	const units::Game kSourceWidth = units::kHalfTile;
 	const units::Game kSourceHeight = units::kHalfTile;
+
+	const int kRadix = 10;
 }
 
 
@@ -31,15 +33,14 @@ NumberSpr::NumberSpr(
 	int digit_count = 0;
 
 	do {
-		const int digit = number % 10;
+		const int digit = number % kRadix;
 
-		reversed_sprites_.push_back(
-				boost::shared_ptr<Sprite>(new Sprite(
+		reversed_glyphs_.push_back(boost::shared_ptr<Sprite>(new Sprite(
 							graphics, kSpritePath,
 							units::gameToPixel(digit*units::kHalfTile), units::gameToPixel(source_y),
 							units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight)
 							)));
-				number /= 10;
+				number /= kRadix;
 				digit_count++;
 				} while (number != 0);
 
@@ -51,13 +52,13 @@ NumberSpr::NumberSpr(
 
 				switch (op) {
 				case PLUS:
-				reversed_sprites_.push_back(boost::shared_ptr<Sprite>(new Sprite(
+				reversed_glyphs_.push_back(boost::shared_ptr<Sprite>(new Sprite(
 								graphics, kSpritePath,
 								units::gameToPixel(kPlusSourceX), units::gameToPixel(kOpSourceY),
 								units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight))));
 				break;
 				case MINUS:
-				reversed_sprites_.push_back(boost::shared_ptr<Sprite>(new Sprite(
+				reversed_glyphs_.push_back(boost::shared_ptr<Sprite>(new Sprite(
 								graphics, kSpritePath,
 								units::gameToPixel(kMinusSourceX), units::gameToPixel(kOpSourceY),
 								units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight))));
@@ -68,10 +69,10 @@ NumberSpr::NumberSpr(
 }
 
 void NumberSpr::draw(Graphics& graphics, units::Game x, units::Game y) {
-	for(size_t i = 0; i < reversed_sprites_.size(); ++i) {
-		// when i == reversed_sprites_.size() - 1, offset = 0
-		// when 0 == reversed_sprites_.size() - 1 - i, offset = 0
-		const units::Game offset = units::kHalfTile * (reversed_sprites_.size() - 1 - i);
-		reversed_sprites_[i]->draw(graphics, x + offset + padding_, y);
+	for(size_t i = 0; i < reversed_glyphs_.size(); i++) {
+		// when i == reversed_glyphs_.size() - 1, offset = 0
+		// when 0 == reversed_glyphs_.size() - 1 - i, offset = 0
+		const units::Game offset = units::kHalfTile * (reversed_glyphs_.size() - 1 - i);
+		reversed_glyphs_[i]->draw(graphics, x + offset + padding_, y);
 	}
 }

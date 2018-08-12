@@ -6,6 +6,7 @@
 #include "units.h"
 #include "varying_width_spr.h"
 #include "number_spr.h"
+#include "damage_text.h"
 #include "timer.h"
 
 #include <boost/scoped_ptr.hpp>
@@ -85,8 +86,8 @@ class Player {
 		bool interacting_;
 
 		Health health_;
-
 		Timer invincible_timer_;
+		DamageText damage_text_;
 
 		bool spriteIsVisible() const;
 
@@ -133,13 +134,14 @@ class Player {
 		void lookDown();
 		void lookHorizontal();
 
-		void takeDamage();
+		void takeDamage(units::HP damage);
 
 		void drawHUD(Graphics& graphics);
 
 		Rectangle damageRectangle() const;
 
 		units::Game center_x() const { return x_ + units::kHalfTile; }
+		units::Game center_y() const { return y_ + units::kHalfTile; }
 };
 
 #endif // PLAYER_H_
