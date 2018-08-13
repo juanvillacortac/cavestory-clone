@@ -2,7 +2,7 @@
 	run
 
 compile:
-	g++ -o cavestory src/**.cpp -lSDL -lm -L/usr/local/lib/ -lboost_filesystem
+	g++ -o cavestory src/**.cpp -std=c++11 -lSDL -lm
 
 run:
 	./cavestory

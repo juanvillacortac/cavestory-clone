@@ -35,7 +35,7 @@ NumberSpr::NumberSpr(
 	do {
 		const int digit = number % kRadix;
 
-		reversed_glyphs_.push_back(boost::shared_ptr<Sprite>(new Sprite(
+		reversed_glyphs_.push_back(std::shared_ptr<Sprite>(new Sprite(
 							graphics, kSpritePath,
 							units::gameToPixel(digit*units::kHalfTile), units::gameToPixel(source_y),
 							units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight)
@@ -52,13 +52,13 @@ NumberSpr::NumberSpr(
 
 				switch (op) {
 				case PLUS:
-				reversed_glyphs_.push_back(boost::shared_ptr<Sprite>(new Sprite(
+				reversed_glyphs_.push_back(std::shared_ptr<Sprite>(new Sprite(
 								graphics, kSpritePath,
 								units::gameToPixel(kPlusSourceX), units::gameToPixel(kOpSourceY),
 								units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight))));
 				break;
 				case MINUS:
-				reversed_glyphs_.push_back(boost::shared_ptr<Sprite>(new Sprite(
+				reversed_glyphs_.push_back(std::shared_ptr<Sprite>(new Sprite(
 								graphics, kSpritePath,
 								units::gameToPixel(kMinusSourceX), units::gameToPixel(kOpSourceY),
 								units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight))));

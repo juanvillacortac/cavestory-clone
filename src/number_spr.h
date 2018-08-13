@@ -3,7 +3,7 @@
 
 #include "units.h"
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <vector>
 
 struct Graphics;
@@ -27,7 +27,7 @@ class NumberSpr {
 		
 		units::Game padding_;
 
-		std::vector<boost::shared_ptr<Sprite> > reversed_glyphs_;
+		std::vector<std::shared_ptr<Sprite> > reversed_glyphs_;
 
 		units::Game width() const { return units::kHalfTile * reversed_glyphs_.size(); }
 		units::Game height() const { return units::kHalfTile; }

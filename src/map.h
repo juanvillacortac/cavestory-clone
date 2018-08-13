@@ -4,8 +4,7 @@
 #include "backdrop.h"
 #include "units.h"
 
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <vector>
 
 struct Graphics;
@@ -41,17 +40,17 @@ class Map {
 		class Tile {
 			public:
 				Tile(TileType tile_type = AIR_TILE,
-						boost::shared_ptr<Sprite> sprite = boost::shared_ptr<Sprite>()) :
+						std::shared_ptr<Sprite> sprite = std::shared_ptr<Sprite>()) :
 					tile_type(tile_type),
 					sprite(sprite) {}
 
 				TileType tile_type;
-				boost::shared_ptr<Sprite> sprite;
+				std::shared_ptr<Sprite> sprite;
 		};
 
-		boost::scoped_ptr<Backdrop> backdrop_;
+		std::unique_ptr<Backdrop> backdrop_;
 
-		std::vector<std::vector<boost::shared_ptr<Sprite>>> bkg_tiles_;
+		std::vector<std::vector<std::shared_ptr<Sprite>>> bkg_tiles_;
 		std::vector<std::vector<Tile>> tiles_;
 };
 

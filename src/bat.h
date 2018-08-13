@@ -4,8 +4,8 @@
 #include "units.h"
 #include "rectangle.h"
 
-#include <boost/shared_ptr.hpp>
 #include <map>
+#include <memory>
 
 struct Graphics;
 struct Sprite;
@@ -40,7 +40,7 @@ class Bat {
 
 		Facing facing_;
 
-		std::map<SpriteState, boost::shared_ptr<Sprite> > sprites_;
+		std::map<SpriteState, std::shared_ptr<Sprite>> sprites_;
 	public:
 		Bat(Graphics& graphics, units::Game x, units::Game y);
 

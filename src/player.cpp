@@ -185,7 +185,7 @@ void Player::initializeSprite(Graphics& graphics,
 		tile_x + kUpFrameOffset : tile_x;
 
 	if(sprite_state.motion_type == WALKING) {
-		sprites_[sprite_state] = boost::shared_ptr<Sprite>(new Animated_spr(
+		sprites_[sprite_state] = std::shared_ptr<Sprite>(new Animated_spr(
 					graphics,
 					kSpriteFilePath,
 					units::tileToPixel(tile_x), units::tileToPixel(tile_y),
@@ -199,7 +199,7 @@ void Player::initializeSprite(Graphics& graphics,
 				 sprite_state.motion_type == FALLING)) {
 			tile_x = kDownFrame;
 		}
-		sprites_[sprite_state] = boost::shared_ptr<Sprite>(new Sprite(
+		sprites_[sprite_state] = std::shared_ptr<Sprite>(new Sprite(
 					graphics,
 					kSpriteFilePath,
 					units::tileToPixel(tile_x), units::tileToPixel(tile_y),

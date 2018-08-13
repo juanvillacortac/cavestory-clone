@@ -3,7 +3,7 @@
 
 #include "units.h"
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 struct Graphics;
 struct Player;
@@ -16,9 +16,9 @@ class Game {
 		void update(units::MS elapsed_time_ms);
 		void draw(Graphics& graphics);
 
-		boost::scoped_ptr<Player> player_;
-		boost::scoped_ptr<Bat> bat_;
-		boost::scoped_ptr<Map> map_;
+		std::unique_ptr<Player> player_;
+		std::unique_ptr<Bat> bat_;
+		std::unique_ptr<Map> map_;
 	public:
 		Game();
 		~Game();

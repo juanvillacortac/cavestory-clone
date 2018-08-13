@@ -9,8 +9,8 @@
 #include "damage_text.h"
 #include "timer.h"
 
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <cassert>
+#include <memory>
 #include <map>
 
 struct Graphics;
@@ -111,12 +111,12 @@ class Player {
 		HorizontalFacing horizontal_facing_;
 		VerticalFacing vertical_facing_;
 
-		std::map<SpriteState, boost::shared_ptr<Sprite>> sprites_;
+		std::map<SpriteState, std::shared_ptr<Sprite>> sprites_;
 
-		boost::scoped_ptr<Sprite> health_bar_sprite_;
-		boost::scoped_ptr<Sprite> health_fill_sprite_;
+		std::unique_ptr<Sprite> health_bar_sprite_;
+		std::unique_ptr<Sprite> health_fill_sprite_;
 
-		boost::scoped_ptr<NumberSpr> health_number_sprite_;
+		std::unique_ptr<NumberSpr> health_number_sprite_;
 	public:
 		Player(Graphics& graphics, units::Game x, units::Game y);
 

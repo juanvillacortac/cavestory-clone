@@ -4,9 +4,8 @@
 #include "units.h"
 
 #include <set>
-#include <boost/noncopyable.hpp>
 
-class Timer : private boost::noncopyable {
+class Timer {
 	private:
 		void update(units::MS elapsed_time_ms) {
 			if(active())
@@ -18,6 +17,9 @@ class Timer : private boost::noncopyable {
 
 		static std::set<Timer*> timers_;
 	public:
+		Timer(const Timer&) = delete;
+		const Timer& operator=(const Timer&) = delete;
+
 		Timer(units::MS expiration_time) :
 			current_time_(expiration_time + 1),
 			expiration_time_(expiration_time) { timers_.insert(this); }

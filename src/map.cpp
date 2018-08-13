@@ -4,7 +4,7 @@
 #include "game.h"
 #include "rectangle.h"
 
-using boost::shared_ptr;
+using std::shared_ptr;
 using std::vector;
 
 void Map::update(units::MS elapsed_time_ms) {

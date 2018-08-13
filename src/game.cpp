@@ -1,4 +1,3 @@
-#include <SDL/SDL.h>
 #include "game.h"
 #include "graphics.h"
 #include "input.h"
@@ -6,6 +5,8 @@
 #include "player.h"
 #include "bat.h"
 #include "map.h"
+
+#include <SDL/SDL.h>
 
 namespace {
 	const units::FPS kFps = 60;

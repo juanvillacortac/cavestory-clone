@@ -29,7 +29,7 @@ void Bat::initializeSprites(Graphics& graphics) {
 void Bat::initializeSprite(Graphics& graphics, const SpriteState& sprite_state) {
 	units::Tile tile_y = sprite_state.facing == RIGHT ? 3 : 2;
 
-	sprites_[sprite_state] = boost::shared_ptr<Sprite>(new Animated_spr(
+	sprites_[sprite_state] = std::shared_ptr<Sprite>(new Animated_spr(
 				graphics, "assets/NpcCemet.bmp",
 				units::tileToPixel(2), units::tileToPixel(tile_y),
 				units::tileToPixel(1), units::tileToPixel(1),
