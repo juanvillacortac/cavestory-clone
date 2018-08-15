@@ -28,24 +28,41 @@ class Player {
 			LAST_MOTION_TYPE
 		};
 
-		typedef std::tuple<MotionType, HorizontalFacing, VerticalFacing> SpriteTuple;
+		enum StrideType {
+			FIRST_STRIDE_TYPE,
+			STRIDE_MIDDLE = FIRST_STRIDE_TYPE,
+			STRIDE_LEFT,
+			STRIDE_RIGHT,
+			LAST_STRIDE_TYPE
+		};
+
+		typedef std::tuple<MotionType, HorizontalFacing, VerticalFacing, StrideType> SpriteTuple;
 
 		struct SpriteState : public SpriteTuple {
 			SpriteState(const SpriteTuple& tuple) : SpriteTuple(tuple) {}
+
 			MotionType motion_type(const SpriteTuple& tuple) const { return std::get<0>(tuple); }
 			HorizontalFacing horizontal_facing(const SpriteTuple& tuple) const { return std::get<1>(tuple); }
 			VerticalFacing vertical_facing(const SpriteTuple& tuple) const { return std::get<2>(tuple); }
+			StrideType stride_type(const SpriteTuple& tuple) const { return std::get<3>(tuple); }
 		};
 
-		struct Health {
+		class WalkingAnimation {
+			private:
+				Timer frame_timer_;
+				units::Frame current_frame_;
+
+				bool forward_;
 			public:
-				Health(Graphics& graphics);
+				WalkingAnimation();
 
-				void update(units::MS elapsed_time);
-				void draw(Graphics& graphics);
+				void update();
+				void reset();
 
-				// returns true if we have died.
-				bool takeDamage(units::HP damage);
+				StrideType stride() const;
+		};
+
+		class Health {
 			private:
 				units::Game fillOffset(units::HP health) const;
 
@@ -58,7 +75,22 @@ class Player {
 				Sprite health_bar_sprite_;
 				VaryingWidthSprite health_fill_sprite_;
 				VaryingWidthSprite damage_fill_sprite_;
+			public:
+				Health(Graphics& graphics);
+
+				void update(units::MS elapsed_time);
+				void draw(Graphics& graphics);
+
+				// returns true if we have died.
+				bool takeDamage(units::HP damage);
 		};
+
+		MotionType motionType() const;
+
+		VerticalFacing vertical_facing() const {
+			return on_ground() && intended_vertical_facing_ == DOWN ?
+				HORIZONTAL : intended_vertical_facing_;
+		}
 
 		bool on_ground() const { return on_ground_; }
 		bool on_ground_;
@@ -69,6 +101,8 @@ class Player {
 		Timer invincible_timer_;
 		DamageText damage_text_;
 		PolarStar polar_star_;
+
+		WalkingAnimation walking_animation_;
 
 		bool spriteIsVisible() const;
 
@@ -90,7 +124,7 @@ class Player {
 		int acceleration_x_;
 
 		HorizontalFacing horizontal_facing_;
-		VerticalFacing vertical_facing_;
+		VerticalFacing intended_vertical_facing_;
 
 		std::map<SpriteState, std::shared_ptr<Sprite>> sprites_;
 

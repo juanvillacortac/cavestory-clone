@@ -27,6 +27,7 @@ class PolarStar {
 		void draw(
 				Graphics& graphics,
 				HorizontalFacing horizontal_facing, VerticalFacing vertical_facing,
+				bool gun_up,
 				units::Game x, units::Game y);
 };
 
