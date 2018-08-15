@@ -3,30 +3,19 @@
 
 #include "units.h"
 #include "rectangle.h"
-
-#include <map>
-#include <memory>
+#include "sprite_state.h"
 
 struct Graphics;
 struct Sprite;
 
 class Bat {
 	private:
-		enum Facing {
-			FIRST_FACING,
-			LEFT = FIRST_FACING,
-			RIGHT,
-			LAST_FACING
-		};
+		typedef std::tuple<HorizontalFacing> SpriteTuple;
 
-		struct SpriteState {
-			SpriteState(Facing facing) : facing(facing) {}
-			Facing facing;
+		struct SpriteState : public SpriteTuple {
+			SpriteState(const SpriteTuple& tuple) : SpriteTuple(tuple) {}
+			HorizontalFacing horizontal_facing(const SpriteTuple& tuple) const { return std::get<0>(tuple); }
 		};
-
-		friend bool operator < (const SpriteState& a, const SpriteState& b) {
-			return a.facing < b.facing;
-		}
 
 		void initializeSprites(Graphics& graphics);
 		void initializeSprite(Graphics& graphics, const SpriteState& sprite_state);
@@ -38,7 +27,7 @@ class Bat {
 
 		units::Degrees flight_angle_;
 
-		Facing facing_;
+		HorizontalFacing facing_;
 
 		std::map<SpriteState, std::shared_ptr<Sprite>> sprites_;
 	public:

@@ -21,13 +21,13 @@ Bat::Bat(Graphics& graphics, units::Game x, units::Game y) :
 }
 
 void Bat::initializeSprites(Graphics& graphics) {
-	for(int facing = FIRST_FACING; facing < LAST_FACING; facing++) {
-		initializeSprite(graphics, SpriteState(Facing(facing)));
+	ENUM_FOREACH(h_facing, HORIZONTAL_FACING) {
+		initializeSprite(graphics, std::make_tuple(HorizontalFacing(h_facing)));
 	}
 }
 
 void Bat::initializeSprite(Graphics& graphics, const SpriteState& sprite_state) {
-	units::Tile tile_y = sprite_state.facing == RIGHT ? 3 : 2;
+	units::Tile tile_y = sprite_state.horizontal_facing(sprite_state) == RIGHT ? 3 : 2;
 
 	sprites_[sprite_state] = std::shared_ptr<Sprite>(new Animated_spr(
 				graphics, "assets/NpcCemet.bmp",
@@ -39,7 +39,7 @@ void Bat::initializeSprite(Graphics& graphics, const SpriteState& sprite_state) 
 }
 
 Bat::SpriteState Bat::getSpriteState() const {
-	return SpriteState(facing_);
+	return std::make_tuple(facing_);
 }
 
 units::HP Bat::contactDamage() const {

@@ -12,8 +12,6 @@
 #include "polar_star.h"
 
 #include <cassert>
-#include <memory>
-#include <map>
 
 struct Graphics;
 struct Map;
@@ -30,21 +28,14 @@ class Player {
 			LAST_MOTION_TYPE
 		};
 
-		struct SpriteState {
-			SpriteState(
-					MotionType motion_type = STANDING,
-					HorizontalFacing horizontal_facing = LEFT,
-					VerticalFacing vertical_facing = HORIZONTAL) :
-				motion_type(motion_type),
-				horizontal_facing(horizontal_facing),
-				vertical_facing(vertical_facing) {}
+		typedef std::tuple<MotionType, HorizontalFacing, VerticalFacing> SpriteTuple;
 
-			MotionType motion_type;
-			HorizontalFacing horizontal_facing;
-			VerticalFacing vertical_facing;
+		struct SpriteState : public SpriteTuple {
+			SpriteState(const SpriteTuple& tuple) : SpriteTuple(tuple) {}
+			MotionType motion_type(const SpriteTuple& tuple) const { return std::get<0>(tuple); }
+			HorizontalFacing horizontal_facing(const SpriteTuple& tuple) const { return std::get<1>(tuple); }
+			VerticalFacing vertical_facing(const SpriteTuple& tuple) const { return std::get<2>(tuple); }
 		};
-
-		friend bool operator < (const SpriteState& a, const SpriteState& b);
 
 		struct Health {
 			public:

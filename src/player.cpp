@@ -71,20 +71,6 @@ namespace {
 	}
 }
 
-bool operator < (const Player::SpriteState& a, const Player::SpriteState& b) {
-	if(a.motion_type != b.motion_type) {
-		return a.motion_type < b.motion_type;
-	}
-	if(a.horizontal_facing != b.horizontal_facing) {
-		return a.horizontal_facing < b.horizontal_facing;
-	}
-	if(a.vertical_facing != b.vertical_facing) {
-		return a.vertical_facing < b.vertical_facing;
-	}
-
-	return false;
-}
-
 Player::Player(Graphics& graphics, units::Game x, units::Game y) : x_(x), y_(y),
 	velocity_x_(0.0f), velocity_y_(0.0f),
 	acceleration_x_(0),
@@ -136,21 +122,12 @@ void Player::drawHUD(Graphics& graphics) {
 
 void Player::initializeSprites(Graphics& graphics) {
 	// Do u wanna eat spaghetti?
-	for(MotionType motion_type = FIRST_MOTION_TYPE;
-			motion_type < LAST_MOTION_TYPE;
-			motion_type = static_cast<MotionType>(motion_type + 1)) {
-		for(HorizontalFacing horizontal_facing = FIRST_HORIZONTAL_FACING;
-				horizontal_facing < LAST_HORIZONTAL_FACING;
-				horizontal_facing = static_cast<HorizontalFacing>(horizontal_facing + 1)) {
-			for(VerticalFacing vertical_facing = FIRST_VERTICAL_FACING;
-					vertical_facing < LAST_VERTICAL_FACING;
-					vertical_facing = static_cast<VerticalFacing>(vertical_facing + 1)) {
-				initializeSprite(
-						graphics,
-						SpriteState(
-							motion_type,
-							horizontal_facing,
-							vertical_facing));
+	ENUM_FOREACH(motion, MOTION_TYPE) {
+		ENUM_FOREACH(h_facing, HORIZONTAL_FACING) {
+			ENUM_FOREACH(v_facing, VERTICAL_FACING) {
+				initializeSprite(graphics, std::make_tuple((MotionType)motion,
+							(HorizontalFacing)h_facing,
+							(VerticalFacing)v_facing));
 			}
 		}
 	}
@@ -159,12 +136,12 @@ void Player::initializeSprites(Graphics& graphics) {
 void Player::initializeSprite(Graphics& graphics,
 		const SpriteState& sprite_state) {
 
-	units::Tile tile_y = sprite_state.horizontal_facing == LEFT ?
+	units::Tile tile_y = sprite_state.horizontal_facing(sprite_state) == LEFT ?
 		kCharacterFrame : 1 + kCharacterFrame;
 
 	units::Tile tile_x;
 
-	switch(sprite_state.motion_type) {
+	switch(sprite_state.motion_type(sprite_state)) {
 		case WALKING:
 			tile_x = kWalkFrame;
 			break;
@@ -183,10 +160,10 @@ void Player::initializeSprite(Graphics& graphics,
 		case LAST_MOTION_TYPE:
 			break;
 	}
-	tile_x = sprite_state.vertical_facing == UP ?
+	tile_x = sprite_state.vertical_facing(sprite_state) == UP ?
 		tile_x + kUpFrameOffset : tile_x;
 
-	if(sprite_state.motion_type == WALKING) {
+	if(sprite_state.motion_type(sprite_state) == WALKING) {
 		sprites_[sprite_state] = std::shared_ptr<Sprite>(new Animated_spr(
 					graphics,
 					kSpriteFilePath,
@@ -196,9 +173,9 @@ void Player::initializeSprite(Graphics& graphics,
 					)
 				);
 	} else {
-		if(sprite_state.vertical_facing == DOWN  &&
-				(sprite_state.motion_type == JUMPING ||
-				 sprite_state.motion_type == FALLING)) {
+		if(sprite_state.vertical_facing(sprite_state) == DOWN && 
+				(sprite_state.motion_type(sprite_state) == JUMPING ||
+				 sprite_state.motion_type(sprite_state) == FALLING)) {
 			tile_x = kDownFrame;
 		}
 		sprites_[sprite_state] = std::shared_ptr<Sprite>(new Sprite(
@@ -222,7 +199,7 @@ Player::SpriteState Player::getSpriteState() {
 		motion = velocity_y_ < 0.0f ? JUMPING : FALLING;
 	}
 
-	return SpriteState(
+	return std::make_tuple(
 			motion,
 			horizontal_facing_,
 			vertical_facing_

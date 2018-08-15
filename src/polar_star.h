@@ -4,30 +4,18 @@
 #include "sprite_state.h"
 #include "units.h"
 
-#include <map>
-#include <memory>
-
 struct Graphics;
 struct Sprite;
 
 class PolarStar {
 	private:
-		struct SpriteState {
-			SpriteState(HorizontalFacing horizontal_facing, VerticalFacing vertical_facing) :
-				horizontal_facing(horizontal_facing),
-				vertical_facing(vertical_facing) {}
+		typedef std::tuple<HorizontalFacing, VerticalFacing> SpriteTuple;
 
-			HorizontalFacing horizontal_facing;
-			VerticalFacing vertical_facing;
+		struct SpriteState : public SpriteTuple {
+			SpriteState(const SpriteTuple& tuple) : SpriteTuple(tuple) {}
+			HorizontalFacing horizontal_facing(const SpriteTuple& tuple) const { return std::get<0>(tuple); }
+			VerticalFacing vertical_facing(const SpriteTuple& tuple) const { return std::get<1>(tuple); }
 		};
-
-		friend bool operator<(const SpriteState& a, const SpriteState& b) {
-			if(a.horizontal_facing != b.horizontal_facing) {
-				return a.horizontal_facing < b.horizontal_facing;
-			}
-
-			return a.vertical_facing < b.vertical_facing;
-		}
 
 		void initializeSprites(Graphics& graphics);
 		void initializeSprite(Graphics& graphics, const SpriteState& sprite_state);
