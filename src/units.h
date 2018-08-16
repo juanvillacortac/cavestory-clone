@@ -1,6 +1,8 @@
 #ifndef UNITS_H_
 #define UNITS_H_
 
+#include "config.h"
+
 #include <cmath>
 
 namespace units {
@@ -31,7 +33,9 @@ namespace units {
 
 	// Game to pixel
 	inline Pixel gameToPixel(Game game) {
-		return Pixel(round(game)); // game / 2 for 16x16
+		return config::getGraphicsQuality() == config::HIGH_QUALITY ?
+			Pixel(round(game)) :
+			Pixel(round(game / 2));
 	}
 
 	// Game to tile

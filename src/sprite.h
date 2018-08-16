@@ -16,7 +16,7 @@ class Sprite {
 	public:
 		Sprite(
 				Graphics& graphics,
-				const std::string& file_path,
+				const std::string& file_name,
 				units::Pixel source_x, units::Pixel source_y,
 				units::Pixel width, units::Pixel height);
 

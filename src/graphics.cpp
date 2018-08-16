@@ -28,21 +28,26 @@ Graphics::~Graphics() {
 	SDL_FreeSurface(screen_);
 }
 
-Graphics::SurfaceID Graphics::loadImage(const std::string& file_path, bool black_to_alpha) {
+Graphics::SurfaceID Graphics::loadImage(const std::string& file_name, bool black_to_alpha) {
+	const std::string file_path = config::getGraphicsQuality() == config::ORIGINAL_QUALITY ?
+		"assets/" + file_name + ".pbm" :
+		"assets/" + file_name + ".bmp";
+
 	// If we haven't loaded in the spritesheet
 	if(spr_sheets_.count(file_path) == 0) {
 		// Load it
 		spr_sheets_[file_path] = SDL_LoadBMP(file_path.c_str());
-		if(black_to_alpha) {
-			const Uint32 black_color = SDL_MapRGB(spr_sheets_[file_path]->format, 0, 0, 0);
-			SDL_SetColorKey(spr_sheets_[file_path], SDL_SRCCOLORKEY, black_color);
-		}
 		// Error handler
 		if(spr_sheets_[file_path] == NULL) {
 			// Could not load the image for whatever reason, print to stderr.
 			fprintf(stderr, "Could not find image: %s\n", file_path.c_str());
 			// Don't try to continue if we couldn't load an image, just exit.
 			exit(EXIT_FAILURE);
+		}
+		// Alpha in image
+		if(black_to_alpha) {
+			const Uint32 black_color = SDL_MapRGB(spr_sheets_[file_path]->format, 0, 0, 0);
+			SDL_SetColorKey(spr_sheets_[file_path], SDL_SRCCOLORKEY, black_color);
 		}
 	}
 	return spr_sheets_[file_path];

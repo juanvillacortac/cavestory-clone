@@ -13,7 +13,7 @@ namespace {
 	const units::Tile kLeftOffset = 0;
 	const units::Tile kRightOffset = 1;
 
-	const std::string kSpritePath("assets/Arms.bmp");
+	const std::string kSpritePath("Arms");
 }
 
 PolarStar::PolarStar(Graphics& graphics) {

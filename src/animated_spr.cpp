@@ -2,11 +2,11 @@
 
 Animated_spr::Animated_spr(
 		Graphics& graphics,
-		const std::string& file_path,
+		const std::string& file_name,
 		units::Pixel source_x, units::Pixel source_y,
 		units::Pixel width, units::Pixel height,
 		units::FPS fps, units::Frame frames_num) : 
-	Sprite(graphics, file_path, source_x, source_y, width, height),
+	Sprite(graphics, file_name, source_x, source_y, width, height),
 	frame_timer_(1000 / fps),
 	frames_num_(frames_num),
 	current_frame_(0)

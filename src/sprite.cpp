@@ -3,12 +3,12 @@
 
 Sprite::Sprite(
 		Graphics& graphics,
-		const std::string& file_path,
+		const std::string& file_name,
 		units::Pixel source_x, units::Pixel source_y,
 		units::Pixel width, units::Pixel height) {
 	const bool black_to_alpha = true;
 
-	spr_sheet_ = graphics.loadImage(file_path, black_to_alpha);
+	spr_sheet_ = graphics.loadImage(file_name, black_to_alpha);
 	source_rect_.x = source_x;
 	source_rect_.y = source_y;
 	source_rect_.w = width;

@@ -31,7 +31,7 @@ namespace {
 
 	const int kHealthNumberNumDigits = 2;
 
-	const std::string kSpritePath("assets/TextBox.bmp");
+	const std::string kSpritePath("TextBox");
 
 	const units::MS kDamageDelay = 1500;
 }
