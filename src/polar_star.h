@@ -20,15 +20,21 @@ class PolarStar {
 		class Projectile {
 			private:
 				std::shared_ptr<Sprite> sprite_;
+
 				const HorizontalFacing horizontal_direction_;
 				const VerticalFacing vertical_direction_;
 				const units::Game x_, y_;
+
 				units::Game offset_;
 			public:
 				Projectile(std::shared_ptr<Sprite> sprite,
 						HorizontalFacing horizontal_direction,
 						VerticalFacing vertical_direction,
 						units::Game x, units::Game y);
+
+				// Returns true if |this| are alive.
+				bool update(units::MS elapsed_time);
+
 				void draw(Graphics& graphics);
 		};
 
@@ -44,7 +50,9 @@ class PolarStar {
 
 		std::shared_ptr<Sprite> horizontal_projectile_;
 		std::shared_ptr<Sprite> vertical_projectile_;
-		std::shared_ptr<Projectile> projectile_;
+
+		std::shared_ptr<Projectile> projectile_a_;
+		std::shared_ptr<Projectile> projectile_b_;
 	public:
 		PolarStar(Graphics& graphics);
 
@@ -59,6 +67,8 @@ class PolarStar {
 				bool gun_up);
 
 		void stopFire() {}
+
+		void updateProjectiles(units::MS elapsed_time_ms);
 };
 
 #endif // POLAR_STAR_H_
