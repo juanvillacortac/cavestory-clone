@@ -137,7 +137,6 @@ void Game::eventLoop() {
 
 void Game::update(units::MS elapsed_time_ms) {
 	Timer::updateAll(elapsed_time_ms);
-	map_->update(elapsed_time_ms);
 	player_->update(elapsed_time_ms, *map_);
 	bat_->update(elapsed_time_ms, player_->center_x());
 	

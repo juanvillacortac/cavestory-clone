@@ -78,7 +78,7 @@ class Player {
 			public:
 				Health(Graphics& graphics);
 
-				void update(units::MS elapsed_time);
+				void update();
 				void draw(Graphics& graphics);
 
 				// returns true if we have died.

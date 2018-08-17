@@ -83,13 +83,11 @@ Player::Player(Graphics& graphics, units::Game x, units::Game y) : x_(x), y_(y),
 }
 
 void Player::update(units::MS elapsed_time_ms, const Map& map) {
-	sprites_[getSpriteState()]->update(elapsed_time_ms);
-
 	walking_animation_.update();
 
 	polar_star_.updateProjectiles(elapsed_time_ms);
 
-	health_.update(elapsed_time_ms);
+	health_.update();
 
 	damage_text_.update(elapsed_time_ms);
 

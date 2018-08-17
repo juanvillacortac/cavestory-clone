@@ -12,7 +12,7 @@ class Animated_spr : public Sprite {
 		const units::Frame frames_num_;
 		units::Frame current_frame_;
 
-		void update(units::MS elapsed_time_ms);
+		void update();
 	public:
 		Animated_spr(
 				Graphics& graphics,

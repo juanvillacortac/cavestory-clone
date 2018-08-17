@@ -16,7 +16,7 @@ Animated_spr::Animated_spr(
 Animated_spr::~Animated_spr() {
 }
 
-void Animated_spr::update(units::MS elapsed_time_ms) {
+void Animated_spr::update() {
 	if(frame_timer_.expired()) {
 		++current_frame_;
 		frame_timer_.reset();

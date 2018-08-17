@@ -56,7 +56,7 @@ void Bat::update(units::MS elapsed_time_ms, units::Game player_x) {
 		kFlightAmplitude *
 		units::Game(std::sin(units::degreesToRadians(flight_angle_)));
 
-	sprites_[getSpriteState()]->update(elapsed_time_ms);
+	sprites_[getSpriteState()]->update();
 }
 
 void Bat::draw(Graphics& graphics) const {

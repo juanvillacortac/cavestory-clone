@@ -33,7 +33,6 @@ class Map {
 
 		std::vector<CollisionTile> getCollidingTiles(const Rectangle& rectangle) const;
 
-		void update(units::MS elapsed_time_ms);
 		void drawBackground(Graphics& graphics) const;
 		void draw(Graphics& graphics) const;
 	private:
