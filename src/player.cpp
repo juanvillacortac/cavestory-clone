@@ -85,7 +85,7 @@ Player::Player(Graphics& graphics, units::Game x, units::Game y) : x_(x), y_(y),
 void Player::update(units::MS elapsed_time_ms, const Map& map) {
 	walking_animation_.update();
 
-	polar_star_.updateProjectiles(elapsed_time_ms);
+	polar_star_.updateProjectiles(elapsed_time_ms, map);
 
 	health_.update();
 

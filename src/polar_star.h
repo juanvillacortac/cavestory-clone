@@ -3,9 +3,11 @@
 
 #include "sprite_state.h"
 #include "units.h"
+#include "rectangle.h"
 
 struct Graphics;
 struct Sprite;
+struct Map;
 
 class PolarStar {
 	private:
@@ -19,10 +21,17 @@ class PolarStar {
 
 		class Projectile {
 			private:
+
+				Rectangle collisionRectangle() const;
+
+				units::Game getX() const;
+				units::Game getY() const;
+
 				std::shared_ptr<Sprite> sprite_;
 
 				const HorizontalFacing horizontal_direction_;
 				const VerticalFacing vertical_direction_;
+
 				const units::Game x_, y_;
 
 				units::Game offset_;
@@ -33,7 +42,7 @@ class PolarStar {
 						units::Game x, units::Game y);
 
 				// Returns true if |this| are alive.
-				bool update(units::MS elapsed_time);
+				bool update(units::MS elapsed_time, const Map& map);
 
 				void draw(Graphics& graphics);
 		};
@@ -68,7 +77,7 @@ class PolarStar {
 
 		void stopFire() {}
 
-		void updateProjectiles(units::MS elapsed_time_ms);
+		void updateProjectiles(units::MS elapsed_time_ms, const Map& map);
 };
 
 #endif // POLAR_STAR_H_
