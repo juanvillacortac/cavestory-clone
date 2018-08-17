@@ -93,6 +93,8 @@ class Player {
 		}
 
 		bool on_ground() const { return on_ground_; }
+		bool gun_up() const
+		{ return motionType() == WALKING && walking_animation_.stride() != STRIDE_MIDDLE; }
 		bool on_ground_;
 		bool jump_active_;
 		bool interacting_;
@@ -148,6 +150,9 @@ class Player {
 		void lookUp();
 		void lookDown();
 		void lookHorizontal();
+
+		void startFire();
+		void stopFire();
 
 		void takeDamage(units::HP damage);
 

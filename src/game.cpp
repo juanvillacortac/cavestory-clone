@@ -100,6 +100,13 @@ void Game::eventLoop() {
 			player_->stopJump();
 		}
 
+		// Player Fire
+		if (input.wasKeyPressed(SDLK_w)) {
+			player_->startFire();
+		} else if (input.wasKeyReleased(SDLK_w)) {
+			player_->stopFire();
+		}
+
 		// Fullscreen
 		if(input.wasKeyPressed(SDLK_F4)) {
 			graphics.setVideo();
