@@ -4,6 +4,9 @@
 #include "sprite_state.h"
 #include "units.h"
 #include "rectangle.h"
+#include "projectile.h"
+
+#include <vector>
 
 struct Graphics;
 struct Sprite;
@@ -19,11 +22,8 @@ class PolarStar {
 			VerticalFacing vertical_facing(const SpriteTuple& tuple) const { return std::get<1>(tuple); }
 		};
 
-		class Projectile {
+		class Projectile : public ::Projectile {
 			private:
-
-				Rectangle collisionRectangle() const;
-
 				units::Game getX() const;
 				units::Game getY() const;
 
@@ -33,6 +33,8 @@ class PolarStar {
 				const VerticalFacing vertical_direction_;
 
 				const units::Game x_, y_;
+
+				bool alive_;
 
 				units::Game offset_;
 			public:
@@ -45,6 +47,11 @@ class PolarStar {
 				bool update(units::MS elapsed_time, const Map& map);
 
 				void draw(Graphics& graphics);
+
+				void collideWithEnemy() { alive_ = false; }
+
+				Rectangle collisionRectangle() const;
+				units::HP contactDamage() const { return 1; }
 		};
 
 		units::Game gun_x(HorizontalFacing horizontal_facing, units::Game player_x) const
@@ -78,6 +85,8 @@ class PolarStar {
 		void stopFire() {}
 
 		void updateProjectiles(units::MS elapsed_time_ms, const Map& map);
+
+		std::vector<std::shared_ptr< ::Projectile>> getProjectiles();
 };
 
 #endif // POLAR_STAR_H_

@@ -44,6 +44,16 @@ class Bat {
 					32, 0
 					);
 		}
+
+		Rectangle collisionRectangle() const {
+			return Rectangle(
+					x_, y_,
+					units::tileToGame(1), units::tileToGame(1)
+					);
+		}
+
+		void takeDamage(units::HP damage)
+		{ printf("%d of damage! collision occurred\n", damage); }
 };
 
 #endif // BAT_H_

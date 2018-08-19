@@ -15,6 +15,7 @@
 
 struct Graphics;
 struct Map;
+struct Projectile;
 
 class Player {
 	private:
@@ -162,6 +163,9 @@ class Player {
 
 		units::Game center_x() const { return x_ + units::kHalfTile; }
 		units::Game center_y() const { return y_ + units::kHalfTile; }
+
+		std::vector<std::shared_ptr<Projectile>> getProjectiles()
+		{ return polar_star_.getProjectiles(); }
 };
 
 #endif // PLAYER_H_
