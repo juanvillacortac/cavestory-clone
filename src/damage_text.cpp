@@ -6,7 +6,7 @@ namespace {
 	const units::MS kDamageTime = 2000;
 }
 
-DamageText::DamageText() : should_rise_(true), damage_(0), offset_y_(0), timer_(kDamageTime) {}
+DamageText::DamageText() : should_rise_(true), center_x_(0), center_y_(0), damage_(0), offset_y_(0), timer_(kDamageTime) {}
 
 void DamageText::setDamage(units::HP damage) {
 	should_rise_ = damage_ == 0;
@@ -18,6 +18,11 @@ void DamageText::setDamage(units::HP damage) {
 	timer_.reset();
 }
 
+void DamageText::setPosition(units::Game center_x, units::Game center_y) {
+	center_x_ = center_x;
+	center_y_ = center_y;
+}
+
 void DamageText::update(units::MS elapsed_time) {
 	if(timer_.expired()) {
 		damage_ = 0;
@@ -26,9 +31,9 @@ void DamageText::update(units::MS elapsed_time) {
 	}
 }
 
-void DamageText::draw(Graphics& graphics, units::Game center_x, units::Game center_y) {
+void DamageText::draw(Graphics& graphics) {
 	if(timer_.expired()) return;
 
 	NumberSpr::DamageNumber(graphics, damage_).
-		drawCentered(graphics, center_x, center_y + offset_y_);
+		drawCentered(graphics, center_x_, center_y_ + offset_y_);
 } 

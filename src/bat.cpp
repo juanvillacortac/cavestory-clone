@@ -50,6 +50,7 @@ void Bat::update(units::MS elapsed_time_ms, units::Game player_x) {
 	flight_angle_ += kAngularVelocity * elapsed_time_ms;
 
 	damage_text_.update(elapsed_time_ms);
+	damage_text_.setPosition(center_x(), center_y());
 
 	facing_ = x_ + units::kHalfTile > player_x ?
 		LEFT : RIGHT;
@@ -63,5 +64,5 @@ void Bat::update(units::MS elapsed_time_ms, units::Game player_x) {
 
 void Bat::draw(Graphics& graphics) {
 	sprites_.at(getSpriteState())->draw(graphics, x_, y_);
-	damage_text_.draw(graphics, center_x(), center_y());
+	damage_text_.draw(graphics);
 }

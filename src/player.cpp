@@ -90,6 +90,7 @@ void Player::update(units::MS elapsed_time_ms, const Map& map) {
 	health_.update();
 
 	damage_text_.update(elapsed_time_ms);
+	damage_text_.setPosition(center_x(), center_y());
 
 	updateX(elapsed_time_ms, map);
 	updateY(elapsed_time_ms, map);
@@ -109,7 +110,7 @@ void Player::draw(Graphics& graphics) {
 		sprites_[getSpriteState()]->draw(graphics, x_, y_);
 	}
 
-	damage_text_.draw(graphics, center_x(), center_y());
+	damage_text_.draw(graphics);
 };
 
 void Player::drawHUD(Graphics& graphics) {
