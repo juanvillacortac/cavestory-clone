@@ -14,7 +14,7 @@ namespace {
 }
 
 Bat::Bat(Graphics& graphics, units::Game x, units::Game y) :
-	center_y_(y),
+	flight_center_y_(y),
 	x_(x), y_(y),
 	flight_angle_(0.0f) {
 	initializeSprites(graphics);
@@ -49,16 +49,19 @@ units::HP Bat::contactDamage() const {
 void Bat::update(units::MS elapsed_time_ms, units::Game player_x) {
 	flight_angle_ += kAngularVelocity * elapsed_time_ms;
 
+	damage_text_.update(elapsed_time_ms);
+
 	facing_ = x_ + units::kHalfTile > player_x ?
 		LEFT : RIGHT;
 
-	y_ = center_y_ +
+	y_ = flight_center_y_ +
 		kFlightAmplitude *
 		units::Game(std::sin(units::degreesToRadians(flight_angle_)));
 
 	sprites_[getSpriteState()]->update();
 }
 
-void Bat::draw(Graphics& graphics) const {
+void Bat::draw(Graphics& graphics) {
 	sprites_.at(getSpriteState())->draw(graphics, x_, y_);
+	damage_text_.draw(graphics, center_x(), center_y());
 }

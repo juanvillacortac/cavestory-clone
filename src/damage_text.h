@@ -11,6 +11,8 @@ class DamageText {
 		units::HP damage_;
 		units::Game offset_y_;
 		Timer timer_;
+
+		bool should_rise_;
 	public:
 		DamageText();
 
