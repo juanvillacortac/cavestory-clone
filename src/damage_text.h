@@ -21,7 +21,7 @@ class DamageText {
 
 		void setDamage(units::HP damage);
 		void setPosition(units::Game center_x, units::Game center_y);
-		void update(units::MS elapsed_time);
+		bool update(units::MS elapsed_time);
 		void draw(Graphics& graphics);
 };
 

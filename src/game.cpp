@@ -34,7 +34,10 @@ void Game::eventLoop() {
 	SDL_Event event;
 
 	player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2), units::tileToGame(kScreenWidth / 2)));
+	damage_texts_.addDamageable(player_);
+
 	bat_.reset(new Bat(graphics, units::tileToGame(15), units::tileToGame((kScreenWidth / 2) - 3)));
+	damage_texts_.addDamageable(bat_);
 
 	map_.reset(Map::createTestMap(graphics));
 
@@ -118,6 +121,10 @@ void Game::eventLoop() {
 		if(input.wasKeyPressed(SDLK_r)) {
 			player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2),
 						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)));
+			damage_texts_.addDamageable(player_);
+			bat_.reset(new Bat(graphics, units::tileToGame(15),
+						units::tileToGame((kScreenWidth / 2) - 3)));
+			damage_texts_.addDamageable(bat_);
 		}
 
 		const units::MS current_time_ms = SDL_GetTicks();
@@ -137,19 +144,23 @@ void Game::eventLoop() {
 
 void Game::update(units::MS elapsed_time_ms) {
 	Timer::updateAll(elapsed_time_ms);
+	damage_texts_.update(elapsed_time_ms);
 	player_->update(elapsed_time_ms, *map_);
-	bat_->update(elapsed_time_ms, player_->center_x());
+	if(bat_) {
+		if(!bat_->update(elapsed_time_ms, player_->center_x()))
+			bat_.reset();
+	}
 
 	std::vector<std::shared_ptr<Projectile>> projectiles(player_->getProjectiles());
 	
 	for(size_t i = 0; i < projectiles.size(); i++) {
-		if(bat_->collisionRectangle().collideWith(projectiles[i]->collisionRectangle())) {
+		if(bat_ && bat_->collisionRectangle().collideWith(projectiles[i]->collisionRectangle())) {
 			bat_->takeDamage(projectiles[i]->contactDamage());
 			projectiles[i]->collideWithEnemy();
 		}
 	}
 
-	if(bat_->damageRectangle().collideWith(player_->damageRectangle()))
+	if(bat_ && bat_->damageRectangle().collideWith(player_->damageRectangle()))
 		player_->takeDamage(bat_->contactDamage());
 }
 
@@ -157,8 +168,10 @@ void Game::draw(Graphics& graphics) {
 	graphics.clear();
 
 	map_->drawBackground(graphics);
-	bat_->draw(graphics);
+	if(bat_)
+		bat_->draw(graphics);
 	player_->draw(graphics);
+	damage_texts_.draw(graphics);
 	map_->draw(graphics);
 
 	player_->drawHUD(graphics);

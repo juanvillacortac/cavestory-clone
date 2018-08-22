@@ -5,11 +5,12 @@
 #include "rectangle.h"
 #include "sprite_state.h"
 #include "damage_text.h"
+#include "damageable.h"
 
 struct Graphics;
 struct Sprite;
 
-class Bat {
+class Bat : public Damageable {
 	private:
 		typedef std::tuple<HorizontalFacing> SpriteTuple;
 
@@ -24,10 +25,14 @@ class Bat {
 
 		const units::Game flight_center_y_;
 
+		bool alive_;
+
 		units::Game x_, y_;
 
 		units::Game center_x() const { return x_ + units::kHalfTile; }
 		units::Game center_y() const { return y_ + units::kHalfTile; }
+
+		std::shared_ptr<DamageText> get_damage_text() { return damage_text_; };
 
 		units::Degrees flight_angle_;
 
@@ -35,13 +40,13 @@ class Bat {
 
 		std::map<SpriteState, std::shared_ptr<Sprite>> sprites_;
 
-		DamageText damage_text_;
+		std::shared_ptr<DamageText> damage_text_;
 	public:
 		Bat(Graphics& graphics, units::Game x, units::Game y);
 
 		units::HP contactDamage() const;
 
-		void update(units::MS elapsed_time_ms, units::Game player_x);
+		bool update(units::MS elapsed_time_ms, units::Game player_x);
 		void draw(Graphics& graphics);
 
 		Rectangle damageRectangle() const {
@@ -59,7 +64,7 @@ class Bat {
 		}
 
 		void takeDamage(units::HP damage)
-		{ damage_text_.setDamage(damage); }
+		{ damage_text_->setDamage(damage); alive_ = false;}
 };
 
 #endif // BAT_H_

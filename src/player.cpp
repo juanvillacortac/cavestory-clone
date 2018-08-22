@@ -77,6 +77,7 @@ Player::Player(Graphics& graphics, units::Game x, units::Game y) : x_(x), y_(y),
 	interacting_(false),
 	health_(graphics),
 	invincible_timer_(kInvincibleTime),
+	damage_text_(new DamageText()),
 	polar_star_(graphics)
 {
 	initializeSprites(graphics);
@@ -88,9 +89,6 @@ void Player::update(units::MS elapsed_time_ms, const Map& map) {
 	polar_star_.updateProjectiles(elapsed_time_ms, map);
 
 	health_.update();
-
-	damage_text_.update(elapsed_time_ms);
-	damage_text_.setPosition(center_x(), center_y());
 
 	updateX(elapsed_time_ms, map);
 	updateY(elapsed_time_ms, map);
@@ -110,7 +108,7 @@ void Player::draw(Graphics& graphics) {
 		sprites_[getSpriteState()]->draw(graphics, x_, y_);
 	}
 
-	damage_text_.draw(graphics);
+	damage_text_->draw(graphics);
 };
 
 void Player::drawHUD(Graphics& graphics) {
@@ -291,7 +289,7 @@ void Player::takeDamage(units::HP damage) {
 	if(invincible_timer_.active()) return;
 
 	health_.takeDamage(damage);
-	damage_text_.setDamage(damage);
+	damage_text_->setDamage(damage);
 
 	velocity_y_ = std::min(velocity_y_, -kShortJumpSpeed);
 

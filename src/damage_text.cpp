@@ -23,12 +23,14 @@ void DamageText::setPosition(units::Game center_x, units::Game center_y) {
 	center_y_ = center_y;
 }
 
-void DamageText::update(units::MS elapsed_time) {
+bool DamageText::update(units::MS elapsed_time) {
 	if(timer_.expired()) {
 		damage_ = 0;
 	} else if(should_rise_) {
 		offset_y_ = std::max(-units::tileToGame(1), offset_y_ + kVelocity * elapsed_time);
 	}
+
+	return !timer_.expired();
 }
 
 void DamageText::draw(Graphics& graphics) {

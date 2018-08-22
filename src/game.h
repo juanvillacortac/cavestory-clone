@@ -2,6 +2,7 @@
 #define GAME_H_
 
 #include "units.h"
+#include "damage_texts.h"
 
 #include <memory>
 
@@ -16,9 +17,11 @@ class Game {
 		void update(units::MS elapsed_time_ms);
 		void draw(Graphics& graphics);
 
-		std::unique_ptr<Player> player_;
-		std::unique_ptr<Bat> bat_;
+		std::shared_ptr<Player> player_;
+		std::shared_ptr<Bat> bat_;
 		std::unique_ptr<Map> map_;
+
+		DamageTexts damage_texts_;
 	public:
 		Game();
 		~Game();

@@ -8,6 +8,7 @@
 #include "varying_width_spr.h"
 #include "number_spr.h"
 #include "damage_text.h"
+#include "damageable.h"
 #include "timer.h"
 #include "polar_star.h"
 
@@ -17,7 +18,7 @@ struct Graphics;
 struct Map;
 struct Projectile;
 
-class Player {
+class Player : public Damageable {
 	private:
 		enum MotionType {
 			FIRST_MOTION_TYPE,
@@ -102,8 +103,10 @@ class Player {
 
 		Health health_;
 		Timer invincible_timer_;
-		DamageText damage_text_;
 		PolarStar polar_star_;
+
+		std::shared_ptr<DamageText> damage_text_;
+
 
 		WalkingAnimation walking_animation_;
 
@@ -163,6 +166,8 @@ class Player {
 
 		units::Game center_x() const { return x_ + units::kHalfTile; }
 		units::Game center_y() const { return y_ + units::kHalfTile; }
+
+		std::shared_ptr<DamageText> get_damage_text() { return damage_text_; };
 
 		std::vector<std::shared_ptr<Projectile>> getProjectiles()
 		{ return polar_star_.getProjectiles(); }
