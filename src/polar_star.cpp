@@ -208,6 +208,10 @@ bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map) {
 		}
 	}
 
+	if(getX() < 0 || getY() < 0) {
+		return !alive_;
+	}
+
 	return alive_ && offset_ < kProjectileMaxOffset;
 }
 
