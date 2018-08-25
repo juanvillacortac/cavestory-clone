@@ -7,6 +7,8 @@
 #include "map.h"
 
 #include <SDL/SDL.h>
+#include <stdlib.h>
+#include <time.h>
 
 namespace {
 	const units::FPS kFps = 60;
@@ -17,6 +19,8 @@ units::Tile Game::kScreenWidth = 20;
 units::Tile Game::kScreenHeight = 15;
 
 Game::Game() {
+	srand(static_cast<unsigned int>(time(NULL)));
+
 	SDL_Init(SDL_INIT_EVERYTHING);
 
 	eventLoop();
@@ -33,13 +37,28 @@ void Game::eventLoop() {
 	Graphics graphics;
 	SDL_Event event;
 
-	player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2), units::tileToGame(kScreenWidth / 2)));
+	player_.reset(new Player(graphics,
+				units::tileToGame(kScreenWidth / 2),
+				units::tileToGame(kScreenWidth / 2)
+				));
+	
 	damage_texts_.addDamageable(player_);
 
-	bat_.reset(new Bat(graphics, units::tileToGame(15), units::tileToGame((kScreenWidth / 2) - 3)));
+	bat_.reset(new Bat(
+				graphics,
+				units::tileToGame(15),
+				units::tileToGame((kScreenWidth / 2) - 3)
+				));
+
 	damage_texts_.addDamageable(bat_);
 
 	map_.reset(Map::createTestMap(graphics));
+
+	particle_.reset(new HeadBumpParticle(
+				graphics,
+				units::tileToGame(kScreenWidth) / 2,
+				units::tileToGame(kScreenHeight) / 2
+				));
 
 	units::MS last_update_time = SDL_GetTicks();
 
@@ -106,24 +125,31 @@ void Game::eventLoop() {
 		// Player Fire
 		if (input.wasKeyPressed(SDLK_w)) {
 			player_->startFire();
-		} else if (input.wasKeyReleased(SDLK_w)) {
+		}
+		else if (input.wasKeyReleased(SDLK_w)) {
 			player_->stopFire();
 		}
 
 		// Fullscreen
 		if(input.wasKeyPressed(SDLK_F4)) {
 			graphics.setVideo();
-			player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2),
-						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)));
+			player_.reset(new Player(
+						graphics,
+						units::tileToGame(kScreenWidth / 2),
+						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)
+						));
 		}
 
-		// Reset player
+		// Reset game
 		if(input.wasKeyPressed(SDLK_r)) {
 			player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2),
-						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)));
+						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)
+						));
 			damage_texts_.addDamageable(player_);
-			bat_.reset(new Bat(graphics, units::tileToGame(15),
-						units::tileToGame((kScreenWidth / 2) - 3)));
+			bat_.reset(new Bat(
+						graphics, units::tileToGame(15),
+						units::tileToGame((kScreenWidth / 2) - 3)
+					  ));
 			damage_texts_.addDamageable(bat_);
 		}
 
@@ -145,6 +171,7 @@ void Game::eventLoop() {
 void Game::update(units::MS elapsed_time_ms) {
 	Timer::updateAll(elapsed_time_ms);
 	damage_texts_.update(elapsed_time_ms);
+	particle_->update(elapsed_time_ms);
 	player_->update(elapsed_time_ms, *map_);
 	if(bat_) {
 		if(!bat_->update(elapsed_time_ms, player_->center_x()))
@@ -173,6 +200,7 @@ void Game::draw(Graphics& graphics) {
 	player_->draw(graphics);
 	damage_texts_.draw(graphics);
 	map_->draw(graphics);
+	particle_->draw(graphics);
 
 	player_->drawHUD(graphics);
 

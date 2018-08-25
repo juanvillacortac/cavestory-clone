@@ -3,6 +3,7 @@
 
 #include "units.h"
 #include "damage_texts.h"
+#include "head_bump.h"
 
 #include <memory>
 
@@ -20,6 +21,7 @@ class Game {
 		std::shared_ptr<Player> player_;
 		std::shared_ptr<Bat> bat_;
 		std::unique_ptr<Map> map_;
+		std::unique_ptr<HeadBumpParticle> particle_;
 
 		DamageTexts damage_texts_;
 	public:

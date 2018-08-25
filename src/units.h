@@ -31,6 +31,18 @@ namespace units {
 		}
 	}
 
+	inline double degreesToRadians(Degrees degrees) {
+		return degrees * kPi / 180.0f;
+	}
+
+	inline Game cos(Degrees degrees) {
+		return static_cast<Game>(std::cos(degreesToRadians(degrees)));
+	}
+
+	inline Game sin(Degrees degrees) {
+		return static_cast<Game>(std::sin(degreesToRadians(degrees)));
+	}
+
 	// Game to pixel
 	inline Pixel gameToPixel(Game game) {
 		return config::getGraphicsQuality() == config::HIGH_QUALITY ?
@@ -51,10 +63,6 @@ namespace units {
 	// Tile to pixel
 	inline Pixel tileToPixel(Tile tile) {
 		return gameToPixel(tileToGame(tile));
-	}
-
-	inline double degreesToRadians(Degrees degrees) {
-		return degrees * kPi / 180.0f;
 	}
 
 	const Game kHalfTile = tileToGame(1) / 2.0f;
