@@ -3,7 +3,7 @@
 
 #include "units.h"
 #include "damage_texts.h"
-#include "head_bump.h"
+#include "particle_system.h"
 
 #include <memory>
 
@@ -15,13 +15,13 @@ struct Map;
 class Game {
 	private:
 		void eventLoop();
-		void update(units::MS elapsed_time_ms);
+		void update(units::MS elapsed_time_ms, Graphics& graphics);
 		void draw(Graphics& graphics);
 
 		std::shared_ptr<Player> player_;
 		std::shared_ptr<Bat> bat_;
 		std::unique_ptr<Map> map_;
-		std::unique_ptr<HeadBumpParticle> particle_;
+		ParticleSystem particle_system_;
 
 		DamageTexts damage_texts_;
 	public:

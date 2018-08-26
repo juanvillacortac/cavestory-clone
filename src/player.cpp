@@ -4,6 +4,8 @@
 #include "game.h"
 #include "map.h"
 #include "rectangle.h"
+#include "particle_system.h"
+#include "head_bump.h"
 
 #include <cmath>
 
@@ -93,7 +95,7 @@ Player::Player(Graphics& graphics, units::Game x, units::Game y) : x_(x), y_(y),
 	initializeSprites(graphics);
 }
 
-void Player::update(units::MS elapsed_time_ms, const Map& map) {
+void Player::update(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools) {
 	walking_animation_.update();
 
 	polar_star_.updateProjectiles(elapsed_time_ms, map);
@@ -101,7 +103,7 @@ void Player::update(units::MS elapsed_time_ms, const Map& map) {
 	health_.update();
 
 	updateX(elapsed_time_ms, map);
-	updateY(elapsed_time_ms, map);
+	updateY(elapsed_time_ms, map, particle_tools);
 
 	// TODO: remove this shitty hack
 	/*if(y_ > 320) {
@@ -423,7 +425,7 @@ void Player::updateX(units::MS elapsed_time_ms, const Map& map) {
 	}
 }
 
-void Player::updateY(units::MS elapsed_time_ms, const Map& map) {
+void Player::updateY(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools) {
 	// Update velocity
 	const units::Acceleration gravity = jump_active_ && velocity_y_ < 0.0f ? kJumpGravity : kGravity;
 
@@ -451,6 +453,13 @@ void Player::updateY(units::MS elapsed_time_ms, const Map& map) {
 
 		if(info.collided) {
 			y_ = units::tileToGame(info.row) + kCollisionYHeight;
+
+			particle_tools.system.addNewParticle(std::shared_ptr<Particle>(
+						new HeadBumpParticle(
+							particle_tools.graphics,
+							center_x(),
+							y_ + kCollisionYTop)
+						));
 		}
 	} else {
 		// Check collision in the direction of delta
@@ -458,7 +467,15 @@ void Player::updateY(units::MS elapsed_time_ms, const Map& map) {
 
 		// React to collision
 		if(info.collided) {
-			y_ = units::tileToGame(info.row) + kCollisionY.height();
+			y_ = units::tileToGame(info.row) + kCollisionYHeight;
+
+			particle_tools.system.addNewParticle(std::shared_ptr<Particle>(
+						new HeadBumpParticle(
+							particle_tools.graphics,
+							center_x(),
+							y_ + kCollisionYTop)
+						));
+
 			velocity_y_ = 0.0f;
 		} else {
 			y_ += delta;

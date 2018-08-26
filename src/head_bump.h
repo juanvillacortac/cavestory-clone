@@ -1,14 +1,15 @@
 #ifndef HEAD_BUMP_H_
 #define HEAD_BUMP_H_
 
-#include "polar_vector.h" 
+#include "particle.h"
+#include "polar_vector.h"
 #include "units.h"
 #include "sprite.h"
 #include "timer.h"
 
 struct Graphics;
 
-class HeadBumpParticle {
+class HeadBumpParticle : public Particle {
 	private:
 		const units::Game center_x_, center_y_;
 

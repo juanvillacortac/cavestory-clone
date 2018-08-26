@@ -17,6 +17,7 @@
 struct Graphics;
 struct Map;
 struct Projectile;
+struct ParticleTools;
 
 class Player : public Damageable {
 	private:
@@ -122,7 +123,7 @@ class Player : public Damageable {
 		Rectangle rightCollision(units::Game delta) const;
 
 		void updateX(units::MS elapsed_time_ms, const Map& map);
-		void updateY(units::MS elapsed_time_ms, const Map& map);
+		void updateY(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools);
 
 		units::Game x_, y_;
 
@@ -141,7 +142,7 @@ class Player : public Damageable {
 	public:
 		Player(Graphics& graphics, units::Game x, units::Game y);
 
-		void update(units::MS elapsed_time_ms, const Map& map);
+		void update(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools);
 		void draw(Graphics& graphics);
 
 		void startMovingLeft();
