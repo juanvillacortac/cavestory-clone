@@ -1,6 +1,9 @@
 #include "polar_star.h"
 #include "sprite.h"
 #include "map.h"
+#include "particle_system.h"
+#include "projectile_star_particle.h"
+#include "projectile_wall_particle.h"
 
 namespace {
 	const int kPolarStarIndex = 2; // 0-based indexing
@@ -41,14 +44,14 @@ PolarStar::PolarStar(Graphics& graphics) {
 	initializeSprites(graphics);
 }
 
-void PolarStar::updateProjectiles(units::MS elapsed_time_ms, const Map& map) {
-	if (projectile_a_) {
-		if (!projectile_a_->update(elapsed_time_ms, map)) {
+void PolarStar::updateProjectiles(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools) {
+	if(projectile_a_) {
+		if(!projectile_a_->update(elapsed_time_ms, map, particle_tools)) {
 			projectile_a_.reset();
 		}
 	}
-	if (projectile_b_) {
-		if (!projectile_b_->update(elapsed_time_ms, map)) {
+	if(projectile_b_) {
+		if(!projectile_b_->update(elapsed_time_ms, map, particle_tools)) {
 			projectile_b_.reset();
 		}
 	}
@@ -88,7 +91,8 @@ units::Game PolarStar::gun_y(VerticalFacing vertical_facing, bool gun_up, units:
 void PolarStar::startFire(units::Game player_x, units::Game player_y,
 		HorizontalFacing horizontal_facing,
 		VerticalFacing vertical_facing,
-		bool gun_up) {
+		bool gun_up,
+		ParticleTools& particle_tools) {
 	if (projectile_a_ && projectile_b_) return;
 
 	units::Game bullet_x = gun_x(horizontal_facing, player_x) - units::kHalfTile;
@@ -127,12 +131,16 @@ void PolarStar::startFire(units::Game player_x, units::Game player_y,
 		projectile_a_.reset(new Projectile(
 					vertical_facing == HORIZONTAL ? horizontal_projectile_ : vertical_projectile_,
 					horizontal_facing, vertical_facing,
-					bullet_x, bullet_y));
+					bullet_x, bullet_y,
+					particle_tools
+					));
 	} else if (!projectile_b_) {
 		projectile_b_.reset(new Projectile(
 					vertical_facing == HORIZONTAL ? horizontal_projectile_ : vertical_projectile_,
 					horizontal_facing, vertical_facing,
-					bullet_x, bullet_y));
+					bullet_x, bullet_y,
+					particle_tools
+					));
 	}
 }
 
@@ -187,16 +195,22 @@ void PolarStar::initializeSprite(Graphics& graphics, const SpriteState& sprite_s
 PolarStar::Projectile::Projectile(std::shared_ptr<Sprite> sprite,
 		HorizontalFacing horizontal_direction,
 		VerticalFacing vertical_direction,
-		units::Game x, units::Game y) :
+		units::Game x, units::Game y,
+		ParticleTools& particle_tools) :
 	sprite_(sprite),
 	horizontal_direction_(horizontal_direction),
 	vertical_direction_(vertical_direction),
 	x_(x), y_(y),
 	offset_(0),
 	alive_(true)
-{}
+{
+	particle_tools.system.addNewParticle(std::shared_ptr<Particle>(
+				new ProjectileStarParticle(
+					particle_tools.graphics, x, y
+					)));
+}
 
-bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map) {
+bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools) {
 	offset_ += kProjectileSpeed * elapsed_time_ms;
 
 	std::vector<Map::CollisionTile> colliding_tiles(
@@ -204,6 +218,38 @@ bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map) {
 
 	for(size_t i = 0; i < colliding_tiles.size(); i++) {
 		if(colliding_tiles[i].tile_type == Map::WALL_TILE) {
+			const Rectangle tile_rectangle(
+					units::tileToGame(colliding_tiles[i].col),
+					units::tileToGame(colliding_tiles[i].row),
+					units::tileToGame(1), units::tileToGame(1));
+
+			units::Game particle_x, particle_y;
+
+			if(vertical_direction_ == HORIZONTAL) {
+				if(horizontal_direction_ == LEFT) {
+					particle_x = tile_rectangle.right();
+				} else {
+					particle_x = tile_rectangle.left();
+				}
+				particle_x -= units::kHalfTile;
+				particle_y = getY();
+			} else {
+				if(vertical_direction_ == UP) {
+					particle_y = tile_rectangle.bottom();
+				} else {
+					particle_y = tile_rectangle.top();
+				}
+				particle_y -= units::kHalfTile;
+				particle_x = getX();
+			}
+
+			particle_tools.system.addNewParticle(std::shared_ptr<Particle>(
+					new ProjectileWallParticle(
+						particle_tools.graphics,
+						particle_x,
+						particle_y
+					)));
+
 			return false;
 		}
 	}
@@ -212,7 +258,20 @@ bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map) {
 		return !alive_;
 	}
 
-	return alive_ && offset_ < kProjectileMaxOffset;
+	if(!alive_) {
+		return false;
+	} else if(offset_ >= kProjectileMaxOffset) {
+		particle_tools.system.addNewParticle(std::shared_ptr<Particle>(
+					new ProjectileStarParticle(
+						particle_tools.graphics,
+						getX(),
+						getY()
+						)
+					));
+		return false;
+	} else {
+		return true;
+	}
 }
 
 Rectangle PolarStar::Projectile::collisionRectangle() const {

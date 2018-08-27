@@ -98,7 +98,7 @@ Player::Player(Graphics& graphics, units::Game x, units::Game y) : x_(x), y_(y),
 void Player::update(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools) {
 	walking_animation_.update();
 
-	polar_star_.updateProjectiles(elapsed_time_ms, map);
+	polar_star_.updateProjectiles(elapsed_time_ms, map, particle_tools);
 
 	health_.update();
 
@@ -290,8 +290,8 @@ void Player::stopJump() {
 	jump_active_ = false;
 }
 
-void Player::startFire() {
-	polar_star_.startFire(x_, y_, horizontal_facing_, vertical_facing(), gun_up());
+void Player::startFire(ParticleTools& particle_tools) {
+	polar_star_.startFire(x_, y_, horizontal_facing_, vertical_facing(), gun_up(), particle_tools);
 }
 void Player::stopFire() {
 	polar_star_.stopFire();

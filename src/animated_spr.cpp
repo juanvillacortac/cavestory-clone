@@ -9,7 +9,8 @@ Animated_spr::Animated_spr(
 	Sprite(graphics, file_name, source_x, source_y, width, height),
 	frame_timer_(1000 / fps),
 	frames_num_(frames_num),
-	current_frame_(0)
+	current_frame_(0),
+	num_completed_loops_(0)
 {
 }
 
@@ -25,6 +26,7 @@ void Animated_spr::update() {
 		} else {
 			source_rect_.x -= source_rect_.w * (frames_num_ - 1);
 			current_frame_ = 0;
+			num_completed_loops_++;
 		}
 	}
 }

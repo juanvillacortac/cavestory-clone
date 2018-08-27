@@ -118,7 +118,11 @@ void Game::eventLoop() {
 
 		// Player Fire
 		if (input.wasKeyPressed(SDLK_w)) {
-			player_->startFire();
+			ParticleTools particle_tools = {
+				particle_system_, graphics
+			};
+
+			player_->startFire(particle_tools);
 		}
 		else if (input.wasKeyReleased(SDLK_w)) {
 			player_->stopFire();
@@ -132,6 +136,7 @@ void Game::eventLoop() {
 						units::tileToGame(kScreenWidth / 2),
 						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)
 						));
+			damage_texts_.addDamageable(player_);
 		}
 
 		// Reset game

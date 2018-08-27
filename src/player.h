@@ -156,7 +156,7 @@ class Player : public Damageable {
 		void lookDown();
 		void lookHorizontal();
 
-		void startFire();
+		void startFire(ParticleTools& particle_tools);
 		void stopFire();
 
 		void takeDamage(units::HP damage);
