@@ -29,9 +29,6 @@ class Bat : public Damageable {
 
 		units::Game x_, y_;
 
-		units::Game center_x() const { return x_ + units::kHalfTile; }
-		units::Game center_y() const { return y_ + units::kHalfTile; }
-
 		std::shared_ptr<DamageText> get_damage_text() { return damage_text_; };
 
 		units::Degrees flight_angle_;
@@ -65,6 +62,9 @@ class Bat : public Damageable {
 
 		void takeDamage(units::HP damage)
 		{ damage_text_->setDamage(damage); alive_ = false;}
+
+		units::Game center_x() const { return x_ + units::kHalfTile; }
+		units::Game center_y() const { return y_ + units::kHalfTile; }
 };
 
 #endif // BAT_H_

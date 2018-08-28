@@ -454,7 +454,7 @@ void Player::updateY(units::MS elapsed_time_ms, const Map& map, ParticleTools& p
 		if(info.collided) {
 			y_ = units::tileToGame(info.row) + kCollisionYHeight;
 
-			particle_tools.system.addNewParticle(std::shared_ptr<Particle>(
+			particle_tools.front_system.addNewParticle(std::shared_ptr<Particle>(
 						new HeadBumpParticle(
 							particle_tools.graphics,
 							center_x(),
@@ -469,7 +469,7 @@ void Player::updateY(units::MS elapsed_time_ms, const Map& map, ParticleTools& p
 		if(info.collided) {
 			y_ = units::tileToGame(info.row) + kCollisionYHeight;
 
-			particle_tools.system.addNewParticle(std::shared_ptr<Particle>(
+			particle_tools.front_system.addNewParticle(std::shared_ptr<Particle>(
 						new HeadBumpParticle(
 							particle_tools.graphics,
 							center_x(),

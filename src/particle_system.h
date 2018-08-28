@@ -21,7 +21,9 @@ class ParticleSystem {
 
 class ParticleTools {
 	public:
-		ParticleSystem& system;
+		ParticleSystem& front_system;
+		ParticleSystem& entity_system;
+
 		Graphics& graphics;
 };
 

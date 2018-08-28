@@ -5,6 +5,7 @@
 #include "player.h"
 #include "bat.h"
 #include "map.h"
+#include "death_cloud_particle.h"
 
 #include <SDL/SDL.h>
 #include <stdlib.h>
@@ -119,7 +120,9 @@ void Game::eventLoop() {
 		// Player Fire
 		if (input.wasKeyPressed(SDLK_w)) {
 			ParticleTools particle_tools = {
-				particle_system_, graphics
+				front_particle_system_,
+				entity_particle_system_,
+				graphics
 			};
 
 			player_->startFire(particle_tools);
@@ -172,14 +175,24 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 
 	damage_texts_.update(elapsed_time_ms);
 
-	particle_system_.update(elapsed_time_ms);
-	ParticleTools particle_tools = { particle_system_, graphics };
+	front_particle_system_.update(elapsed_time_ms);
+	entity_particle_system_.update(elapsed_time_ms);
+
+	ParticleTools particle_tools = {
+		front_particle_system_,
+		entity_particle_system_,
+		graphics
+	};
 
 	player_->update(elapsed_time_ms, *map_, particle_tools);
 
 	if(bat_) {
-		if(!bat_->update(elapsed_time_ms, player_->center_x()))
+		if(!bat_->update(elapsed_time_ms, player_->center_x())) {
+			DeathCloudParticle::createRandomDeathClouds(particle_tools,
+					bat_->center_x(), bat_->center_y(),
+					3);
 			bat_.reset();
+		}
 	}
 
 	std::vector<std::shared_ptr<Projectile>> projectiles(player_->getProjectiles());
@@ -201,10 +214,11 @@ void Game::draw(Graphics& graphics) {
 	map_->drawBackground(graphics);
 	if(bat_)
 		bat_->draw(graphics);
+	entity_particle_system_.draw(graphics);
 	player_->draw(graphics);
 	damage_texts_.draw(graphics);
 	map_->draw(graphics);
-	particle_system_.draw(graphics);
+	front_particle_system_.draw(graphics);
 
 	player_->drawHUD(graphics);
 
