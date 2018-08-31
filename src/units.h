@@ -21,6 +21,7 @@ namespace units {
 	typedef float AngularVelocity; // Degrees / MS.
 
 	typedef int HP;
+	typedef unsigned int GunLevel;
 
 	namespace {
 		const Game kTileSize = 32.0f;

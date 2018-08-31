@@ -11,6 +11,7 @@ struct Graphics;
 struct Player;
 struct Bat;
 struct Map;
+struct ExperienceHUD;
 
 class Game {
 	private:
@@ -21,6 +22,8 @@ class Game {
 		std::shared_ptr<Player> player_;
 		std::shared_ptr<Bat> bat_;
 		std::unique_ptr<Map> map_;
+		std::unique_ptr<ExperienceHUD> hud_;
+
 		ParticleSystem front_particle_system_, entity_particle_system_;
 
 		DamageTexts damage_texts_;
