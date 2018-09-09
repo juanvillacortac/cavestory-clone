@@ -67,8 +67,6 @@ class Player : public Damageable {
 
 		class Health {
 			private:
-				units::Game fillOffset(units::HP health) const;
-
 				units::HP damage_;
 				Timer damage_timer_;
 

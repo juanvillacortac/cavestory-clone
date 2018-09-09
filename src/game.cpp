@@ -129,6 +129,7 @@ void Game::eventLoop() {
 			};
 
 			player_->startFire(particle_tools);
+			hud_->activateFlash();
 		}
 		else if (input.wasKeyReleased(SDLK_w)) {
 			player_->stopFire();
@@ -225,7 +226,7 @@ void Game::draw(Graphics& graphics) {
 
 	player_->drawHUD(graphics);
 
-	hud_->draw(graphics, 1);
+	hud_->draw(graphics, 1, 10, 10);
 
 	graphics.flip();
 }

@@ -21,6 +21,7 @@ namespace units {
 	typedef float AngularVelocity; // Degrees / MS.
 
 	typedef int HP;
+	typedef int GunExperience;
 	typedef unsigned int GunLevel;
 
 	namespace {
