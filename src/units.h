@@ -23,6 +23,7 @@ namespace units {
 	typedef int HP;
 	typedef int GunExperience;
 	typedef unsigned int GunLevel;
+	const GunLevel kMaxGunLevel = 3;
 
 	namespace {
 		const Game kTileSize = 32.0f;

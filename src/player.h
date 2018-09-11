@@ -11,6 +11,7 @@
 #include "damageable.h"
 #include "timer.h"
 #include "polar_star.h"
+#include "hud_experience.h"
 
 #include <cassert>
 
@@ -103,6 +104,8 @@ class Player : public Damageable {
 		Health health_;
 		Timer invincible_timer_;
 		PolarStar polar_star_;
+
+		ExperienceHUD gun_experience_hud_;
 
 		std::shared_ptr<DamageText> damage_text_;
 

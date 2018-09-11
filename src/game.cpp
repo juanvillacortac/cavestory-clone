@@ -6,7 +6,6 @@
 #include "bat.h"
 #include "map.h"
 #include "death_cloud_particle.h"
-#include "hud_experience.h"
 
 #include <SDL/SDL.h>
 #include <stdlib.h>
@@ -55,8 +54,6 @@ void Game::eventLoop() {
 	damage_texts_.addDamageable(bat_);
 
 	map_.reset(Map::createTestMap(graphics));
-
-	hud_.reset(new ExperienceHUD(graphics));
 
 	units::MS last_update_time = SDL_GetTicks();
 
@@ -129,7 +126,6 @@ void Game::eventLoop() {
 			};
 
 			player_->startFire(particle_tools);
-			hud_->activateFlash();
 		}
 		else if (input.wasKeyReleased(SDLK_w)) {
 			player_->stopFire();
@@ -225,8 +221,6 @@ void Game::draw(Graphics& graphics) {
 	front_particle_system_.draw(graphics);
 
 	player_->drawHUD(graphics);
-
-	hud_->draw(graphics, 1, 10, 10);
 
 	graphics.flip();
 }

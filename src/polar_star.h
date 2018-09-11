@@ -10,6 +10,7 @@
 
 struct Graphics;
 struct Sprite;
+struct ExperienceHUD;
 struct Map;
 struct ParticleTools;
 
@@ -35,6 +36,8 @@ class PolarStar {
 
 				const units::Game x_, y_;
 
+				const units::GunLevel gun_level_;
+
 				bool alive_;
 
 				units::Game offset_;
@@ -42,7 +45,8 @@ class PolarStar {
 				Projectile(std::shared_ptr<Sprite> sprite,
 						HorizontalFacing horizontal_direction,
 						VerticalFacing vertical_direction,
-						units::Game x, units::Game y, 
+						units::Game x, units::Game y,
+						units::GunLevel gun_level,
 						ParticleTools& particle_tools);
 
 				// Returns true if |this| are alive.
@@ -53,7 +57,7 @@ class PolarStar {
 				void collideWithEnemy() { alive_ = false; }
 
 				Rectangle collisionRectangle() const;
-				units::HP contactDamage() const { return 1; }
+				units::HP contactDamage() const;
 		};
 
 		units::Game gun_x(HorizontalFacing horizontal_facing, units::Game player_x) const
@@ -66,8 +70,10 @@ class PolarStar {
 
 		std::map<SpriteState, std::shared_ptr<Sprite> > sprite_map_;
 
-		std::shared_ptr<Sprite> horizontal_projectile_;
-		std::shared_ptr<Sprite> vertical_projectile_;
+		units::GunLevel current_level_;
+
+		std::shared_ptr<Sprite> horizontal_projectiles_[units::kMaxGunLevel];
+		std::shared_ptr<Sprite> vertical_projectiles_[units::kMaxGunLevel];
 
 		std::shared_ptr<Projectile> projectile_a_;
 		std::shared_ptr<Projectile> projectile_b_;
@@ -88,6 +94,8 @@ class PolarStar {
 		void stopFire() {}
 
 		void updateProjectiles(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools);
+
+		void drawHUD(Graphics& graphics, ExperienceHUD& hud);
 
 		std::vector<std::shared_ptr< ::Projectile>> getProjectiles();
 };
