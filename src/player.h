@@ -5,6 +5,8 @@
 #include "sprite_state.h"
 #include "rectangle.h"
 #include "units.h"
+#include "kinematics.h"
+#include "map_collidable.h"
 #include "varying_width_spr.h"
 #include "number_spr.h"
 #include "damage_text.h"
@@ -20,7 +22,8 @@ struct Map;
 struct Projectile;
 struct ParticleTools;
 
-class Player : public Damageable {
+class Player : public Damageable,
+	private MapCollidable {
 	private:
 		enum MotionType {
 			FIRST_MOTION_TYPE,
@@ -118,17 +121,15 @@ class Player : public Damageable {
 		void initializeSprite(Graphics& graphics, const SpriteState& sprite_state);
 		SpriteState getSpriteState();
 
-		Rectangle topCollision(units::Game delta) const;
-		Rectangle bottomCollision(units::Game delta) const;
-		Rectangle leftCollision(units::Game delta) const;
-		Rectangle rightCollision(units::Game delta) const;
-
 		void updateX(units::MS elapsed_time_ms, const Map& map);
-		void updateY(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools);
+		void updateY(units::MS elapsed_time_ms, const Map& map);
 
-		units::Game x_, y_;
+		void onCollision(MapCollidable::SideType side, bool is_delta_direction);
+		void onDelta(MapCollidable::SideType side);
 
-		units::Velocity velocity_x_, velocity_y_;
+		ParticleTools& particle_tools_;
+
+		Kinematics kinematics_x_, kinematics_y_;
 		int acceleration_x_;
 
 		HorizontalFacing horizontal_facing_;
@@ -141,9 +142,9 @@ class Player : public Damageable {
 
 		std::unique_ptr<NumberSpr> health_number_sprite_;
 	public:
-		Player(Graphics& graphics, units::Game x, units::Game y);
+		Player(Graphics& graphics, ParticleTools& particle_tools, units::Game x, units::Game y);
 
-		void update(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools);
+		void update(units::MS elapsed_time_ms, const Map& map);
 		void draw(Graphics& graphics);
 
 		void startMovingLeft();
@@ -157,7 +158,7 @@ class Player : public Damageable {
 		void lookDown();
 		void lookHorizontal();
 
-		void startFire(ParticleTools& particle_tools);
+		void startFire();
 		void stopFire();
 
 		void takeDamage(units::HP damage);
@@ -166,8 +167,8 @@ class Player : public Damageable {
 
 		Rectangle damageRectangle() const;
 
-		units::Game center_x() const { return x_ + units::kHalfTile; }
-		units::Game center_y() const { return y_ + units::kHalfTile; }
+		units::Game center_x() const { return kinematics_x_.position + units::kHalfTile; }
+		units::Game center_y() const { return kinematics_y_.position + units::kHalfTile; }
 
 		std::shared_ptr<DamageText> get_damage_text() { return damage_text_; };
 

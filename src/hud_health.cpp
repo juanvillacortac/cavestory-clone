@@ -11,7 +11,7 @@ namespace {
 	const units::Game kHealthBarSourceWidth = units::tileToGame(4);
 	const units::Game kHealthBarSourceHeight = units::kHalfTile;
 
-	const units::Game kHealthFillX = 5*units::kHalfTile;
+	const units::Game kHealthFillX = 5 * units::kHalfTile;
 	const units::Game kHealthFillY = units::tileToGame(2);
 
 	const units::Game kMaxFillWidth = 5 * units::kHalfTile - 2.0f;

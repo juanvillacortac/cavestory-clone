@@ -38,7 +38,15 @@ void Game::eventLoop() {
 	Graphics graphics;
 	SDL_Event event;
 
-	player_.reset(new Player(graphics,
+	ParticleTools particle_tools = {
+		front_particle_system_,
+		entity_particle_system_,
+		graphics
+	};
+
+	player_.reset(new Player(
+				graphics,
+				particle_tools,
 				units::tileToGame(kScreenWidth / 2),
 				units::tileToGame(kScreenWidth / 2)
 				));
@@ -119,13 +127,7 @@ void Game::eventLoop() {
 
 		// Player Fire
 		if (input.wasKeyPressed(SDLK_w)) {
-			ParticleTools particle_tools = {
-				front_particle_system_,
-				entity_particle_system_,
-				graphics
-			};
-
-			player_->startFire(particle_tools);
+			player_->startFire();
 		}
 		else if (input.wasKeyReleased(SDLK_w)) {
 			player_->stopFire();
@@ -136,6 +138,7 @@ void Game::eventLoop() {
 			graphics.setVideo();
 			player_.reset(new Player(
 						graphics,
+						particle_tools,
 						units::tileToGame(kScreenWidth / 2),
 						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)
 						));
@@ -144,7 +147,10 @@ void Game::eventLoop() {
 
 		// Reset game
 		if(input.wasKeyPressed(SDLK_r)) {
-			player_.reset(new Player(graphics, units::tileToGame(kScreenWidth / 2),
+			player_.reset(new Player(
+						graphics,
+						particle_tools,
+						units::tileToGame(kScreenWidth / 2),
 						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)
 						));
 			damage_texts_.addDamageable(player_);
@@ -178,16 +184,15 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 	front_particle_system_.update(elapsed_time_ms);
 	entity_particle_system_.update(elapsed_time_ms);
 
-	ParticleTools particle_tools = {
-		front_particle_system_,
-		entity_particle_system_,
-		graphics
-	};
-
-	player_->update(elapsed_time_ms, *map_, particle_tools);
+	player_->update(elapsed_time_ms, *map_);
 
 	if(bat_) {
 		if(!bat_->update(elapsed_time_ms, player_->center_x())) {
+			ParticleTools particle_tools = {
+				front_particle_system_,
+				entity_particle_system_,
+				graphics
+			};
 			DeathCloudParticle::createRandomDeathClouds(particle_tools,
 					bat_->center_x(), bat_->center_y(),
 					3);
