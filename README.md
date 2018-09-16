@@ -1,7 +1,6 @@
 # WIP: A SDL Cave Story clone
 To compile, you must satisfy the following dependencies:
 
- - Boost C++ library (libboost-dev).
  - SDL 1.2 (libsdl1.2-dev).
 
 Before, run `make`, or `make && make run`.
