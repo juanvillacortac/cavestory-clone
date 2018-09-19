@@ -21,6 +21,7 @@ struct Graphics;
 struct Map;
 struct Projectile;
 struct ParticleTools;
+struct Pickup;
 
 class Player : public Damageable,
 	private MapCollidable {
@@ -161,9 +162,11 @@ class Player : public Damageable,
 		void startFire();
 		void stopFire();
 
+		void drawHUD(Graphics& graphics);
+
 		void takeDamage(units::HP damage);
 
-		void drawHUD(Graphics& graphics);
+		void collectPickup(const Pickup& pickup);
 
 		Rectangle damageRectangle() const;
 

@@ -305,6 +305,9 @@ void Player::takeDamage(units::HP damage) {
 	invincible_timer_.reset();
 }
 
+void Player::collectPickup(const Pickup&) {
+}
+
 Rectangle Player::damageRectangle() const {
 	return Rectangle(
 			kinematics_x_.position + kCollisionRectangle.boundingBox().left(),
