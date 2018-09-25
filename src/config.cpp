@@ -2,6 +2,6 @@
 
 namespace config {
 	GraphicsQuality getGraphicsQuality() {
-		return HIGH_QUALITY;
+		return HIGH;
 	}
 }

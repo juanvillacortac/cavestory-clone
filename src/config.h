@@ -3,8 +3,8 @@
 
 namespace config {
 	enum GraphicsQuality {
-		HIGH_QUALITY,
-		ORIGINAL_QUALITY
+		HIGH,
+		ORIGINAL
 	};
 
 	GraphicsQuality getGraphicsQuality();

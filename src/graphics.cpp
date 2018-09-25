@@ -29,7 +29,7 @@ Graphics::~Graphics() {
 }
 
 Graphics::SurfaceID Graphics::loadImage(const std::string& file_name, bool black_to_alpha) {
-	const std::string file_path = config::getGraphicsQuality() == config::ORIGINAL_QUALITY ?
+	const std::string file_path = config::getGraphicsQuality() == config::ORIGINAL ?
 		"assets/" + file_name + ".pbm" :
 		"assets/" + file_name + ".bmp";
 
