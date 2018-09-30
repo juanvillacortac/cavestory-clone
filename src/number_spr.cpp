@@ -69,7 +69,7 @@ NumberSpr::NumberSpr(
 }
 
 void NumberSpr::draw(Graphics& graphics, units::Game x, units::Game y) {
-	for(size_t i = 0; i < reversed_glyphs_.size(); i++) {
+	for (size_t i = 0; i < reversed_glyphs_.size(); i++) {
 		// when i == reversed_glyphs_.size() - 1, offset = 0
 		// when 0 == reversed_glyphs_.size() - 1 - i, offset = 0
 		const units::Game offset = units::kHalfTile * (reversed_glyphs_.size() - 1 - i);

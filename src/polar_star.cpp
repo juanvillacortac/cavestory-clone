@@ -52,13 +52,13 @@ PolarStar::PolarStar(Graphics& graphics) :
 }
 
 void PolarStar::updateProjectiles(units::MS elapsed_time_ms, const Map& map, ParticleTools& particle_tools) {
-	if(projectile_a_) {
-		if(!projectile_a_->update(elapsed_time_ms, map, particle_tools)) {
+	if (projectile_a_) {
+		if (!projectile_a_->update(elapsed_time_ms, map, particle_tools)) {
 			projectile_a_.reset();
 		}
 	}
-	if(projectile_b_) {
-		if(!projectile_b_->update(elapsed_time_ms, map, particle_tools)) {
+	if (projectile_b_) {
+		if (!projectile_b_->update(elapsed_time_ms, map, particle_tools)) {
 			projectile_b_.reset();
 		}
 	}
@@ -87,12 +87,12 @@ void PolarStar::drawHUD(Graphics& graphics, ExperienceHUD& hud) {
 units::Game PolarStar::gun_y(VerticalFacing vertical_facing, bool gun_up, units::Game player_y) const {
 	units::Game gun_y = player_y;
 
-	if(vertical_facing == UP)
+	if (vertical_facing == UP)
 		gun_y -= units::kHalfTile / 2;
 
-	if(vertical_facing == DOWN)
+	if (vertical_facing == DOWN)
 		gun_y += units::kHalfTile / 2;
-	if(gun_up)
+	if (gun_up)
 		gun_y -= 2.0f;
 
 	return gun_y;
@@ -239,8 +239,8 @@ bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map, Pa
 	std::vector<Map::CollisionTile> colliding_tiles(
 			map.getCollidingTiles(collisionRectangle()));
 
-	for(size_t i = 0; i < colliding_tiles.size(); i++) {
-		if(colliding_tiles[i].tile_type == Map::WALL_TILE) {
+	for (size_t i = 0; i < colliding_tiles.size(); i++) {
+		if (colliding_tiles[i].tile_type == Map::WALL_TILE) {
 			const Rectangle tile_rectangle(
 					units::tileToGame(colliding_tiles[i].col),
 					units::tileToGame(colliding_tiles[i].row),
@@ -248,8 +248,8 @@ bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map, Pa
 
 			units::Game particle_x, particle_y;
 
-			if(vertical_direction_ == HORIZONTAL) {
-				if(horizontal_direction_ == LEFT) {
+			if (vertical_direction_ == HORIZONTAL) {
+				if (horizontal_direction_ == LEFT) {
 					particle_x = tile_rectangle.right();
 				} else {
 					particle_x = tile_rectangle.left();
@@ -257,7 +257,7 @@ bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map, Pa
 				particle_x -= units::kHalfTile;
 				particle_y = getY();
 			} else {
-				if(vertical_direction_ == UP) {
+				if (vertical_direction_ == UP) {
 					particle_y = tile_rectangle.bottom();
 				} else {
 					particle_y = tile_rectangle.top();
@@ -277,13 +277,13 @@ bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map, Pa
 		}
 	}
 
-	if(getX() < 0 || getY() < 0) {
+	if (getX() < 0 || getY() < 0) {
 		return !alive_;
 	}
 
-	if(!alive_) {
+	if (!alive_) {
 		return false;
-	} else if(offset_ >= kProjectileMaxOffsets[gun_level_ - 1]) {
+	} else if (offset_ >= kProjectileMaxOffsets[gun_level_ - 1]) {
 		particle_tools.front_system.addNewParticle(std::shared_ptr<Particle>(
 					new ProjectileStarParticle(
 						particle_tools.graphics,
@@ -314,7 +314,7 @@ units::HP PolarStar::Projectile::contactDamage() const {
 }
 
 units::Game PolarStar::Projectile::getX() const {
-	if(vertical_direction_ == HORIZONTAL)
+	if (vertical_direction_ == HORIZONTAL)
 		return x_ + (horizontal_direction_ == LEFT ? -offset_ : offset_);
 	return x_;
 }

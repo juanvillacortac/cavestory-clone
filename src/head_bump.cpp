@@ -29,7 +29,7 @@ HeadBumpParticle::HeadBumpParticle(Graphics& graphics, units::Game center_x, uni
 {}
 
 void HeadBumpParticle::draw(Graphics& graphics) {
-	if(timer_.current_time() / kFlashPeriod % 2 == 0) {
+	if (timer_.current_time() / kFlashPeriod % 2 == 0) {
 		sprite_.draw(graphics, center_x_ + particle_a_.get_x(), center_y_ + particle_a_.get_y());
 		sprite_.draw(graphics, center_x_ + particle_b_.get_x(), center_y_ + particle_b_.get_y());
 	}

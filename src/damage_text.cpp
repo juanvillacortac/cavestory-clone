@@ -11,7 +11,7 @@ DamageText::DamageText() : should_rise_(true), center_x_(0), center_y_(0), damag
 void DamageText::setDamage(units::HP damage) {
 	should_rise_ = damage_ == 0;
 
-	if(should_rise_)
+	if (should_rise_)
 		offset_y_ = 0;
 
 	damage_ += damage;
@@ -24,9 +24,9 @@ void DamageText::setPosition(units::Game center_x, units::Game center_y) {
 }
 
 bool DamageText::update(units::MS elapsed_time) {
-	if(timer_.expired()) {
+	if (timer_.expired()) {
 		damage_ = 0;
-	} else if(should_rise_) {
+	} else if (should_rise_) {
 		offset_y_ = std::max(-units::tileToGame(1), offset_y_ + kVelocity * elapsed_time);
 	}
 
@@ -34,7 +34,7 @@ bool DamageText::update(units::MS elapsed_time) {
 }
 
 void DamageText::draw(Graphics& graphics) {
-	if(timer_.expired()) return;
+	if (timer_.expired()) return;
 
 	NumberSpr::DamageNumber(graphics, damage_).
 		drawCentered(graphics, center_x_, center_y_ + offset_y_);

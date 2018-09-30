@@ -60,7 +60,7 @@ Player::Health::Health(Graphics& graphics) :
 {}
 
 void Player::Health::update() {
-	if(damage_ > 0 && damage_timer_.expired()) {
+	if (damage_ > 0 && damage_timer_.expired()) {
 		current_health_ -= damage_;
 		damage_ = 0;
 	}
@@ -69,7 +69,7 @@ void Player::Health::update() {
 void Player::Health::draw(Graphics& graphics) {
 	health_bar_sprite_.draw(graphics, kHealthBarX, kHealthBarY);
 
-	if(damage_ > 0) {
+	if (damage_ > 0) {
 		damage_fill_sprite_.draw(
 				graphics, kHealthFillX, kHealthFillY);
 	}

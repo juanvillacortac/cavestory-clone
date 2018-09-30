@@ -8,7 +8,7 @@
 class Timer {
 	private:
 		void update(units::MS elapsed_time_ms) {
-			if(active())
+			if (active())
 				current_time_ += elapsed_time_ms;
 		}
 

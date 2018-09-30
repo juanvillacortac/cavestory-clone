@@ -13,10 +13,10 @@ Player::WalkingAnimation::WalkingAnimation() :
 {}
 
 void Player::WalkingAnimation::update() {
-	if(frame_timer_.expired()) {
+	if (frame_timer_.expired()) {
 		frame_timer_.reset();
 
-		if(forward_) {
+		if (forward_) {
 			current_frame_++;
 			forward_ = current_frame_ != kNumWalkFrames - 1;
 		} else {

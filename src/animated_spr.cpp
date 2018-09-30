@@ -18,10 +18,10 @@ Animated_spr::~Animated_spr() {
 }
 
 void Animated_spr::update() {
-	if(frame_timer_.expired()) {
+	if (frame_timer_.expired()) {
 		++current_frame_;
 		frame_timer_.reset();
-		if(current_frame_ < frames_num_) {
+		if (current_frame_ < frames_num_) {
 			source_rect_.x += source_rect_.w;
 		} else {
 			source_rect_.x -= source_rect_.w * (frames_num_ - 1);

@@ -11,7 +11,7 @@ const ZeroAccelerator ZeroAccelerator::kZero;
 const ConstantAccelerator ConstantAccelerator::kGravity(kGravityAcceleration, kTerminalSpeed);
 
 void ConstantAccelerator::updateVelocity(Kinematics& kinematics, units::MS elapsed_time) const {
-	if(acceleration_ < 0.0f) {
+	if (acceleration_ < 0.0f) {
 		kinematics.velocity = std::max(kinematics.velocity + acceleration_ * elapsed_time, max_velocity_);
 	} else {
 		kinematics.velocity = std::min(kinematics.velocity + acceleration_ * elapsed_time, max_velocity_);

@@ -102,7 +102,7 @@ void Player::update(units::MS elapsed_time_ms, const Map& map) {
 	updateY(elapsed_time_ms, map);
 
 	// TODO: remove this shitty hack
-	/*if(kinematics_y_.position > 320) {
+	/*if (kinematics_y_.position > 320) {
 		kinematics_y_.position = 320;
 		kinematics_y_.velocity = 0.0f;
 	}
@@ -111,7 +111,7 @@ void Player::update(units::MS elapsed_time_ms, const Map& map) {
 }
 
 void Player::draw(Graphics& graphics) {
-	if(spriteIsVisible()) {
+	if (spriteIsVisible()) {
 		polar_star_.draw(graphics, horizontal_facing_, vertical_facing(), gun_up(), kinematics_x_.position, kinematics_y_.position);
 		sprites_[getSpriteState()]->draw(graphics, kinematics_x_.position, kinematics_y_.position);
 	}
@@ -120,7 +120,7 @@ void Player::draw(Graphics& graphics) {
 };
 
 void Player::drawHUD(Graphics& graphics) {
-	if(spriteIsVisible()) {
+	if (spriteIsVisible()) {
 		health_.draw(graphics);
 		polar_star_.drawHUD(graphics, gun_experience_hud_);
 	}
@@ -183,7 +183,7 @@ void Player::initializeSprite(Graphics& graphics,
 		default: break;
 	}
 
-	if(sprite_state.motion_type(sprite_state) == WALKING) {
+	if (sprite_state.motion_type(sprite_state) == WALKING) {
 		switch(sprite_state.stride_type(sprite_state)) {
 			case STRIDE_MIDDLE:
 				break;
@@ -219,9 +219,9 @@ void Player::initializeSprite(Graphics& graphics,
 Player::MotionType Player::motionType() const {
 	MotionType motion;
 
-	if(interacting_) {
+	if (interacting_) {
 		motion = INTERACTING;
-	} else if(on_ground()) {
+	} else if (on_ground()) {
 		motion = acceleration_x_ == 0 ? STANDING : WALKING;
 	} else {
 		motion = kinematics_y_.velocity < 0.0f ? JUMPING : FALLING;
@@ -245,7 +245,7 @@ void Player::lookUp() {
 }
 
 void Player::lookDown() {
-	if(intended_vertical_facing_ == DOWN)
+	if (intended_vertical_facing_ == DOWN)
 		return;
 	intended_vertical_facing_ = DOWN;
 	interacting_ = on_ground();
@@ -256,14 +256,14 @@ void Player::lookHorizontal() {
 }
 
 void Player::startMovingLeft() {
-	if(on_ground() && acceleration_x_ == 0) { walking_animation_.reset(); }
+	if (on_ground() && acceleration_x_ == 0) { walking_animation_.reset(); }
 	acceleration_x_ = -1;
 	horizontal_facing_ = LEFT;
 	interacting_ = false;
 }
 
 void Player::startMovingRight() {
-	if(on_ground() && acceleration_x_ == 0) { walking_animation_.reset(); }
+	if (on_ground() && acceleration_x_ == 0) { walking_animation_.reset(); }
 	acceleration_x_ = 1;
 	horizontal_facing_ = RIGHT;
 	interacting_ = false;
@@ -276,7 +276,7 @@ void Player::stopMoving() {
 void Player::startJump() {
 	interacting_ = false;
 	jump_active_ = true;
-	if(on_ground()) {
+	if (on_ground()) {
 		// give an initial velocity up
 		kinematics_y_.velocity = -kJumpSpeed;
 	}
@@ -295,7 +295,7 @@ void Player::stopFire() {
 }
 
 void Player::takeDamage(units::HP damage) {
-	if(invincible_timer_.active()) return;
+	if (invincible_timer_.active()) return;
 
 	health_.takeDamage(damage);
 	damage_text_->setDamage(damage);
@@ -353,7 +353,7 @@ void Player::updateY(units::MS elapsed_time_ms, const Map& map) {
 void Player::onCollision(MapCollidable::SideType side, bool is_delta_direction) {
 	switch(side) {
 		case MapCollidable::TOP_SIDE:
-			if(is_delta_direction)
+			if (is_delta_direction)
 				kinematics_y_.velocity = 0.0f;
 			particle_tools_.front_system.addNewParticle(std::shared_ptr<Particle>(
 						new HeadBumpParticle(
@@ -364,15 +364,15 @@ void Player::onCollision(MapCollidable::SideType side, bool is_delta_direction) 
 			break;
 		case MapCollidable::BOTTOM_SIDE:
 			on_ground_ = true;
-			if(is_delta_direction)
+			if (is_delta_direction)
 				kinematics_y_.velocity = 0.0f;
 			break;
 		case MapCollidable::LEFT_SIDE:
-			if(is_delta_direction)
+			if (is_delta_direction)
 				kinematics_x_.velocity = 0.0f;
 			break;
 		case MapCollidable::RIGHT_SIDE:
-			if(is_delta_direction)
+			if (is_delta_direction)
 				kinematics_x_.velocity = 0.0f;
 			break;
 	}

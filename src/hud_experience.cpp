@@ -76,13 +76,13 @@ void ExperienceHUD::draw(Graphics& graphics,
 
 	experience_bar_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY);
 
-	if(current_experience < level_experience) {
+	if (current_experience < level_experience) {
 		fill_sprite_.set_percentage_width(current_experience * 1.0f / level_experience);
 		fill_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY);
 	} else {
 		max_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY);
 	}
 
-	if(flash_timer_.active() && flash_timer_.current_time() / kFlashPeriod % 2 == 0)
+	if (flash_timer_.active() && flash_timer_.current_time() / kFlashPeriod % 2 == 0)
 		flash_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY);
 }

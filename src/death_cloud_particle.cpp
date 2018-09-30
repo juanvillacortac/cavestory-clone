@@ -35,7 +35,7 @@ void DeathCloudParticle::createRandomDeathClouds(
 		units::Game center_y,
 		int num_particles
 		) {
-	for(int i = 0; i < num_particles; i++) {
+	for (int i = 0; i < num_particles; i++) {
 		particle_tools.entity_system.addNewParticle(std::shared_ptr<DeathCloudParticle>(
 					new DeathCloudParticle(particle_tools.graphics,
 						center_x, center_y, 

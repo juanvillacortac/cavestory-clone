@@ -9,9 +9,9 @@ using std::vector;
 
 void Map::drawBackground(Graphics& graphics) const {
 	backdrop_->draw(graphics);
-	for(size_t row = 0; row < bkg_tiles_.size(); row++) {
-		for(size_t col = 0; col < bkg_tiles_[row].size(); col++) {
-			if(bkg_tiles_[row][col]) {
+	for (size_t row = 0; row < bkg_tiles_.size(); row++) {
+		for (size_t col = 0; col < bkg_tiles_[row].size(); col++) {
+			if (bkg_tiles_[row][col]) {
 				bkg_tiles_[row][col]->draw(
 						graphics,
 						units::tileToGame(col), units::tileToGame(row));
@@ -21,9 +21,9 @@ void Map::drawBackground(Graphics& graphics) const {
 }
 
 void Map::draw(Graphics& graphics) const {
-	for(size_t row = 0; row < tiles_.size(); row++) {
-		for(size_t col = 0; col < tiles_[row].size(); col++) {
-			if(tiles_[row][col].sprite) {
+	for (size_t row = 0; row < tiles_.size(); row++) {
+		for (size_t col = 0; col < tiles_[row].size(); col++) {
+			if (tiles_[row][col].sprite) {
 				tiles_[row][col].sprite->draw(
 						graphics,
 						units::tileToGame(col), units::tileToGame(row));
@@ -40,8 +40,8 @@ vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle& rectangle) co
 
 	vector<CollisionTile> collision_tiles;
 
-	for(units::Tile row = first_row; row <= last_row; row++) {
-		for(units::Tile col = first_col; col <= last_col; col++) {
+	for (units::Tile row = first_row; row <= last_row; row++) {
+		for (units::Tile col = first_col; col <= last_col; col++) {
 			collision_tiles.push_back(CollisionTile(row, col, tiles_[row][col].tile_type));
 		}
 	}
@@ -77,8 +77,8 @@ Map* Map::createTestMap(Graphics& graphics) {
 
 	Tile tile(WALL_TILE, sprite);
 
-	for(units::Tile col = 0; col < num_cols; col++) {
-		for(units::Tile row = 11; row < num_rows; row++) {
+	for (units::Tile col = 0; col < num_cols; col++) {
+		for (units::Tile row = 11; row < num_rows; row++) {
 			map->tiles_[row][col] = tile;
 		}
 	}

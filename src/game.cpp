@@ -86,18 +86,18 @@ void Game::eventLoop() {
 			}
 		}
 
-		if(input.wasKeyPressed(SDLK_ESCAPE)) {
+		if (input.wasKeyPressed(SDLK_ESCAPE)) {
 			running = false;
 		}
 
 		// Player movement
-		if(input.isKeyHeld(SDLK_LEFT) && input.isKeyHeld(SDLK_RIGHT)) {
+		if (input.isKeyHeld(SDLK_LEFT) && input.isKeyHeld(SDLK_RIGHT)) {
 			player_->stopMoving();
 		}
-		else if(input.isKeyHeld(SDLK_LEFT)) {
+		else if (input.isKeyHeld(SDLK_LEFT)) {
 			player_->startMovingLeft();
 		}
-		else if(input.isKeyHeld(SDLK_RIGHT)) {
+		else if (input.isKeyHeld(SDLK_RIGHT)) {
 			player_->startMovingRight();
 		}
 		else {
@@ -105,23 +105,23 @@ void Game::eventLoop() {
 		}
 
 		// Looking
-		if(input.isKeyHeld(SDLK_UP) && input.isKeyHeld(SDLK_DOWN)) {
+		if (input.isKeyHeld(SDLK_UP) && input.isKeyHeld(SDLK_DOWN)) {
 			player_->lookHorizontal();
 		}
-		else if(input.isKeyHeld(SDLK_UP)) {
+		else if (input.isKeyHeld(SDLK_UP)) {
 			player_->lookUp();
 		}
-		else if(input.isKeyHeld(SDLK_DOWN)) {
+		else if (input.isKeyHeld(SDLK_DOWN)) {
 			player_->lookDown();
 		} else {
 			player_->lookHorizontal();
 		}
 
 		// Player Jump
-		if(input.wasKeyPressed(SDLK_q)) {
+		if (input.wasKeyPressed(SDLK_q)) {
 			player_->startJump();
 		}
-		else if(input.wasKeyReleased(SDLK_q)){
+		else if (input.wasKeyReleased(SDLK_q)){
 			player_->stopJump();
 		}
 
@@ -134,7 +134,7 @@ void Game::eventLoop() {
 		}
 
 		// Fullscreen
-		if(input.wasKeyPressed(SDLK_F4)) {
+		if (input.wasKeyPressed(SDLK_F4)) {
 			graphics.setVideo();
 			player_.reset(new Player(
 						graphics,
@@ -146,7 +146,7 @@ void Game::eventLoop() {
 		}
 
 		// Reset game
-		if(input.wasKeyPressed(SDLK_r)) {
+		if (input.wasKeyPressed(SDLK_r)) {
 			player_.reset(new Player(
 						graphics,
 						particle_tools,
@@ -171,7 +171,7 @@ void Game::eventLoop() {
 		const units::MS ms_per_frame = 1000 / kFps;
 		const units::MS elapsed_time_ms = SDL_GetTicks() - start_time_ms;
 
-		if(elapsed_time_ms < ms_per_frame)
+		if (elapsed_time_ms < ms_per_frame)
 			SDL_Delay(ms_per_frame - elapsed_time_ms);
 	}
 }
@@ -186,8 +186,8 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 
 	player_->update(elapsed_time_ms, *map_);
 
-	if(bat_) {
-		if(!bat_->update(elapsed_time_ms, player_->center_x())) {
+	if (bat_) {
+		if (!bat_->update(elapsed_time_ms, player_->center_x())) {
 			ParticleTools particle_tools = {
 				front_particle_system_,
 				entity_particle_system_,
@@ -202,14 +202,14 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 
 	std::vector<std::shared_ptr<Projectile>> projectiles(player_->getProjectiles());
 	
-	for(size_t i = 0; i < projectiles.size(); i++) {
-		if(bat_ && bat_->collisionRectangle().collideWith(projectiles[i]->collisionRectangle())) {
+	for (size_t i = 0; i < projectiles.size(); i++) {
+		if (bat_ && bat_->collisionRectangle().collideWith(projectiles[i]->collisionRectangle())) {
 			bat_->takeDamage(projectiles[i]->contactDamage());
 			projectiles[i]->collideWithEnemy();
 		}
 	}
 
-	if(bat_ && bat_->damageRectangle().collideWith(player_->damageRectangle()))
+	if (bat_ && bat_->damageRectangle().collideWith(player_->damageRectangle()))
 		player_->takeDamage(bat_->contactDamage());
 }
 
@@ -217,7 +217,7 @@ void Game::draw(Graphics& graphics) {
 	graphics.clear();
 
 	map_->drawBackground(graphics);
-	if(bat_)
+	if (bat_)
 		bat_->draw(graphics);
 	entity_particle_system_.draw(graphics);
 	player_->draw(graphics);
