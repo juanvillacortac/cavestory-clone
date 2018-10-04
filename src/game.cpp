@@ -81,6 +81,12 @@ void Game::eventLoop() {
 				case SDL_KEYUP:
 					input.keyUpEvent(event);
 					break;
+				case SDL_JOYBUTTONDOWN:
+					input.joyButtonDownEvent(event);
+					break;
+				case SDL_JOYBUTTONUP:
+					input.joyButtonUpEvent(event);
+					break;
 				default:
 					break;
 			}
@@ -126,10 +132,10 @@ void Game::eventLoop() {
 		}
 
 		// Player Fire
-		if (input.wasKeyPressed(SDLK_w)) {
+		if (input.wasKeyPressed(SDLK_w) || input.wasJoyButtonPressed(2)) {
 			player_->startFire();
 		}
-		else if (input.wasKeyReleased(SDLK_w)) {
+		else if (input.wasKeyReleased(SDLK_w) || input.wasJoyButtonPressed(2)) {
 			player_->stopFire();
 		}
 
