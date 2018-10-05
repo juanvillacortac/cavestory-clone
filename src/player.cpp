@@ -288,7 +288,8 @@ void Player::stopJump() {
 }
 
 void Player::startFire() {
-	polar_star_.startFire(kinematics_x_.position, kinematics_y_.position, horizontal_facing_, vertical_facing(), gun_up(), particle_tools_);
+	if(!interacting_)
+		polar_star_.startFire(kinematics_x_.position, kinematics_y_.position, horizontal_facing_, vertical_facing(), gun_up(), particle_tools_);
 }
 void Player::stopFire() {
 	polar_star_.stopFire();
