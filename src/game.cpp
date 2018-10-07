@@ -1,6 +1,5 @@
 #include "game.h"
 #include "graphics.h"
-#include "input.h"
 #include "timer.h"
 #include "player.h"
 #include "bat.h"
@@ -24,6 +23,8 @@ Game::Game() {
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 
+	Input input;
+
 	eventLoop();
 }
 
@@ -34,7 +35,6 @@ Game::~Game() {
 void Game::eventLoop() {
 	bool running = true;
 
-	Input input;
 	Graphics graphics;
 	SDL_Event event;
 
@@ -50,7 +50,7 @@ void Game::eventLoop() {
 				units::tileToGame(kScreenWidth / 2),
 				units::tileToGame(kScreenWidth / 2)
 				));
-	
+
 	damage_texts_.addDamageable(player_);
 
 	bat_.reset(new Bat(
@@ -124,18 +124,18 @@ void Game::eventLoop() {
 		}
 
 		// Player Jump
-		if (input.wasKeyPressed(SDLK_q)) {
+		if (input.wasKeyPressed(SDLK_q) || input.wasJoyButtonPressed(0)) {
 			player_->startJump();
 		}
-		else if (input.wasKeyReleased(SDLK_q)){
+		else if (input.wasKeyReleased(SDLK_q) || input.wasJoyButtonReleased(0)){
 			player_->stopJump();
 		}
 
 		// Player Fire
-		if (input.wasKeyPressed(SDLK_w) || input.wasJoyButtonPressed(2)) {
+		if (input.wasKeyPressed(SDLK_w) || input.wasJoyButtonPressed(1)) {
 			player_->startFire();
 		}
-		else if (input.wasKeyReleased(SDLK_w) || input.wasJoyButtonPressed(2)) {
+		else if (input.wasKeyReleased(SDLK_w) || input.wasJoyButtonReleased(1)) {
 			player_->stopFire();
 		}
 

@@ -3,6 +3,8 @@
 void Input::beginNewFrame() {
 	pressed_keys_.clear();
 	released_keys_.clear();
+	pressed_buttons_.clear();
+	released_buttons_.clear();
 }
 
 void Input::keyDownEvent(const SDL_Event& event) {

@@ -14,11 +14,19 @@ class Input {
 		std::map<Uint8, bool> pressed_buttons_;
 		std::map<Uint8, bool> released_buttons_;
 	public:
+		Input() {
+			SDL_Joystick *joy;
+
+			if(SDL_NumJoysticks()>0){
+				joy=SDL_JoystickOpen(0);
+			}
+		}
+
 		void beginNewFrame();
 
 		void keyDownEvent(const SDL_Event& event);
 		void keyUpEvent(const SDL_Event& event);
-		
+
 		void joyButtonDownEvent(const SDL_Event& event);
 		void joyButtonUpEvent(const SDL_Event& event);
 

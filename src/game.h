@@ -2,6 +2,7 @@
 #define GAME_H_
 
 #include "units.h"
+#include "input.h"
 #include "damage_texts.h"
 #include "particle_system.h"
 
@@ -12,6 +13,7 @@ struct Player;
 struct Bat;
 struct Map;
 struct ExperienceHUD;
+struct Input;
 
 class Game {
 	private:
@@ -26,6 +28,8 @@ class Game {
 		ParticleSystem front_particle_system_, entity_particle_system_;
 
 		DamageTexts damage_texts_;
+
+		Input input;
 	public:
 		Game();
 		~Game();
