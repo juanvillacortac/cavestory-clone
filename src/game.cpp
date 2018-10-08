@@ -87,6 +87,8 @@ void Game::eventLoop() {
 				case SDL_JOYBUTTONUP:
 					input.joyButtonUpEvent(event);
 					break;
+				case SDL_JOYAXISMOTION:
+					input.joyAxisEvent(event);
 				default:
 					break;
 			}
@@ -100,10 +102,10 @@ void Game::eventLoop() {
 		if (input.isKeyHeld(SDLK_LEFT) && input.isKeyHeld(SDLK_RIGHT)) {
 			player_->stopMoving();
 		}
-		else if (input.isKeyHeld(SDLK_LEFT)) {
+		else if (input.isKeyHeld(SDLK_LEFT) || input.getJoyAxis(0) < -8000) {
 			player_->startMovingLeft();
 		}
-		else if (input.isKeyHeld(SDLK_RIGHT)) {
+		else if (input.isKeyHeld(SDLK_RIGHT) || input.getJoyAxis(0) > 8000) {
 			player_->startMovingRight();
 		}
 		else {
@@ -114,10 +116,10 @@ void Game::eventLoop() {
 		if (input.isKeyHeld(SDLK_UP) && input.isKeyHeld(SDLK_DOWN)) {
 			player_->lookHorizontal();
 		}
-		else if (input.isKeyHeld(SDLK_UP)) {
+		else if (input.isKeyHeld(SDLK_UP) || input.getJoyAxis(1) < -8000) {
 			player_->lookUp();
 		}
-		else if (input.isKeyHeld(SDLK_DOWN)) {
+		else if (input.isKeyHeld(SDLK_DOWN) || input.getJoyAxis(1) > 8000) {
 			player_->lookDown();
 		} else {
 			player_->lookHorizontal();
@@ -152,7 +154,7 @@ void Game::eventLoop() {
 		}
 
 		// Reset game
-		if (input.wasKeyPressed(SDLK_r)) {
+		if (input.wasKeyPressed(SDLK_r) || input.wasJoyButtonPressed(3)) {
 			player_.reset(new Player(
 						graphics,
 						particle_tools,

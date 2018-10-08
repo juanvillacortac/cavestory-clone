@@ -3,6 +3,7 @@
 void Input::beginNewFrame() {
 	pressed_keys_.clear();
 	released_keys_.clear();
+
 	pressed_buttons_.clear();
 	released_buttons_.clear();
 }
@@ -27,6 +28,10 @@ void Input::joyButtonUpEvent(const SDL_Event& event) {
 	held_buttons_[event.jbutton.button] = false;
 }
 
+void Input::joyAxisEvent(const SDL_Event& event) {
+	axis_value_[event.jaxis.axis] = event.jaxis.value;
+}
+
 bool Input::wasKeyPressed(SDLKey key) {
 	return pressed_keys_[key];
 }
@@ -49,4 +54,8 @@ bool Input::wasJoyButtonReleased(Uint8 button) {
 
 bool Input::isJoyButtonHeld(Uint8 button) {
 	return held_buttons_[button];
+}
+
+int Input::getJoyAxis(Uint8 axis) {
+	return (int) axis_value_[axis];
 }
