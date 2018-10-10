@@ -24,7 +24,7 @@ class NumberSpr {
 
 		// if num_digits is 0, we don't care how much space it takes up.
 		NumberSpr(Graphics& graphics, int number, int num_digits, ColorType color, OperatorType op);
-		
+
 		units::Game padding_;
 
 		std::vector<std::shared_ptr<Sprite>> reversed_glyphs_;

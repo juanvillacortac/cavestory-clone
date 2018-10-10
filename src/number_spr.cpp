@@ -36,36 +36,36 @@ NumberSpr::NumberSpr(
 		const int digit = number % kRadix;
 
 		reversed_glyphs_.push_back(std::shared_ptr<Sprite>(new Sprite(
+						graphics, kSpritePath,
+						units::gameToPixel(digit*units::kHalfTile), units::gameToPixel(source_y),
+						units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight)
+						)));
+		number /= kRadix;
+		digit_count++;
+	} while (number != 0);
+
+	// if num_digits is 0, no shifting
+	// if num_digits is digit_count, no shifting
+	assert(num_digits == 0 || num_digits >= digit_count);
+	padding_ = num_digits == 0 ? 0.0f :
+		units::kHalfTile * (num_digits - digit_count);
+
+	switch (op) {
+		case PLUS:
+			reversed_glyphs_.push_back(std::shared_ptr<Sprite>(new Sprite(
 							graphics, kSpritePath,
-							units::gameToPixel(digit*units::kHalfTile), units::gameToPixel(source_y),
-							units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight)
-							)));
-				number /= kRadix;
-				digit_count++;
-				} while (number != 0);
-
-				// if num_digits is 0, no shifting
-				// if num_digits is digit_count, no shifting
-				assert(num_digits == 0 || num_digits >= digit_count);
-				padding_ = num_digits == 0 ? 0.0f :
-				units::kHalfTile * (num_digits - digit_count);
-
-				switch (op) {
-				case PLUS:
-				reversed_glyphs_.push_back(std::shared_ptr<Sprite>(new Sprite(
-								graphics, kSpritePath,
-								units::gameToPixel(kPlusSourceX), units::gameToPixel(kOpSourceY),
-								units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight))));
-				break;
-				case MINUS:
-				reversed_glyphs_.push_back(std::shared_ptr<Sprite>(new Sprite(
-								graphics, kSpritePath,
-								units::gameToPixel(kMinusSourceX), units::gameToPixel(kOpSourceY),
-								units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight))));
-				break;
-				case NONE:
-				break;
-				}
+							units::gameToPixel(kPlusSourceX), units::gameToPixel(kOpSourceY),
+							units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight))));
+			break;
+		case MINUS:
+			reversed_glyphs_.push_back(std::shared_ptr<Sprite>(new Sprite(
+							graphics, kSpritePath,
+							units::gameToPixel(kMinusSourceX), units::gameToPixel(kOpSourceY),
+							units::gameToPixel(kSourceWidth), units::gameToPixel(kSourceHeight))));
+			break;
+		case NONE:
+			break;
+	}
 }
 
 void NumberSpr::draw(Graphics& graphics, units::Game x, units::Game y) {
