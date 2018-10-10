@@ -8,13 +8,11 @@ namespace {
 }
 
 Graphics::Graphics() {
-	fullscreen_ = false;
-	setVideo();
-	/*screen_ = SDL_SetVideoMode(
+	screen_ = SDL_SetVideoMode(
 			units::tileToPixel(Game::kScreenWidth),
 			units::tileToPixel(Game::kScreenHeight),
 			kBitsPerPixel,
-			0);*/
+			0);
 
 	SDL_ShowCursor(SDL_DISABLE);
 }
@@ -68,23 +66,6 @@ void Graphics::flip() {
 	SDL_Flip(screen_);
 }
 
-void Graphics::setVideo() {
-	switch(fullscreen_) {
-		case true:
-			screen_ = SDL_SetVideoMode(
-					units::tileToPixel(Game::kScreenWidth),
-					units::tileToPixel(Game::kScreenHeight),
-					kBitsPerPixel,
-					SDL_FULLSCREEN);
-			fullscreen_ = false;
-			break;
-		case false:
-			screen_ = SDL_SetVideoMode(
-					units::tileToPixel(Game::kScreenWidth),
-					units::tileToPixel(Game::kScreenHeight),
-					kBitsPerPixel,
-					0);
-			fullscreen_ = true;
-			break;
-	}
+void Graphics::setFullscreen() {
+	SDL_WM_ToggleFullScreen(screen_);
 }

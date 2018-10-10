@@ -143,14 +143,7 @@ void Game::eventLoop() {
 
 		// Fullscreen
 		if (input.wasKeyPressed(SDLK_F4)) {
-			graphics.setVideo();
-			player_.reset(new Player(
-						graphics,
-						particle_tools,
-						units::tileToGame(kScreenWidth / 2),
-						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)
-						));
-			damage_texts_.addDamageable(player_);
+			graphics.setFullscreen();
 		}
 
 		// Reset game
