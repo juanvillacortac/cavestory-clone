@@ -12,7 +12,7 @@ Graphics::Graphics() {
 			units::tileToPixel(Game::kScreenWidth),
 			units::tileToPixel(Game::kScreenHeight),
 			kBitsPerPixel,
-			0);
+			SDL_HWSURFACE);
 
 	SDL_ShowCursor(SDL_DISABLE);
 }
