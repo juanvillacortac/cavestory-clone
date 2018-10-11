@@ -58,6 +58,12 @@ void Graphics::blitSurface(
 	SDL_BlitSurface(source, source_rectangle, screen_, destination_rectangle);
 }
 
+void Graphics::blitNullSurface(
+		SDL_Surface* text,
+		SDL_Rect* destination_rectangle) {
+	SDL_BlitSurface(text, NULL, screen_, destination_rectangle);
+}
+
 void Graphics::clear() {
 	SDL_FillRect(screen_, NULL /*destination_rectangle*/, 0 /*color*/);
 }
