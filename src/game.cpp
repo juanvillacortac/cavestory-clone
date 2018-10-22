@@ -5,6 +5,7 @@
 #include "bat.h"
 #include "map.h"
 #include "death_cloud_particle.h"
+#include "ttf_texts.h"
 
 #include <SDL/SDL.h>
 #include <stdlib.h>
@@ -62,6 +63,17 @@ void Game::eventLoop() {
 	damage_texts_.addDamageable(bat_);
 
 	map_.reset(Map::createTestMap(graphics));
+
+	text_.reset(new TTFText(
+				graphics,
+				"Q: Jump - W: Fire - R: Reset",
+				32,
+				1 * units::kHalfTile,
+				1 * units::kHalfTile,
+				255, 255, 255,
+				0, 0, 0,
+				true
+			       ));
 
 	units::MS last_update_time = SDL_GetTicks();
 
@@ -227,6 +239,8 @@ void Game::draw(Graphics& graphics) {
 	front_particle_system_.draw(graphics);
 
 	player_->drawHUD(graphics);
+
+	text_->draw(graphics);
 
 	graphics.flip();
 }

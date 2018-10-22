@@ -12,6 +12,7 @@ struct Graphics;
 struct Player;
 struct Bat;
 struct Map;
+struct TTFText;
 struct ExperienceHUD;
 struct Input;
 
@@ -24,6 +25,8 @@ class Game {
 		std::shared_ptr<Player> player_;
 		std::shared_ptr<Bat> bat_;
 		std::unique_ptr<Map> map_;
+
+		std::shared_ptr<TTFText> text_;
 
 		ParticleSystem front_particle_system_, entity_particle_system_;
 

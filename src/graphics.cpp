@@ -12,7 +12,7 @@ Graphics::Graphics() {
 			units::tileToPixel(Game::kScreenWidth),
 			units::tileToPixel(Game::kScreenHeight),
 			kBitsPerPixel,
-			0);
+			SDL_HWSURFACE);
 
 	SDL_ShowCursor(SDL_DISABLE);
 }
@@ -56,6 +56,12 @@ void Graphics::blitSurface(
 		SDL_Rect* source_rectangle,
 		SDL_Rect* destination_rectangle) {
 	SDL_BlitSurface(source, source_rectangle, screen_, destination_rectangle);
+}
+
+void Graphics::blitNullSurface(
+		SDL_Surface* text,
+		SDL_Rect* destination_rectangle) {
+	SDL_BlitSurface(text, NULL, screen_, destination_rectangle);
 }
 
 void Graphics::clear() {
