@@ -277,9 +277,9 @@ bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map, Pa
 		}
 	}
 
-	if (getX() < 0 || getY() < 0) {
+	/*if (getX() < 0 || getY() < 0) {
 		return !alive_;
-	}
+	}*/
 
 	if (!alive_) {
 		return false;
