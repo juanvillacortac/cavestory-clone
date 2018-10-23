@@ -42,7 +42,7 @@ vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle& rectangle) co
 
 	vector<CollisionTile> collision_tiles;
 
-	if (last_row < tiles_.size() && last_col < tiles_[1].size()) {
+	if (last_row <= tiles_.size() && last_col <= tiles_[1].size()) {
 		for (units::Tile row = first_row; row <= last_row; row++) {
 			for (units::Tile col = first_col; col <= last_col; col++) {
 				collision_tiles.push_back(CollisionTile(row, col, tiles_[row][col].tile_type));
