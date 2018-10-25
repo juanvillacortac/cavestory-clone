@@ -49,6 +49,7 @@ vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle& rectangle) co
 			}
 		}
 	}
+
 	return collision_tiles;
 }
 
