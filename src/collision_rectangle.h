@@ -3,72 +3,21 @@
 
 #include "rectangle.h"
 
-#include <assert.h>
-
 class CollisionRectangle {
-	private:
-		Rectangle top_, bottom_, left_, right_;
 	public:
-		CollisionRectangle(
-				const Rectangle& top,
-				const Rectangle& bottom,
-				const Rectangle& left,
-				const Rectangle& right) :
-			top_(top), bottom_(bottom),
-			left_(left), right_(right) {}
+		virtual ~CollisionRectangle() = 0;
 
-		Rectangle boundingBox() const {
-			return Rectangle(
-					left_.left(),
-					top_.top(),
-					left_.width() + right_.width(),
-					top_.height() + bottom_.height()
-					);
-		}
+		virtual Rectangle boundingBox() const = 0;
 
-		Rectangle topCollision(units::Game x, units::Game y, units::Game delta) const {
-			assert(delta <= 0);
+		virtual Rectangle topCollision(units::Game x, units::Game y, units::Game delta) const = 0;
 
-			return Rectangle(
-					x + top_.left(),
-					y + top_.top() + delta,
-					top_.width(),
-					top_.height() - delta
-					);
-		}
+		virtual Rectangle bottomCollision(units::Game x, units::Game y, units::Game delta) const = 0;
 
-		Rectangle bottomCollision(units::Game x, units::Game y, units::Game delta) const {
-			assert(delta >= 0);
+		virtual Rectangle leftCollision(units::Game x, units::Game y, units::Game delta) const = 0;
 
-			return Rectangle(
-					x + bottom_.left(),
-					y + bottom_.top(),
-					bottom_.width(),
-					bottom_.height() + delta
-					);
-		}
-
-		Rectangle leftCollision(units::Game x, units::Game y, units::Game delta) const {
-			assert(delta <= 0);
-
-			return Rectangle(
-					x + left_.left() + delta,
-					y + left_.top(),
-					left_.width() - delta,
-					left_.height() + delta
-					);
-		}
-
-		Rectangle rightCollision(units::Game x, units::Game y, units::Game delta) const {
-			assert(delta >= 0);
-
-			return Rectangle(
-					x + right_.left(),
-					y + right_.top(),
-					right_.width() + delta,
-					right_.height()
-					);
-		}
+		virtual Rectangle rightCollision(units::Game x, units::Game y, units::Game delta) const = 0;
 };
+
+inline CollisionRectangle::~CollisionRectangle() {}
 
 #endif // COLLISION_RECTANGLE_H_

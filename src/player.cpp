@@ -4,7 +4,7 @@
 #include "game.h"
 #include "map.h"
 #include "rectangle.h"
-#include "collision_rectangle.h"
+#include "composite_collision_rectangle.h"
 #include "accelerators.h"
 #include "particle_system.h"
 #include "head_bump.h"
@@ -53,7 +53,7 @@ namespace {
 	const units::Game kCollisionTopLeft = (units::tileToGame(1) - kCollisionTopWidth) / 2;
 	const units::Game kCollisionBottomLeft = (units::tileToGame(1) - kCollisionBottomWidth) / 2;
 
-	const CollisionRectangle kCollisionRectangle(
+	const CompositeCollisionRectangle kCollisionRectangle(
 			Rectangle(
 				kCollisionTopLeft,
 				kCollisionYTop,
