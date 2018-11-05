@@ -4,8 +4,6 @@
 #include "game.h"
 #include "rectangle.h"
 
-#include <iostream>
-
 using std::shared_ptr;
 using std::vector;
 
