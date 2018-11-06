@@ -6,6 +6,7 @@
 #include "map.h"
 #include "death_cloud_particle.h"
 #include "ttf_texts.h"
+#include "dorito.h"
 
 #include <SDL/SDL.h>
 #include <stdlib.h>
@@ -66,7 +67,7 @@ void Game::eventLoop() {
 
 	text_.reset(new TTFText(
 				graphics,
-				"Q: Jump - W: Fire - R: Reset",
+				"Q: Jump - W: Fire - E: Drop experience - R: Reset",
 				32,
 				1 * units::kHalfTile,
 				1 * units::kHalfTile,
@@ -153,6 +154,22 @@ void Game::eventLoop() {
 			player_->stopFire();
 		}
 
+		if (input.wasKeyPressed(SDLK_e) || input.wasJoyButtonPressed(4)) {
+			int size = rand() % 3;
+
+			switch (size) {
+				case 0:
+					pickups_.add(std::shared_ptr<Pickup>(new Dorito(graphics, 300, 200, Dorito::SMALL)));
+					break;
+				case 1:
+					pickups_.add(std::shared_ptr<Pickup>(new Dorito(graphics, 300, 200, Dorito::MEDIUM)));
+					break;
+				case 2:
+					pickups_.add(std::shared_ptr<Pickup>(new Dorito(graphics, 300, 200, Dorito::LARGE)));
+					break;
+			}
+		}
+
 		// Fullscreen
 		if (input.wasKeyPressed(SDLK_F4)) {
 			graphics.setFullscreen();
@@ -194,6 +211,8 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 
 	damage_texts_.update(elapsed_time_ms);
 
+	pickups_.update(elapsed_time_ms, *map_);
+
 	front_particle_system_.update(elapsed_time_ms);
 	entity_particle_system_.update(elapsed_time_ms);
 
@@ -209,11 +228,14 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 			DeathCloudParticle::createRandomDeathClouds(particle_tools,
 					bat_->center_x(), bat_->center_y(),
 					3);
+			pickups_.add(std::shared_ptr<Pickup>(new Dorito(graphics, bat_->center_x(), bat_->center_y(), Dorito::SMALL)));
 			bat_.reset();
 		}
 	}
 
 	std::vector<std::shared_ptr<Projectile>> projectiles(player_->getProjectiles());
+
+	pickups_.handleCollision(*player_);
 	
 	for (size_t i = 0; i < projectiles.size(); i++) {
 		if (bat_ && bat_->collisionRectangle().collideWith(projectiles[i]->collisionRectangle())) {
@@ -233,6 +255,7 @@ void Game::draw(Graphics& graphics) {
 	if (bat_)
 		bat_->draw(graphics);
 	entity_particle_system_.draw(graphics);
+	pickups_.draw(graphics);
 	player_->draw(graphics);
 	damage_texts_.draw(graphics);
 	map_->draw(graphics);

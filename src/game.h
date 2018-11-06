@@ -5,6 +5,7 @@
 #include "input.h"
 #include "damage_texts.h"
 #include "particle_system.h"
+#include "pickups.h"
 
 #include <memory>
 
@@ -31,6 +32,8 @@ class Game {
 		ParticleSystem front_particle_system_, entity_particle_system_;
 
 		DamageTexts damage_texts_;
+
+		Pickups pickups_;
 
 		Input input;
 	public:
