@@ -154,16 +154,25 @@ void Game::eventLoop() {
 			player_->stopFire();
 		}
 
+		// Drop Doritos
 		if (input.wasKeyPressed(SDLK_e) || input.wasJoyButtonPressed(4)) {
 			int size = rand() % 3;
+
+			int
+				dorito_x = units::tileToGame(kScreenWidth) / 2,
+				dorito_y = units::tileToGame(kScreenHeight) / 2;
+
+			DeathCloudParticle::createRandomDeathClouds(particle_tools,
+					dorito_x, dorito_y,
+					1);
 
 			switch (size) {
 				case 0:
 					pickups_.add(std::shared_ptr<Pickup>(
 								new Dorito(
 									graphics,
-									units::tileToGame(kScreenWidth) / 2,
-									units::tileToGame(kScreenHeight) / 2,
+									dorito_x,
+									dorito_y,
 									Dorito::SMALL)));
 					break;
 				case 1:
@@ -171,8 +180,8 @@ void Game::eventLoop() {
 					pickups_.add(std::shared_ptr<Pickup>(
 								new Dorito(
 									graphics,
-									units::tileToGame(kScreenWidth) / 2,
-									units::tileToGame(kScreenHeight) / 2,
+									dorito_x,
+									dorito_y,
 									Dorito::MEDIUM)));
 					break;
 				case 2:
@@ -180,8 +189,8 @@ void Game::eventLoop() {
 					pickups_.add(std::shared_ptr<Pickup>(
 								new Dorito(
 									graphics,
-									units::tileToGame(kScreenWidth) / 2,
-									units::tileToGame(kScreenHeight) / 2,
+									dorito_x,
+									dorito_y,
 									Dorito::LARGE)));
 					break;
 			}
@@ -270,8 +279,8 @@ void Game::draw(Graphics& graphics) {
 	map_->drawBackground(graphics);
 	if (bat_)
 		bat_->draw(graphics);
-	entity_particle_system_.draw(graphics);
 	pickups_.draw(graphics);
+	entity_particle_system_.draw(graphics);
 	player_->draw(graphics);
 	damage_texts_.draw(graphics);
 	map_->draw(graphics);
