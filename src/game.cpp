@@ -159,13 +159,30 @@ void Game::eventLoop() {
 
 			switch (size) {
 				case 0:
-					pickups_.add(std::shared_ptr<Pickup>(new Dorito(graphics, 300, 200, Dorito::SMALL)));
+					pickups_.add(std::shared_ptr<Pickup>(
+								new Dorito(
+									graphics,
+									units::tileToGame(kScreenWidth) / 2,
+									units::tileToGame(kScreenHeight) / 2,
+									Dorito::SMALL)));
 					break;
 				case 1:
-					pickups_.add(std::shared_ptr<Pickup>(new Dorito(graphics, 300, 200, Dorito::MEDIUM)));
+
+					pickups_.add(std::shared_ptr<Pickup>(
+								new Dorito(
+									graphics,
+									units::tileToGame(kScreenWidth) / 2,
+									units::tileToGame(kScreenHeight) / 2,
+									Dorito::MEDIUM)));
 					break;
 				case 2:
-					pickups_.add(std::shared_ptr<Pickup>(new Dorito(graphics, 300, 200, Dorito::LARGE)));
+
+					pickups_.add(std::shared_ptr<Pickup>(
+								new Dorito(
+									graphics,
+									units::tileToGame(kScreenWidth) / 2,
+									units::tileToGame(kScreenHeight) / 2,
+									Dorito::LARGE)));
 					break;
 			}
 		}
@@ -228,7 +245,6 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 			DeathCloudParticle::createRandomDeathClouds(particle_tools,
 					bat_->center_x(), bat_->center_y(),
 					3);
-			pickups_.add(std::shared_ptr<Pickup>(new Dorito(graphics, bat_->center_x(), bat_->center_y(), Dorito::SMALL)));
 			bat_.reset();
 		}
 	}

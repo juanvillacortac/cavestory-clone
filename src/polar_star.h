@@ -70,7 +70,9 @@ class PolarStar {
 
 		std::map<SpriteState, std::shared_ptr<Sprite> > sprite_map_;
 
-		units::GunLevel current_level_;
+		units::GunLevel current_level() const;
+
+		units::GunExperience current_experience_;
 
 		std::shared_ptr<Sprite> horizontal_projectiles_[units::kMaxGunLevel];
 		std::shared_ptr<Sprite> vertical_projectiles_[units::kMaxGunLevel];
@@ -85,6 +87,8 @@ class PolarStar {
 				HorizontalFacing horizontal_facing, VerticalFacing vertical_facing,
 				bool gun_up,
 				units::Game x, units::Game y);
+
+		void collectExperience(units::GunExperience experience);
 
 		void startFire(units::Game player_x, units::Game player_y,
 				HorizontalFacing horizontal_facing, VerticalFacing vertical_facing,

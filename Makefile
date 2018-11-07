@@ -16,7 +16,7 @@ OBJECTS=$(patsubst %.cpp,$(OBJDIR)/%.o,$(SRCS))
 # -std=c++03=Enforce C++03 standard compliance. (You could also use C++11 if you
 #  want to be more up-to-date).
 # -MMD=Create a .d file to store the rule for the header dependencies of each object.
-CFLAGS=-g -std=c++11 -MMD -no-pie
+CFLAGS=-g -std=c++11 -MMD
 
 # LDLIBS (Load Libraries)
 # External libraries you are using that need to be linked.
@@ -26,7 +26,7 @@ CFLAGS=-g -std=c++11 -MMD -no-pie
 LDLIBS=`sdl-config --cflags --libs` -lSDL_ttf -lm
 
 # LDFLAGS (Load/linker flags)
-LDFLAGS=
+LDFLAGS=-no-pie
 
 # The C++ compiler you are using.
 CC=g++
