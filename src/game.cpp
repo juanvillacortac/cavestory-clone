@@ -162,10 +162,6 @@ void Game::eventLoop() {
 				dorito_x = units::tileToGame(kScreenWidth) / 2,
 				dorito_y = units::tileToGame(kScreenHeight) / 2;
 
-			DeathCloudParticle::createRandomDeathClouds(particle_tools,
-					dorito_x, dorito_y,
-					1);
-
 			switch (size) {
 				case 0:
 					pickups_.add(std::shared_ptr<Pickup>(
@@ -279,8 +275,8 @@ void Game::draw(Graphics& graphics) {
 	map_->drawBackground(graphics);
 	if (bat_)
 		bat_->draw(graphics);
-	pickups_.draw(graphics);
 	entity_particle_system_.draw(graphics);
+	pickups_.draw(graphics);
 	player_->draw(graphics);
 	damage_texts_.draw(graphics);
 	map_->draw(graphics);
