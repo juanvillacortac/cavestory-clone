@@ -7,6 +7,7 @@
 #include "death_cloud_particle.h"
 #include "ttf_texts.h"
 #include "dorito.h"
+#include "flashing_pickup.h"
 
 #include <SDL/SDL.h>
 #include <stdlib.h>
@@ -250,6 +251,8 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 			DeathCloudParticle::createRandomDeathClouds(particle_tools,
 					bat_->center_x(), bat_->center_y(),
 					3);
+			pickups_.add(FlashingPickup::heartPickup(
+						graphics, bat_->center_x(), bat_->center_y()));
 			bat_.reset();
 		}
 	}

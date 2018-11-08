@@ -72,6 +72,8 @@ class Player : public Damageable,
 
 		class Health {
 			private:
+				void resetFillSprites();
+
 				units::HP damage_;
 				Timer damage_timer_;
 
@@ -89,6 +91,8 @@ class Player : public Damageable,
 
 				// returns true if we have died.
 				bool takeDamage(units::HP damage);
+
+				void addHealth(units::HP health);
 		};
 
 		MotionType motionType() const;

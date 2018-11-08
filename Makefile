@@ -16,7 +16,7 @@ OBJECTS=$(patsubst %.cpp,$(OBJDIR)/%.o,$(SRCS))
 # -std=c++03=Enforce C++03 standard compliance. (You could also use C++11 if you
 #  want to be more up-to-date).
 # -MMD=Create a .d file to store the rule for the header dependencies of each object.
-CFLAGS=-g -std=c++11 -MMD
+CFLAGS=-std=c++11 -MMD
 
 # LDLIBS (Load Libraries)
 # External libraries you are using that need to be linked.
@@ -30,6 +30,9 @@ LDFLAGS=-no-pie
 
 # The C++ compiler you are using.
 CC=g++
+
+# Debug flag
+DEBUG ?= 1
 
 # The directory to put the executable.
 BINDIR=.
@@ -49,6 +52,11 @@ all: $(EXECUTABLE)
 # Each .d file gets generated whenever its .o file is compiled.
 # Special thanks to /u/yurik for pointing this out to me!
 -include $(OBJECTS:.o=.d)
+
+# Logic for debug flag
+ifeq ($(DEBUG), 1)
+	CFLAGS += -g
+endif
 
 # Links the objects into a "cavestory" executable.
 # Also links the libs in $(LDLIBS) (SDL1.2 in our case)
