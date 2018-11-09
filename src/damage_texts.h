@@ -6,13 +6,13 @@
 #include <memory>
 #include <map>
 
-struct DamageText;
+struct FloatingNumber;
 struct Damageable;
 struct Graphics;
 
 class DamageTexts {
 	private:
-		typedef std::map<std::shared_ptr<DamageText>, std::weak_ptr<Damageable>> DamageTextMap;
+		typedef std::map<std::shared_ptr<FloatingNumber>, std::weak_ptr<Damageable>> DamageTextMap;
 
 		DamageTextMap damage_text_map_;
 	public:

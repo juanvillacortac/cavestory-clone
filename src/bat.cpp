@@ -19,7 +19,7 @@ Bat::Bat(Graphics& graphics, units::Game x, units::Game y) :
 	flight_angle_(0.0f),
 	alive_(true),
 	facing_(RIGHT),
-	damage_text_(new DamageText())
+	damage_text_(new FloatingNumber(FloatingNumber::DAMAGE))
 {
 	initializeSprites(graphics);
 }

@@ -5,7 +5,7 @@
 
 #include <memory>
 
-struct DamageText;
+struct FloatingNumber;
 
 class Damageable {
 	public:
@@ -13,7 +13,7 @@ class Damageable {
 
 		virtual units::Game center_x() const = 0;
 		virtual units::Game center_y() const = 0;
-		virtual std::shared_ptr<DamageText> get_damage_text() = 0;
+		virtual std::shared_ptr<FloatingNumber> get_damage_text() = 0;
 };
 
 inline Damageable::~Damageable() {}

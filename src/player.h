@@ -9,7 +9,7 @@
 #include "map_collidable.h"
 #include "varying_width_spr.h"
 #include "number_spr.h"
-#include "damage_text.h"
+#include "floating_number.h"
 #include "damageable.h"
 #include "timer.h"
 #include "polar_star.h"
@@ -115,7 +115,8 @@ class Player : public Damageable,
 
 		ExperienceHUD gun_experience_hud_;
 
-		std::shared_ptr<DamageText> damage_text_;
+		std::shared_ptr<FloatingNumber> damage_text_;
+		FloatingNumber experience_text_;
 
 
 		WalkingAnimation walking_animation_;
@@ -177,7 +178,7 @@ class Player : public Damageable,
 		units::Game center_x() const { return kinematics_x_.position + units::kHalfTile; }
 		units::Game center_y() const { return kinematics_y_.position + units::kHalfTile; }
 
-		std::shared_ptr<DamageText> get_damage_text() { return damage_text_; };
+		std::shared_ptr<FloatingNumber> get_damage_text() { return damage_text_; };
 
 		std::vector<std::shared_ptr<Projectile>> getProjectiles()
 		{ return polar_star_.getProjectiles(); }
