@@ -32,7 +32,7 @@ void Map::draw(Graphics& graphics) const {
 	}
 }
 
-vector<Map::CollisionTile> Map::getCollidingTiles(const Rectangle& rectangle) const {
+vector<CollisionTile> Map::getCollidingTiles(const Rectangle& rectangle) const {
 	const units::Tile first_row = units::gameToTile(rectangle.top());
 	const units::Tile last_row = units::gameToTile(rectangle.bottom());
 	const units::Tile first_col = units::gameToTile(rectangle.left());
@@ -77,7 +77,7 @@ Map* Map::createTestMap(Graphics& graphics) {
 				units::tileToPixel(1), units::tileToPixel(1)
 				));
 
-	Tile tile(WALL_TILE, sprite);
+	Tile tile(tiles::WALL_TILE, sprite);
 
 	for (units::Tile col = 0; col < num_cols; col++) {
 		for (units::Tile row = 11; row < num_rows; row++) {

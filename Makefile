@@ -16,7 +16,7 @@ OBJECTS=$(patsubst %.cpp,$(OBJDIR)/%.o,$(SRCS))
 # -std=c++03=Enforce C++03 standard compliance. (You could also use C++11 if you
 #  want to be more up-to-date).
 # -MMD=Create a .d file to store the rule for the header dependencies of each object.
-CFLAGS=-std=c++11 -MMD
+CFLAGS=-std=c++17 -MMD
 
 # LDLIBS (Load Libraries)
 # External libraries you are using that need to be linked.

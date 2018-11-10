@@ -130,8 +130,8 @@ class Player : public Damageable,
 		void updateX(units::MS elapsed_time_ms, const Map& map);
 		void updateY(units::MS elapsed_time_ms, const Map& map);
 
-		void onCollision(MapCollidable::SideType side, bool is_delta_direction);
-		void onDelta(MapCollidable::SideType side);
+		void onCollision(sides::SideType side, bool is_delta_direction);
+		void onDelta(sides::SideType side);
 
 		ParticleTools& particle_tools_;
 

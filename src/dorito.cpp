@@ -74,10 +74,10 @@ void Dorito::draw(Graphics& graphics) {
 
 int Dorito::value() const { return kValues[size_]; }
 
-void Dorito::onCollision(SideType side, bool is_delta_direction) {
-	if (side == TOP_SIDE) {
+void Dorito::onCollision(sides::SideType side, bool is_delta_direction) {
+	if (side == sides::TOP_SIDE) {
 		kinematics_y_.velocity = 0.0f;
-	} else if (side == BOTTOM_SIDE) {
+	} else if (side == sides::BOTTOM_SIDE) {
 		kinematics_y_.velocity = -kBounceSpeed;
 	} else {
 		kinematics_x_.velocity = -kinematics_x_.velocity;
