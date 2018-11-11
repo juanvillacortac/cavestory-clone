@@ -10,13 +10,25 @@ struct Accelerator;
 struct Map;
 
 class MapCollidable {
+	private:
+		enum AxisType {
+			X_AXIS,
+			Y_AXIS
+		};
+
+		void update(
+				const CollisionRectangle& collision_rectangle,
+				const Accelerator& accelerator,
+				const Kinematics& kinematics_x, const Kinematics& kinematics_y,
+				units::MS elapsed_time_ms, const Map& map,
+				Kinematics& kinematics, AxisType axis);
 	public:
 		void updateX(
 				const CollisionRectangle& collision_rectangle,
 				const Accelerator& accelerator,
 				Kinematics& kinematics_x, const Kinematics& kinematics_y,
 				units::MS elapsed_time_ms, const Map& map
-				);
+			    );
 		void updateY(
 				const CollisionRectangle& collision_rectangle,
 				const Accelerator& accelerator,

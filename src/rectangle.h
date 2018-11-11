@@ -2,6 +2,7 @@
 #define RECTANGLE_H_
 
 #include "units.h"
+#include "side_type.h"
 
 class Rectangle {
 	private:
@@ -27,6 +28,19 @@ class Rectangle {
 				left() <= other.right() &&
 				top() <= other.bottom() &&
 				bottom() >= other.top();
+		}
+
+		units::Game side(sides::SideType side) const {
+			if (side == sides::LEFT_SIDE)
+				return left();
+
+			if (side == sides::RIGHT_SIDE)
+				return right();
+
+			if (side == sides::TOP_SIDE)
+				return top();
+
+			return bottom();
 		}
 };
 
