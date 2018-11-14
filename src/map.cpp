@@ -4,6 +4,10 @@
 #include "game.h"
 #include "rectangle.h"
 
+#include <map>
+
+using namespace tiles;
+
 using std::shared_ptr;
 using std::vector;
 
@@ -70,26 +74,19 @@ Map* Map::createTestMap(Graphics& graphics) {
 				num_cols, shared_ptr<Sprite>()
 				));
 
-	shared_ptr<Sprite> sprite(new Sprite(
+	Tile wall_tile(TileType().set(WALL), shared_ptr<Sprite>(new Sprite(
 				graphics,
 				"PrtCave",
 				units::tileToPixel(1), 0,
 				units::tileToPixel(1), units::tileToPixel(1)
-				));
+				)));
 
-	Tile tile(tiles::WALL_TILE, sprite);
-
-	for (units::Tile col = 0; col < num_cols; col++) {
-		for (units::Tile row = 11; row < num_rows; row++) {
-			map->tiles_[row][col] = tile;
-		}
-	}
-
-	map->tiles_[10][5] = tile;
-	map->tiles_[10][7] = tile;
-	map->tiles_[9][6] = tile;
-	map->tiles_[10][6] = tile;
-	map->tiles_[7][12] = tile;
+	Tile rock_tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"PrtCave",
+				units::tileToPixel(0), units::tileToPixel(1),
+				units::tileToPixel(1), units::tileToPixel(1)
+				)));
 
 	// Chains stuff
 	shared_ptr<Sprite> chain_top(new Sprite(
@@ -110,6 +107,85 @@ Map* Map::createTestMap(Graphics& graphics) {
 				units::tileToPixel(13), units::tileToPixel(2),
 				units::tileToPixel(1), units::tileToPixel(1)
 				));
+
+	enum {
+		LTT, // Left Top Tall
+		LTS, // Left Top Short
+		RTS, // Right Top Short
+		RTT, // Right Top Tall
+		LBT, // Left Bottom Tall
+		LBS, // Left Bottom Short
+		RBS, // Right Bottom Short
+		RBT, // Right Bottom Tall
+		NUM_SLOPES
+	};
+
+	Tile slope_tile[NUM_SLOPES];
+
+	for (int i = 0; i < NUM_SLOPES; i++) {
+		slope_tile[i] = Tile(
+				TileType().set(SLOPE).
+				set(i / 2 % 2 == 0 ? LEFT_SLOPE : RIGHT_SLOPE).
+				set(i / 4 == 0 ? TOP_SLOPE : BOTTOM_SLOPE).
+				set((i + 1) / 2 % 2 == 0 ? TALL_SLOPE : SHORT_SLOPE),
+				shared_ptr<Sprite>(new Sprite(
+						graphics, "PrtCave",
+						units::tileToPixel(2 + i % 4), units::tileToPixel(i / 4),
+						units::tileToPixel(1), units::tileToPixel(1)
+						)
+					)
+				);
+	}
+
+	for (units::Tile col = 0; col < num_cols; col++) {
+		for (units::Tile row = 12; row < num_rows; row++) {
+			map->tiles_[row][col] = wall_tile;
+		}
+	}
+
+	for (units::Tile col = 0; col < num_cols; col++)
+		if (col < 13 || col > 17)
+		map->tiles_[11][col] = wall_tile;
+
+	map->tiles_[10][5] = wall_tile;
+	map->tiles_[10][7] = wall_tile;
+	map->tiles_[9][6] = wall_tile;
+	map->tiles_[10][6] = wall_tile;
+	map->tiles_[7][12] = wall_tile;
+
+	map->tiles_[11][13] = slope_tile[LBT];
+	map->tiles_[11][14] = slope_tile[LBS];
+
+	map->tiles_[11][15] = rock_tile;
+
+	map->tiles_[11][16] = slope_tile[RBS];
+	map->tiles_[11][17] = slope_tile[RBT];
+
+	int temp_row = 3;
+
+	map->tiles_[5][temp_row] = wall_tile;
+	map->tiles_[4][temp_row++] = wall_tile;
+	map->tiles_[5][temp_row] = slope_tile[LTT];
+	map->tiles_[4][temp_row++] = wall_tile;
+	map->tiles_[5][temp_row] = slope_tile[LTS];
+	map->tiles_[4][temp_row++] = wall_tile;
+	map->tiles_[4][temp_row++] = wall_tile;
+	map->tiles_[5][temp_row] = slope_tile[RTS];
+	map->tiles_[4][temp_row++] = wall_tile;
+	map->tiles_[5][temp_row] = slope_tile[RTT];
+	map->tiles_[4][temp_row++] = wall_tile;
+	map->tiles_[4][temp_row++] = wall_tile;
+	map->tiles_[5][temp_row - 1] = wall_tile;
+
+	map->bkg_tiles_[6][3] = chain_top;
+	for (units::Tile col = 7; col <= 9; col++)
+		map->bkg_tiles_[col][3] = chain_body;
+	map->bkg_tiles_[10][3] = chain_bottom;
+
+	map->bkg_tiles_[6][9] = chain_top;
+	for (units::Tile col = 7; col <= 9; col++)
+		map->bkg_tiles_[col][9] = chain_body;
+	map->bkg_tiles_[10][9] = chain_bottom;
 
 	map->bkg_tiles_[8][12] = chain_top;
 	map->bkg_tiles_[9][12] = chain_body;
