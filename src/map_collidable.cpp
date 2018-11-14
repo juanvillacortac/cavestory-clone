@@ -1,5 +1,4 @@
 #include "map_collidable.h"
-
 #include "kinematics.h"
 #include "accelerators.h"
 #include "collision_rectangle.h"
@@ -14,7 +13,7 @@ namespace {
 			const Map& map,
 			const Rectangle& rectangle,
 			sides::SideType direction) {
-		std::vector<CollisionTile> tiles(map.getCollidingTiles(rectangle));
+		std::vector<CollisionTile> tiles(map.getCollidingTiles(rectangle, direction));
 
 		for (size_t i = 0; i < tiles.size(); i++) {
 			const sides::SideType side = sides::opposite_side(direction);
