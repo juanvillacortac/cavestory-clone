@@ -39,10 +39,6 @@ void Map::draw(Graphics& graphics) const {
 vector<CollisionTile> Map::getCollidingTiles(
 		const Rectangle& rectangle,
 		sides::SideType direction) const {
-	/* const units::Tile first_row = units::gameToTile(rectangle.top());
-	 * const units::Tile last_row = units::gameToTile(rectangle.bottom());
-	 * const units::Tile first_col = units::gameToTile(rectangle.left());
-	 * const units::Tile last_col = units::gameToTile(rectangle.right());*/
 	const units::Tile first_primary =
 		units::gameToTile(rectangle.side(sides::opposite_side(direction)));
 	const units::Tile last_primary =
