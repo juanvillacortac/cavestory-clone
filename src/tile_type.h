@@ -32,6 +32,7 @@ namespace tiles {
 				return RIGHT_SLOPE;
 			if (side == sides::TOP_SIDE)
 				return TOP_SLOPE;
+
 			return BOTTOM_SLOPE;
 		}
 }

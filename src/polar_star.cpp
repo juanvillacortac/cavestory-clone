@@ -286,16 +286,16 @@ bool PolarStar::Projectile::update(units::MS elapsed_time_ms, const Map& map, Pa
 
 		const bool should_test_slopes = true;
 
-		const std::optional<units::Game> maybe_position(
+		const CollisionTile::TestCollisionInfo test_info(
 				colliding_tiles[i].testCollision(
 					side, perpendicular_position, leading_position, should_test_slopes));
 
-		if (maybe_position) {
+		if (test_info.is_colliding) {
 			const units::Game collision_x = sides::vertical(side) ?
 				perpendicular_position :
-				*maybe_position;
+				test_info.position;
 			const units::Game collision_y = sides::vertical(side) ?
-				*maybe_position :
+				test_info.position :
 				perpendicular_position;
 
 			particle_tools.front_system.addNewParticle(std::shared_ptr<Particle>(

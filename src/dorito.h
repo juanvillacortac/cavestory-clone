@@ -25,7 +25,7 @@ class Dorito :
 		int value() const;
 		PickupType type() const { return EXPERIENCE; }
 	private:
-		void onCollision(sides::SideType side, bool is_delta_direction);
+		void onCollision(sides::SideType side, bool is_delta_direction, const tiles::TileType& tile_type);
 		void onDelta(sides::SideType side) {}
 
 		Kinematics kinematics_x_, kinematics_y_;

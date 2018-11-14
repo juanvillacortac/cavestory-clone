@@ -3,6 +3,9 @@
 
 #include "units.h"
 #include "side_type.h"
+#include "tile_type.h"
+
+ #include <optional>
 
 struct CollisionRectangle;
 struct Kinematics;
@@ -21,22 +24,22 @@ class MapCollidable {
 				const Accelerator& accelerator,
 				const Kinematics& kinematics_x, const Kinematics& kinematics_y,
 				units::MS elapsed_time_ms, const Map& map,
+				const std::optional<tiles::TileType>& maybe_ground_tile,
 				Kinematics& kinematics, AxisType axis);
 	public:
 		void updateX(
 				const CollisionRectangle& collision_rectangle,
 				const Accelerator& accelerator,
 				Kinematics& kinematics_x, const Kinematics& kinematics_y,
-				units::MS elapsed_time_ms, const Map& map
-			    );
+				units::MS elapsed_time_ms, const Map& map);
 		void updateY(
 				const CollisionRectangle& collision_rectangle,
 				const Accelerator& accelerator,
 				const Kinematics& kinematics_x, Kinematics& kinematics_y,
-				units::MS elapsed_time_ms, const Map& map
-				);
+				units::MS elapsed_time_ms, const Map& map,
+				const std::optional<tiles::TileType>& maybe_ground_tile);
 
-		virtual void onCollision(sides::SideType side, bool is_delta_direction) = 0;
+		virtual void onCollision(sides::SideType side, bool is_delta_direction, const tiles::TileType& tile_type) = 0;
 		virtual void onDelta(sides::SideType side) = 0;
 
 		virtual ~MapCollidable() {}

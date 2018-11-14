@@ -14,8 +14,10 @@
 #include "timer.h"
 #include "polar_star.h"
 #include "hud_experience.h"
+#include "tile_type.h"
 
 #include <cassert>
+#include <optional>
 
 struct Graphics;
 struct Map;
@@ -102,10 +104,10 @@ class Player : public Damageable,
 				HORIZONTAL : intended_vertical_facing_;
 		}
 
-		bool on_ground() const { return on_ground_; }
+		bool on_ground() const { return static_cast<bool>(maybe_ground_tile_); }
 		bool gun_up() const
 		{ return motionType() == WALKING && walking_animation_.stride() != STRIDE_MIDDLE; }
-		bool on_ground_;
+		std::optional<tiles::TileType> maybe_ground_tile_;
 		bool jump_active_;
 		bool interacting_;
 
@@ -130,7 +132,7 @@ class Player : public Damageable,
 		void updateX(units::MS elapsed_time_ms, const Map& map);
 		void updateY(units::MS elapsed_time_ms, const Map& map);
 
-		void onCollision(sides::SideType side, bool is_delta_direction);
+		void onCollision(sides::SideType side, bool is_delta_direction, const tiles::TileType& tile_type);
 		void onDelta(sides::SideType side);
 
 		ParticleTools& particle_tools_;

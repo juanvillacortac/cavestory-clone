@@ -59,7 +59,7 @@ bool Dorito::update(units::MS elapsed_time, const Map& map) {
 
 	MapCollidable::updateY(
 			kCollisionRectangles[size_], ConstantAccelerator::kGravity,
-			kinematics_x_, kinematics_y_, elapsed_time, map);
+			kinematics_x_, kinematics_y_, elapsed_time, map, std::nullopt);
 	MapCollidable::updateX(
 			kCollisionRectangles[size_], kFriction,
 			kinematics_x_, kinematics_y_, elapsed_time, map);
@@ -74,7 +74,7 @@ void Dorito::draw(Graphics& graphics) {
 
 int Dorito::value() const { return kValues[size_]; }
 
-void Dorito::onCollision(sides::SideType side, bool is_delta_direction) {
+void Dorito::onCollision(sides::SideType side, bool is_delta_direction, const tiles::TileType& tile_type) {
 	if (side == sides::TOP_SIDE) {
 		kinematics_y_.velocity = 0.0f;
 	} else if (side == sides::BOTTOM_SIDE) {
