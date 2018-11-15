@@ -2,6 +2,7 @@
 #define UNITS_H_
 
 #include "config.h"
+#include "vector2d.h"
 
 #include <cmath>
 
@@ -70,5 +71,12 @@ namespace units {
 
 	const Game kHalfTile = tileToGame(1) / 2.0f;
 }
+
+typedef Vector2D<units::Tile> Tile2D;
+
+typedef Vector2D<units::Game> Position2D;
+typedef Vector2D<units::Game> Dimensions2D; 
+
+typedef Vector2D<units::Velocity> Velocity2D; 
 
 #endif // UNITS_H_

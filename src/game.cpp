@@ -11,7 +11,7 @@
 
 #include <SDL/SDL.h>
 #include <stdlib.h>
-#include <time.h>
+//#include <time.h>
 
 namespace {
 	const units::FPS kFps = 60;
@@ -22,7 +22,9 @@ units::Tile Game::kScreenWidth = 20;
 units::Tile Game::kScreenHeight = 15;
 
 Game::Game() {
-	srand(static_cast<unsigned int>(time(NULL)));
+	//srand(static_cast<unsigned int>(time(NULL)));
+	unsigned int seed = 1414122720;
+	srand(seed);
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 
