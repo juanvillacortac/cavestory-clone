@@ -13,20 +13,14 @@ struct Accelerator;
 struct Map;
 
 class MapCollidable {
-	private:
-		enum AxisType {
-			X_AXIS,
-			Y_AXIS
+	public:
+		enum CollisionType {
+			BOUNCING_COLLISION,
+				STICKY_COLLISION
 		};
 
-		void update(
-				const CollisionRectangle& collision_rectangle,
-				const Accelerator& accelerator,
-				const Kinematics& kinematics_x, const Kinematics& kinematics_y,
-				units::MS elapsed_time_ms, const Map& map,
-				const std::optional<tiles::TileType>& maybe_ground_tile,
-				Kinematics& kinematics, AxisType axis);
-	public:
+		MapCollidable(CollisionType collision_type) : collision_type_(collision_type) {}
+
 		void updateX(
 				const CollisionRectangle& collision_rectangle,
 				const Accelerator& accelerator,
@@ -43,6 +37,21 @@ class MapCollidable {
 		virtual void onDelta(sides::SideType side) = 0;
 
 		virtual ~MapCollidable() {}
+	private:
+		enum AxisType {
+			X_AXIS,
+			Y_AXIS
+		};
+
+		void update(
+				const CollisionRectangle& collision_rectangle,
+				const Accelerator& accelerator,
+				const Kinematics& kinematics_x, const Kinematics& kinematics_y,
+				units::MS elapsed_time_ms, const Map& map,
+				const std::optional<tiles::TileType>& maybe_ground_tile,
+				Kinematics& kinematics, AxisType axis);
+
+		CollisionType collision_type_; 
 };
 
 #endif // MAP_COLLIDABLE_H_

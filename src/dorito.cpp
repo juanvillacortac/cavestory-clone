@@ -35,6 +35,7 @@ namespace {
 }
 
 Dorito::Dorito(Graphics& graphics, units::Game center_x, units::Game center_y, SizeType size) :
+	MapCollidable(MapCollidable::BOUNCING_COLLISION),
 	kinematics_x_(center_x - units::kHalfTile, (rand() % 11 - 5) * 0.025f),
 	kinematics_y_(center_y - units::kHalfTile, (rand() % 11 - 5) * 0.025f),
 	sprite_(
