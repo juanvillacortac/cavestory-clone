@@ -1,8 +1,8 @@
 # WIP: A SDL Cave Story clone
 To compile, you must satisfy the following dependencies:
 
- - SDL 1.2 (libsdl1.2-dev).
- - SDL 1.2 ttf (libsdl1.2_ttf-dev).
+ - SDL2 (libsdl2-dev).
+ - SDL2 ttf (libsdl2_ttf-dev).
 
 Before, run `make`, or `make && make run`.
 

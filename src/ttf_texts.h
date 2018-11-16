@@ -4,8 +4,8 @@
 #include "units.h"
 
 #include <string>
-#include <SDL/SDL.h>
-#include <SDL/SDL_ttf.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 struct Graphics;
 
@@ -13,9 +13,13 @@ class TTFText {
 	private:
 		TTF_Font* font_;
 		SDL_Surface* text_surface_;
+		SDL_Texture* text_texture_;
+		SDL_Renderer* renderer_;
 
 		units::Game x_;
 		units::Game y_;
+	protected:
+		SDL_Rect source_rect_;
 	public:
 		TTFText(
 				Graphics& graphics,

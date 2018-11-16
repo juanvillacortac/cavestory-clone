@@ -4,13 +4,13 @@
 #include "units.h"
 
 #include <string>
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 struct Graphics;
 
 class Sprite {
 	private:
-		SDL_Surface* spr_sheet_;
+		SDL_Texture* spr_sheet_;
 	protected:
 		SDL_Rect source_rect_;
 	public:

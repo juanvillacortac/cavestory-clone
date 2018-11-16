@@ -1,7 +1,7 @@
 #include "backdrop.h"
 #include "game.h"
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 namespace {
 	const units::Tile kBackgroundSize = 4;

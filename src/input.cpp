@@ -9,13 +9,13 @@ void Input::beginNewFrame() {
 }
 
 void Input::keyDownEvent(const SDL_Event& event) {
-	pressed_keys_[event.key.keysym.sym] = true;
-	held_keys_[event.key.keysym.sym] = true;
+	pressed_keys_[event.key.keysym.scancode] = true;
+	held_keys_[event.key.keysym.scancode] = true;
 }
 
 void Input::keyUpEvent(const SDL_Event& event) {
-	released_keys_[event.key.keysym.sym] = true;
-	held_keys_[event.key.keysym.sym] = false;
+	released_keys_[event.key.keysym.scancode] = true;
+	held_keys_[event.key.keysym.scancode] = false;
 }
 
 void Input::joyButtonDownEvent(const SDL_Event& event) {
@@ -32,15 +32,15 @@ void Input::joyAxisEvent(const SDL_Event& event) {
 	axis_value_[event.jaxis.axis] = event.jaxis.value;
 }
 
-bool Input::wasKeyPressed(SDLKey key) {
+bool Input::wasKeyPressed(SDL_Scancode key) {
 	return pressed_keys_[key];
 }
 
-bool Input::wasKeyReleased(SDLKey key) {
+bool Input::wasKeyReleased(SDL_Scancode key) {
 	return released_keys_[key];
 }
 
-bool Input::isKeyHeld(SDLKey key) {
+bool Input::isKeyHeld(SDL_Scancode key) {
 	return held_keys_[key];
 }
 

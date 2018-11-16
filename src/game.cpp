@@ -9,7 +9,7 @@
 #include "dorito.h"
 #include "flashing_pickup.h"
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <stdlib.h>
 //#include <time.h>
 
@@ -92,7 +92,8 @@ void Game::eventLoop() {
 					running = false;
 					break;
 				case SDL_KEYDOWN:
-					input.keyDownEvent(event);
+					if (!event.key.repeat)
+						input.keyDownEvent(event);
 					break;
 				case SDL_KEYUP:
 					input.keyUpEvent(event);
@@ -110,18 +111,18 @@ void Game::eventLoop() {
 			}
 		}
 
-		if (input.wasKeyPressed(SDLK_ESCAPE)) {
+		if (input.wasKeyPressed(SDL_SCANCODE_ESCAPE)) {
 			running = false;
 		}
 
 		// Player movement
-		if (input.isKeyHeld(SDLK_LEFT) && input.isKeyHeld(SDLK_RIGHT)) {
+		if (input.isKeyHeld(SDL_SCANCODE_LEFT) && input.isKeyHeld(SDL_SCANCODE_RIGHT)) {
 			player_->stopMoving();
 		}
-		else if (input.isKeyHeld(SDLK_LEFT) || input.getJoyAxis(0) < -8000) {
+		else if (input.isKeyHeld(SDL_SCANCODE_LEFT) || input.getJoyAxis(0) < -8000) {
 			player_->startMovingLeft();
 		}
-		else if (input.isKeyHeld(SDLK_RIGHT) || input.getJoyAxis(0) > 8000) {
+		else if (input.isKeyHeld(SDL_SCANCODE_RIGHT) || input.getJoyAxis(0) > 8000) {
 			player_->startMovingRight();
 		}
 		else {
@@ -129,36 +130,36 @@ void Game::eventLoop() {
 		}
 
 		// Looking
-		if (input.isKeyHeld(SDLK_UP) && input.isKeyHeld(SDLK_DOWN)) {
+		if (input.isKeyHeld(SDL_SCANCODE_UP) && input.isKeyHeld(SDL_SCANCODE_DOWN)) {
 			player_->lookHorizontal();
 		}
-		else if (input.isKeyHeld(SDLK_UP) || input.getJoyAxis(1) < -8000) {
+		else if (input.isKeyHeld(SDL_SCANCODE_UP) || input.getJoyAxis(1) < -8000) {
 			player_->lookUp();
 		}
-		else if (input.isKeyHeld(SDLK_DOWN) || input.getJoyAxis(1) > 8000) {
+		else if (input.isKeyHeld(SDL_SCANCODE_DOWN) || input.getJoyAxis(1) > 8000) {
 			player_->lookDown();
 		} else {
 			player_->lookHorizontal();
 		}
 
 		// Player Jump
-		if (input.wasKeyPressed(SDLK_q) || input.wasJoyButtonPressed(0)) {
+		if (input.wasKeyPressed(SDL_SCANCODE_Q) || input.wasJoyButtonPressed(0)) {
 			player_->startJump();
 		}
-		else if (input.wasKeyReleased(SDLK_q) || input.wasJoyButtonReleased(0)){
+		else if (input.wasKeyReleased(SDL_SCANCODE_Q) || input.wasJoyButtonReleased(0)){
 			player_->stopJump();
 		}
 
 		// Player Fire
-		if (input.wasKeyPressed(SDLK_w) || input.wasJoyButtonPressed(1)) {
+		if (input.wasKeyPressed(SDL_SCANCODE_W) || input.wasJoyButtonPressed(1)) {
 			player_->startFire();
 		}
-		else if (input.wasKeyReleased(SDLK_w) || input.wasJoyButtonReleased(1)) {
+		else if (input.wasKeyReleased(SDL_SCANCODE_W) || input.wasJoyButtonReleased(1)) {
 			player_->stopFire();
 		}
 
 		// Drop Doritos
-		if (input.wasKeyPressed(SDLK_e) || input.wasJoyButtonPressed(4)) {
+		if (input.wasKeyPressed(SDL_SCANCODE_E) || input.wasJoyButtonPressed(4)) {
 			int size = rand() % 3;
 
 			int
@@ -196,12 +197,12 @@ void Game::eventLoop() {
 		}
 
 		// Fullscreen
-		if (input.wasKeyPressed(SDLK_F4)) {
+		if (input.wasKeyPressed(SDL_SCANCODE_F4)) {
 			graphics.setFullscreen();
 		}
 
 		// Reset game
-		if (input.wasKeyPressed(SDLK_r) || input.wasJoyButtonPressed(3)) {
+		if (input.wasKeyPressed(SDL_SCANCODE_R) || input.wasJoyButtonPressed(3)) {
 			player_.reset(new Player(
 						graphics,
 						particle_tools,

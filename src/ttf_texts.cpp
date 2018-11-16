@@ -22,13 +22,16 @@ TTFText::TTFText(
 
 	if (alpha) {
 		const Uint32 black_color = SDL_MapRGB(text_surface_->format, 0, 0, 0);
-		SDL_SetColorKey(text_surface_, SDL_SRCCOLORKEY, black_color);
+		SDL_SetColorKey(text_surface_, SDL_TRUE, black_color);
 	}
+
+	text_texture_ = graphics.surfaceToTexture(text_surface_);
+	SDL_FreeSurface(text_surface_); 
 }
 
 void TTFText::draw(Graphics& graphics) {
 	SDL_Rect destination_rectangle;
 	destination_rectangle.x = units::gameToPixel(x_);
 	destination_rectangle.y = units::gameToPixel(y_);
-	graphics.blitNullSurface(text_surface_, &destination_rectangle);
+	graphics.blitSurface(text_texture_, NULL, &destination_rectangle);
 }
