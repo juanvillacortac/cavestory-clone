@@ -11,26 +11,26 @@ using namespace tiles;
 using std::shared_ptr;
 using std::vector;
 
-void Map::drawBackground(Graphics& graphics) const {
-	backdrop_->draw(graphics);
+void Map::drawBackground(Graphics& graphics, SDL_Rect& camera) const {
+	backdrop_->draw(graphics, camera);
 	for (size_t row = 0; row < bkg_tiles_.size(); row++) {
 		for (size_t col = 0; col < bkg_tiles_[row].size(); col++) {
 			if (bkg_tiles_[row][col]) {
 				bkg_tiles_[row][col]->draw(
 						graphics,
-						units::tileToGame(col), units::tileToGame(row));
+						units::tileToGame(col), units::tileToGame(row), &camera);
 			}
 		}
 	}
 }
 
-void Map::draw(Graphics& graphics) const {
+void Map::draw(Graphics& graphics, SDL_Rect& camera) const {
 	for (size_t row = 0; row < tiles_.size(); row++) {
 		for (size_t col = 0; col < tiles_[row].size(); col++) {
 			if (tiles_[row][col].sprite) {
 				tiles_[row][col].sprite->draw(
 						graphics,
-						units::tileToGame(col), units::tileToGame(row));
+						units::tileToGame(col), units::tileToGame(row), &camera);
 			}
 		}
 	}

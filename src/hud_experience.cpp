@@ -71,18 +71,18 @@ void ExperienceHUD::draw(Graphics& graphics,
 		units::GunLevel gun_level,
 		units::GunExperience current_experience,
 		units::GunExperience level_experience) {
-	level_sprite_.draw(graphics, units::tileToGame(kLevelDrawX), kDrawY);
-	NumberSpr::HUDNumber(graphics, gun_level, 2).draw(graphics, kLevelNumberDrawX, kDrawY);
+	level_sprite_.draw(graphics, units::tileToGame(kLevelDrawX), kDrawY, NULL);
+	NumberSpr::HUDNumber(graphics, gun_level, 2).draw(graphics, NULL, kLevelNumberDrawX, kDrawY);
 
-	experience_bar_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY);
+	experience_bar_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY, NULL);
 
 	if (current_experience < level_experience) {
 		fill_sprite_.set_percentage_width(current_experience * 1.0f / level_experience);
-		fill_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY);
+		fill_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY, NULL);
 	} else {
-		max_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY);
+		max_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY, NULL);
 	}
 
 	if (flash_timer_.active() && flash_timer_.current_time() / kFlashPeriod % 2 == 0)
-		flash_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY);
+		flash_sprite_.draw(graphics, kExperienceBarDrawX, kDrawY, NULL);
 }

@@ -4,6 +4,7 @@
 #include "rectangle.h"
 
 struct Graphics;
+struct SDL_Rect;
 struct Map;
 
 class Pickup {
@@ -15,7 +16,7 @@ class Pickup {
 		};
 
 		virtual Rectangle collisionRectangle() const = 0;
-		virtual void draw(Graphics& graphics) = 0;
+		virtual void draw(Graphics& graphics, SDL_Rect& camera) = 0;
 		virtual bool update(units::MS elapsed_time, const Map& map) = 0;
 		virtual int value() const = 0;
 		virtual PickupType type() const = 0;

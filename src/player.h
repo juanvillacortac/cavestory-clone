@@ -153,7 +153,7 @@ class Player : public Damageable,
 		Player(Graphics& graphics, ParticleTools& particle_tools, units::Game x, units::Game y);
 
 		void update(units::MS elapsed_time_ms, const Map& map);
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 
 		void startMovingLeft();
 		void startMovingRight();
@@ -169,7 +169,7 @@ class Player : public Damageable,
 		void startFire();
 		void stopFire();
 
-		void drawHUD(Graphics& graphics);
+		void drawHUD(Graphics& graphics, SDL_Rect& camera);
 
 		void takeDamage(units::HP damage);
 

@@ -11,6 +11,7 @@
 
 #include <SDL2/SDL.h>
 #include <stdlib.h>
+#include <iostream>
 //#include <time.h>
 
 namespace {
@@ -20,6 +21,13 @@ namespace {
 
 units::Tile Game::kScreenWidth = 20;
 units::Tile Game::kScreenHeight = 15;
+
+SDL_Rect camera = {
+	0,
+	0,
+	(int)units::tileToPixel(Game::kScreenWidth),
+	(int)units::tileToPixel(Game::kScreenHeight)
+};
 
 Game::Game() {
 	//srand(static_cast<unsigned int>(time(NULL)));
@@ -52,8 +60,8 @@ void Game::eventLoop() {
 	player_.reset(new Player(
 				graphics,
 				particle_tools,
-				units::tileToGame(kScreenWidth / 2),
-				units::tileToGame(kScreenWidth / 2)
+				units::tileToGame(kScreenWidth - 1) / 2,
+				units::tileToGame(kScreenHeight - 1) / 2
 				));
 
 	damage_texts_.addDamageable(player_);
@@ -173,7 +181,8 @@ void Game::eventLoop() {
 									graphics,
 									dorito_x,
 									dorito_y,
-									Dorito::SMALL)));
+									Dorito::SMALL
+									)));
 					break;
 				case 1:
 
@@ -182,7 +191,8 @@ void Game::eventLoop() {
 									graphics,
 									dorito_x,
 									dorito_y,
-									Dorito::MEDIUM)));
+									Dorito::MEDIUM
+									)));
 					break;
 				case 2:
 
@@ -191,7 +201,8 @@ void Game::eventLoop() {
 									graphics,
 									dorito_x,
 									dorito_y,
-									Dorito::LARGE)));
+									Dorito::LARGE
+									)));
 					break;
 			}
 		}
@@ -206,8 +217,8 @@ void Game::eventLoop() {
 			player_.reset(new Player(
 						graphics,
 						particle_tools,
-						units::tileToGame(kScreenWidth / 2),
-						units::tileToGame(kScreenWidth / 2) - units::tileToPixel(4)
+						units::tileToGame(kScreenWidth - 1) / 2,
+						units::tileToGame(kScreenHeight - 1) / 2
 						));
 			damage_texts_.addDamageable(player_);
 			bat_.reset(new Bat(
@@ -244,6 +255,24 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 
 	player_->update(elapsed_time_ms, *map_);
 
+	camera.x = units::gameToPixel(player_->center_x() - units::tileToGame(kScreenWidth) / 2);
+	camera.y = units::gameToPixel(player_->center_y() - units::tileToGame(kScreenHeight) / 2);
+
+	//std::cout << camera.x << " " << camera.y << std::endl;
+
+	/*if ( camera.x < 0 ) {
+		camera.x = 0;
+	}
+	if ( camera.y < 0 ) {
+		camera.y = 0;
+	}
+	if ( camera.x > units::tileToPixel(kScreenWidth) - camera.w ) {
+		camera.x = units::tileToPixel(kScreenWidth) - camera.w;
+	}
+	if( camera.y > units::tileToPixel(kScreenHeight) - camera.h ) {
+		camera.y = units::tileToPixel(kScreenHeight) - camera.h;
+	}*/
+
 	if (bat_) {
 		if (!bat_->update(elapsed_time_ms, player_->center_x())) {
 			ParticleTools particle_tools = {
@@ -278,17 +307,17 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 void Game::draw(Graphics& graphics) {
 	graphics.clear();
 
-	map_->drawBackground(graphics);
+	map_->drawBackground(graphics, camera);
 	if (bat_)
-		bat_->draw(graphics);
-	entity_particle_system_.draw(graphics);
-	pickups_.draw(graphics);
-	player_->draw(graphics);
-	damage_texts_.draw(graphics);
-	map_->draw(graphics);
-	front_particle_system_.draw(graphics);
+		bat_->draw(graphics, camera);
+	entity_particle_system_.draw(graphics, camera);
+	pickups_.draw(graphics, camera);
+	player_->draw(graphics, camera);
+	damage_texts_.draw(graphics, camera);
+	map_->draw(graphics, camera);
+	front_particle_system_.draw(graphics, camera);
 
-	player_->drawHUD(graphics);
+	player_->drawHUD(graphics, camera);
 
 	text_->draw(graphics);
 

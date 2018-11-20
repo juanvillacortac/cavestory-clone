@@ -17,6 +17,6 @@ bool ImmobileSingleLoopParticle::update(units::MS /*elapsed_time*/) {
 	return sprite_.num_completed_loops() == 0;
 }
 
-void ImmobileSingleLoopParticle::draw(Graphics& graphics) {
-	sprite_.draw(graphics, x_, y_);
+void ImmobileSingleLoopParticle::draw(Graphics& graphics, SDL_Rect& camera) {
+	sprite_.draw(graphics, x_, y_, &camera);
 } 

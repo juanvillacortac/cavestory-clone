@@ -22,7 +22,7 @@ class Sprite {
 
 		virtual void update() {}
 
-		void draw(Graphics& graphics, units::Game x, units::Game y);
+		void draw(Graphics& graphics, units::Game x, units::Game y, SDL_Rect* camera);
 };
 
 #endif // SPRITE_H_

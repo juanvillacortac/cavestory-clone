@@ -33,7 +33,7 @@ class FlashingPickup : public Pickup {
 	public:
 		Rectangle collisionRectangle() const;
 
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 		bool update(units::MS elapsed_time, const Map& map);
 
 		int value() const { return value_; }

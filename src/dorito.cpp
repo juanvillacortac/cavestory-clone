@@ -68,9 +68,9 @@ bool Dorito::update(units::MS elapsed_time, const Map& map) {
 	return timer_.active();
 }
 
-void Dorito::draw(Graphics& graphics) {
+void Dorito::draw(Graphics& graphics, SDL_Rect& camera) {
 	if (timer_.current_time() < kFlashTime || timer_.current_time() / kFlashPeriod % 2 == 0)
-		sprite_.draw(graphics, kinematics_x_.position, kinematics_y_.position);
+		sprite_.draw(graphics, kinematics_x_.position, kinematics_y_.position, &camera);
 }
 
 int Dorito::value() const { return kValues[size_]; }

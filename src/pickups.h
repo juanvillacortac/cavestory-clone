@@ -10,6 +10,7 @@ struct Graphics;
 struct Map;
 struct Pickup;
 struct Player;
+struct SDL_Rect;
 
 class Pickups {
 	private:
@@ -19,7 +20,7 @@ class Pickups {
 		void add(std::shared_ptr<Pickup> pickup) { pickups_.insert(pickup); }
 		void handleCollision(Player& player);
 		void update(units::MS elapsed_time, const Map& map);
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 };
 
 #endif // PICKUPS_H_ 

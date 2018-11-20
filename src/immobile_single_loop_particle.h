@@ -17,7 +17,7 @@ class ImmobileSingleLoopParticle : public Particle {
 				units::Game x, units::Game y);
 
 		bool update(units::MS elapsed_time);
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 		virtual ~ImmobileSingleLoopParticle() {}
 };
 

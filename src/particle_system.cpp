@@ -13,10 +13,10 @@ void ParticleSystem::update(units::MS elapsed_time) {
 	}
 }
 
-void ParticleSystem::draw(Graphics& graphics) {
+void ParticleSystem::draw(Graphics& graphics, SDL_Rect& camera) {
 	for (ParticleSet::iterator iter = particles_.begin();
 			iter != particles_.end();
 			iter++) {
-		(*iter)->draw(graphics);
+		(*iter)->draw(graphics, camera);
 	}
 }

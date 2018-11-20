@@ -28,10 +28,10 @@ HeadBumpParticle::HeadBumpParticle(Graphics& graphics, units::Game center_x, uni
 	max_offset_b_(static_cast<units::Game>(4 + (rand() % 16)))
 {}
 
-void HeadBumpParticle::draw(Graphics& graphics) {
+void HeadBumpParticle::draw(Graphics& graphics, SDL_Rect& camera) {
 	if (timer_.current_time() / kFlashPeriod % 2 == 0) {
-		sprite_.draw(graphics, center_x_ + particle_a_.get_x(), center_y_ + particle_a_.get_y());
-		sprite_.draw(graphics, center_x_ + particle_b_.get_x(), center_y_ + particle_b_.get_y());
+		sprite_.draw(graphics, center_x_ + particle_a_.get_x(), center_y_ + particle_a_.get_y(), &camera);
+		sprite_.draw(graphics, center_x_ + particle_b_.get_x(), center_y_ + particle_b_.get_y(), &camera);
 	}
 }
 

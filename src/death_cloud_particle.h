@@ -24,7 +24,7 @@ class DeathCloudParticle : public Particle {
 				int num_particles);
 
 		bool update(units::MS elapsed_time);
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 };
 
 #endif // DEATH_CLOUD_PARTICLE_H_ 

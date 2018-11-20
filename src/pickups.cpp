@@ -27,10 +27,10 @@ void Pickups::update(units::MS elapsed_time, const Map& map) {
 	}
 }
 
-void Pickups::draw(Graphics& graphics) {
+void Pickups::draw(Graphics& graphics, SDL_Rect& camera) {
 	for (PickupSet::iterator iter = pickups_.begin();
 			iter != pickups_.end();
 			iter++) {
-		(*iter)->draw(graphics);
+		(*iter)->draw(graphics, camera);
 	}
 } 

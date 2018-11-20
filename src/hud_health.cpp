@@ -67,17 +67,17 @@ void Player::Health::update() {
 }
 
 void Player::Health::draw(Graphics& graphics) {
-	health_bar_sprite_.draw(graphics, kHealthBarX, kHealthBarY);
+	health_bar_sprite_.draw(graphics, kHealthBarX, kHealthBarY, NULL);
 
 	if (damage_ > 0) {
 		damage_fill_sprite_.draw(
-				graphics, kHealthFillX, kHealthFillY);
+				graphics, kHealthFillX, kHealthFillY, NULL);
 	}
 
-	health_fill_sprite_.draw(graphics, kHealthFillX, kHealthFillY);
+	health_fill_sprite_.draw(graphics, kHealthFillX, kHealthFillY, NULL);
 
 	NumberSpr::HUDNumber(graphics, current_health_, kHealthNumberNumDigits).draw(
-			graphics, kHealthNumberX, kHealthNumberY);
+			graphics, NULL, kHealthNumberX, kHealthNumberY);
 }
 
 void Player::Health::resetFillSprites() {

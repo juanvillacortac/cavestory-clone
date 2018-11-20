@@ -65,6 +65,6 @@ bool Bat::update(units::MS elapsed_time_ms, units::Game player_x) {
 	return alive_;
 }
 
-void Bat::draw(Graphics& graphics) {
-	sprites_.at(getSpriteState())->draw(graphics, x_, y_);
+void Bat::draw(Graphics& graphics, SDL_Rect& camera) {
+	sprites_.at(getSpriteState())->draw(graphics, x_, y_, &camera);
 }

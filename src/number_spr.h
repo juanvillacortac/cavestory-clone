@@ -8,6 +8,7 @@
 
 struct Graphics;
 struct Sprite;
+struct SDL_Rect;
 
 class NumberSpr {
 	private:
@@ -44,10 +45,10 @@ class NumberSpr {
 		static NumberSpr ExperienceNumber(Graphics& graphics, int number)
 		{ return NumberSpr(graphics, number, 0, WHITE, PLUS); }
 
-		void draw(Graphics& graphics, units::Game x, units::Game y);
+		void draw(Graphics& graphics, SDL_Rect* camera, units::Game x, units::Game y);
 
-		void drawCentered(Graphics& graphics, units::Game x, units::Game y)
-		{ draw(graphics, x - width() / 2, y - height() / 2); }
+		void drawCentered(Graphics& graphics, SDL_Rect* camera, units::Game x, units::Game y)
+		{ draw(graphics, camera, x - width() / 2, y - height() / 2); }
 };
 
 #endif // NUMBER_SPRITE_H_ 

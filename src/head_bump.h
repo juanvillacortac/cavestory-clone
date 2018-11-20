@@ -8,6 +8,7 @@
 #include "timer.h"
 
 struct Graphics;
+struct SDL_Rect;
 
 class HeadBumpParticle : public Particle {
 	private:
@@ -21,7 +22,7 @@ class HeadBumpParticle : public Particle {
 	public:
 		HeadBumpParticle(Graphics& graphics, units::Game center_x, units::Game center_y);
 
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 		bool update(units::MS elapsed_time_ms);
 };
 

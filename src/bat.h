@@ -9,6 +9,7 @@
 
 struct Graphics;
 struct Sprite;
+struct SDL_Rect;
 
 class Bat : public Damageable {
 	private:
@@ -44,7 +45,7 @@ class Bat : public Damageable {
 		units::HP contactDamage() const;
 
 		bool update(units::MS elapsed_time_ms, units::Game player_x);
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 
 		Rectangle damageRectangle() const {
 			return Rectangle(

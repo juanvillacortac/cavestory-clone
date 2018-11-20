@@ -39,14 +39,14 @@ bool FloatingNumber::update(units::MS elapsed_time) {
 	return !timer_.expired();
 }
 
-void FloatingNumber::draw(Graphics& graphics) {
+void FloatingNumber::draw(Graphics& graphics, SDL_Rect& camera) {
 	if (timer_.expired()) return;
 
 	if (type_ == DAMAGE) {
 		NumberSpr::DamageNumber(graphics, value_).
-			drawCentered(graphics, center_x_, center_y_ + offset_y_);
+			drawCentered(graphics, &camera, center_x_, center_y_ + offset_y_);
 	} else {
 		NumberSpr::ExperienceNumber(graphics, value_).
-			drawCentered(graphics, center_x_, center_y_ + offset_y_);
+			drawCentered(graphics, &camera, center_x_, center_y_ + offset_y_);
 	}
 } 

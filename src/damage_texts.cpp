@@ -22,10 +22,10 @@ void DamageTexts::update(units::MS elapsed_time_ms) {
 	}
 }
 
-void DamageTexts::draw(Graphics& graphics) {
+void DamageTexts::draw(Graphics& graphics, SDL_Rect& camera) {
 	for (DamageTextMap::iterator iter = damage_text_map_.begin();
 			iter != damage_text_map_.end();
 			iter++) {
-		iter->first->draw(graphics);
+		iter->first->draw(graphics, camera);
 	}
 }

@@ -50,6 +50,6 @@ bool DeathCloudParticle::update(units::MS elapsed_time) {
 	return sprite_.num_completed_loops() == 0;
 }
 
-void DeathCloudParticle::draw(Graphics& graphics) {
-	sprite_.draw(graphics, center_x_ + offset_.get_x(), center_y_ + offset_.get_y());
+void DeathCloudParticle::draw(Graphics& graphics, SDL_Rect& camera) {
+	sprite_.draw(graphics, center_x_ + offset_.get_x(), center_y_ + offset_.get_y(), &camera);
 } 

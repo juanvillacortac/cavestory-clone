@@ -21,8 +21,8 @@ class Map {
 				const Rectangle& rectangle,
 				sides::SideType direction) const;
 
-		void drawBackground(Graphics& graphics) const;
-		void draw(Graphics& graphics) const;
+		void drawBackground(Graphics& graphics, SDL_Rect& camera) const;
+		void draw(Graphics& graphics, SDL_Rect& camera) const;
 	private:
 		class Tile {
 			public:

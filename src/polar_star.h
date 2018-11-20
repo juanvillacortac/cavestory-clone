@@ -13,6 +13,7 @@ struct Sprite;
 struct ExperienceHUD;
 struct Map;
 struct ParticleTools;
+struct SDL_Rect;
 
 class PolarStar {
 	private:
@@ -52,7 +53,7 @@ class PolarStar {
 				// Returns true if |this| are alive.
 				bool update(units::MS elapsed_time, const Map& map, ParticleTools& particle_tools);
 
-				void draw(Graphics& graphics);
+				void draw(Graphics& graphics, SDL_Rect& camera);
 
 				void collideWithEnemy() { alive_ = false; }
 
@@ -86,7 +87,8 @@ class PolarStar {
 				Graphics& graphics,
 				HorizontalFacing horizontal_facing, VerticalFacing vertical_facing,
 				bool gun_up,
-				units::Game x, units::Game y);
+				units::Game x, units::Game y,
+				SDL_Rect& camera);
 
 		void collectExperience(units::GunExperience experience);
 

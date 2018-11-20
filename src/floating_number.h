@@ -5,6 +5,7 @@
 #include "timer.h"
 
 struct Graphics;
+struct SDL_Rect;
 
 class FloatingNumber {
 	public:
@@ -18,7 +19,7 @@ class FloatingNumber {
 		void addValue(int value);
 		void setPosition(units::Game center_x, units::Game center_y);
 		bool update(units::MS elapsed_time);
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 	private:
 		units::Game center_x_, center_y_;
 		units::Game offset_y_;

@@ -7,7 +7,7 @@
 
 class Backdrop {
 	public:
-		virtual void draw(Graphics& graphics) const = 0;
+		virtual void draw(Graphics& graphics, SDL_Rect& camera) const = 0;
 };
 
 class FixedBackdrop : public Backdrop {
@@ -15,7 +15,7 @@ class FixedBackdrop : public Backdrop {
 		Graphics::SurfaceID surface_id_;
 	public:
 		FixedBackdrop(const std::string& path, Graphics& graphics);
-		void draw(Graphics& graphics) const;
+		void draw(Graphics& graphics, SDL_Rect& camera) const;
 };
 
 #endif // BACKDROP_H_

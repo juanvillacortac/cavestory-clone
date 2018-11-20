@@ -9,6 +9,7 @@
 struct FloatingNumber;
 struct Damageable;
 struct Graphics;
+struct SDL_Rect;
 
 class DamageTexts {
 	private:
@@ -18,7 +19,7 @@ class DamageTexts {
 	public:
 		void addDamageable(std::shared_ptr<Damageable> damageable);
 		void update(units::MS elapsed_time_ms);
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 };
 
 #endif // DAMAGE_TEXTS_H_

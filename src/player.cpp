@@ -116,17 +116,17 @@ void Player::update(units::MS elapsed_time_ms, const Map& map) {
 	// TODO: remember dat shit
 }
 
-void Player::draw(Graphics& graphics) {
+void Player::draw(Graphics& graphics, SDL_Rect& camera) {
 	if (spriteIsVisible()) {
-		polar_star_.draw(graphics, horizontal_facing_, vertical_facing(), gun_up(), kinematics_x_.position, kinematics_y_.position);
-		sprites_[getSpriteState()]->draw(graphics, kinematics_x_.position, kinematics_y_.position);
+		polar_star_.draw(graphics, horizontal_facing_, vertical_facing(), gun_up(), kinematics_x_.position, kinematics_y_.position, camera);
+		sprites_[getSpriteState()]->draw(graphics, kinematics_x_.position, kinematics_y_.position, &camera);
 	}
 
-	damage_text_->draw(graphics);
+	damage_text_->draw(graphics, camera);
 };
 
-void Player::drawHUD(Graphics& graphics) {
-	experience_text_.draw(graphics);
+void Player::drawHUD(Graphics& graphics, SDL_Rect& camera) {
+	experience_text_.draw(graphics, camera);
 
 	if (spriteIsVisible()) {
 		health_.draw(graphics);

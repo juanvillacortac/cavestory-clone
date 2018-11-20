@@ -8,6 +8,7 @@
 
 struct Particle;
 struct Graphics;
+struct SDL_Rect;
 
 class ParticleSystem {
 	private:
@@ -16,7 +17,7 @@ class ParticleSystem {
 	public:
 		void addNewParticle(std::shared_ptr<Particle> particle) { particles_.insert(particle); }
 		void update(units::MS elapsed_time);
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 };
 
 class ParticleTools {

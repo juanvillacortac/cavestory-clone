@@ -21,7 +21,7 @@ class Dorito :
 
 		Rectangle collisionRectangle() const;
 		bool update(units::MS elapsed_time, const Map& map);
-		void draw(Graphics& graphics);
+		void draw(Graphics& graphics, SDL_Rect& camera);
 		int value() const;
 		PickupType type() const { return EXPERIENCE; }
 	private:

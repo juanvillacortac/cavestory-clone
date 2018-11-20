@@ -68,20 +68,20 @@ Rectangle FlashingPickup::collisionRectangle() const {
 			rectangle_.height());
 }
 
-void FlashingPickup::draw(Graphics& graphics) {
+void FlashingPickup::draw(Graphics& graphics, SDL_Rect& camera) {
 	if (timer_.current_time() > kDissipateTime) {
-		dissipating_sprite_.draw(graphics, x_, y_);
+		dissipating_sprite_.draw(graphics, x_, y_, &camera);
 	} else if (timer_.current_time() > kFlickerTime) {
 		if (timer_.current_time() / flash_period_ % 3 == 0) {
-			sprite_.draw(graphics, x_, y_);
+			sprite_.draw(graphics, x_, y_, &camera);
 		} else if (timer_.current_time() / flash_period_ % 3 == 1) {
-			flash_sprite_.draw(graphics, x_, y_);
+			flash_sprite_.draw(graphics, x_, y_, &camera);
 		}
 	} else {
 		if (timer_.current_time() / flash_period_ % 2 == 0) {
-			sprite_.draw(graphics, x_, y_);
+			sprite_.draw(graphics, x_, y_, &camera);
 		} else {
-			flash_sprite_.draw(graphics, x_, y_);
+			flash_sprite_.draw(graphics, x_, y_, &camera);
 		}
 	}
 }

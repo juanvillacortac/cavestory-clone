@@ -70,16 +70,17 @@ void PolarStar::draw(
 		Graphics& graphics,
 		HorizontalFacing horizontal_facing, VerticalFacing vertical_facing,
 		bool gun_up,
-		units::Game player_x, units::Game player_y) {
+		units::Game player_x, units::Game player_y,
+		SDL_Rect& camera) {
 	units::Game x = gun_x(horizontal_facing, player_x);
 	units::Game y = gun_y(vertical_facing, gun_up, player_y);
 
-	sprite_map_[std::make_tuple(horizontal_facing, vertical_facing)]->draw(graphics, x, y);
+	sprite_map_[std::make_tuple(horizontal_facing, vertical_facing)]->draw(graphics, x, y, &camera);
 
 	if (projectile_a_)
-		projectile_a_->draw(graphics);
+		projectile_a_->draw(graphics, camera);
 	if (projectile_b_)
-		projectile_b_->draw(graphics);
+		projectile_b_->draw(graphics, camera);
 }
 
 void PolarStar::drawHUD(Graphics& graphics, ExperienceHUD& hud) {
@@ -89,7 +90,8 @@ void PolarStar::drawHUD(Graphics& graphics, ExperienceHUD& hud) {
 			graphics,
 			level,
 			current_experience_ - kExperiences[level - 1],
-			kExperiences[level] - kExperiences[level - 1]);
+			kExperiences[level] - kExperiences[level - 1]
+			);
 }
 
 units::Game PolarStar::gun_y(VerticalFacing vertical_facing, bool gun_up, units::Game player_y) const {
@@ -367,6 +369,6 @@ units::Game PolarStar::Projectile::getY() const {
 	return y;
 }
 
-void PolarStar::Projectile::draw(Graphics& graphics) {
-	sprite_->draw(graphics, getX(), getY());
+void PolarStar::Projectile::draw(Graphics& graphics, SDL_Rect& camera) {
+	sprite_->draw(graphics, getX(), getY(), &camera);
 } 

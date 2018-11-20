@@ -15,9 +15,14 @@ Sprite::Sprite(
 	source_rect_.h = height;
 }
 
-void Sprite::draw(Graphics& graphics, units::Game x, units::Game y) {
+void Sprite::draw(Graphics& graphics, units::Game x, units::Game y, SDL_Rect* camera) {
 	SDL_Rect destination_rectangle;
-	destination_rectangle.x = units::gameToPixel(x);
-	destination_rectangle.y = units::gameToPixel(y);
+	if (!camera) {
+		destination_rectangle.x = units::gameToPixel(x);
+		destination_rectangle.y = units::gameToPixel(y);
+	} else {
+		destination_rectangle.x = units::gameToPixel(x) - camera->x;
+		destination_rectangle.y = units::gameToPixel(y) - camera->y;
+	}
 	graphics.blitSurface(spr_sheet_, &source_rect_, &destination_rectangle);
 }
