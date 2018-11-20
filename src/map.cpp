@@ -84,10 +84,10 @@ vector<CollisionTile> Map::getCollidingTiles(
 Map* Map::createTestMap(Graphics& graphics) {
 	Map* map = new Map();
 
-	map->backdrop_.reset(new FixedBackdrop("bkBlue", graphics));
-
 	const units::Tile num_rows = 15; // 15 * 32 = 480
 	const units::Tile num_cols = 20; // 20 * 32 = 640
+
+	map->backdrop_.reset(new DinamicBackdrop("bkBlue", graphics, num_rows, num_cols, 4));
 
 	// tiles_ && bkg_tiles_ are num_rows x num_cols in size
 	map->tiles_ = vector<vector<Tile>>(

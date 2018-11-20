@@ -258,8 +258,6 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 	camera.x = units::gameToPixel(player_->center_x() - units::tileToGame(kScreenWidth) / 2);
 	camera.y = units::gameToPixel(player_->center_y() - units::tileToGame(kScreenHeight) / 2);
 
-	//std::cout << camera.x << " " << camera.y << std::endl;
-
 	/*if ( camera.x < 0 ) {
 		camera.x = 0;
 	}
