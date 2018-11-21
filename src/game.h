@@ -15,7 +15,7 @@ struct Bat;
 struct Map;
 struct TTFText;
 struct ExperienceHUD;
-struct Input;
+struct Camera;
 
 class Game {
 	private:
@@ -28,6 +28,8 @@ class Game {
 		std::unique_ptr<Map> map_;
 
 		std::shared_ptr<TTFText> text_;
+
+		std::unique_ptr<Camera> camera_;
 
 		ParticleSystem front_particle_system_, entity_particle_system_;
 

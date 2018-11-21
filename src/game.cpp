@@ -8,6 +8,7 @@
 #include "ttf_texts.h"
 #include "dorito.h"
 #include "flashing_pickup.h"
+#include "camera.h"
 
 #include <SDL2/SDL.h>
 #include <stdlib.h>
@@ -21,13 +22,6 @@ namespace {
 
 units::Tile Game::kScreenWidth = 20;
 units::Tile Game::kScreenHeight = 15;
-
-SDL_Rect camera = {
-	0,
-	0,
-	(int)units::tileToPixel(Game::kScreenWidth),
-	(int)units::tileToPixel(Game::kScreenHeight)
-};
 
 Game::Game() {
 	//srand(static_cast<unsigned int>(time(NULL)));
@@ -56,6 +50,8 @@ void Game::eventLoop() {
 		entity_particle_system_,
 		graphics
 	};
+
+	camera_.reset(new Camera(kScreenWidth, kScreenHeight));
 
 	player_.reset(new Player(
 				graphics,
@@ -255,21 +251,7 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 
 	player_->update(elapsed_time_ms, *map_);
 
-	camera.x = units::gameToPixel(player_->center_x() - units::tileToGame(kScreenWidth) / 2);
-	camera.y = units::gameToPixel(player_->center_y() - units::tileToGame(kScreenHeight) / 2);
-
-	/*if ( camera.x < 0 ) {
-		camera.x = 0;
-	}
-	if ( camera.y < 0 ) {
-		camera.y = 0;
-	}
-	if ( camera.x > units::tileToPixel(kScreenWidth) - camera.w ) {
-		camera.x = units::tileToPixel(kScreenWidth) - camera.w;
-	}
-	if( camera.y > units::tileToPixel(kScreenHeight) - camera.h ) {
-		camera.y = units::tileToPixel(kScreenHeight) - camera.h;
-	}*/
+	camera_->update(player_->center_x(), player_->center_y());
 
 	if (bat_) {
 		if (!bat_->update(elapsed_time_ms, player_->center_x())) {
@@ -305,17 +287,17 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 void Game::draw(Graphics& graphics) {
 	graphics.clear();
 
-	map_->drawBackground(graphics, camera);
+	map_->drawBackground(graphics, camera_->get());
 	if (bat_)
-		bat_->draw(graphics, camera);
-	entity_particle_system_.draw(graphics, camera);
-	pickups_.draw(graphics, camera);
-	player_->draw(graphics, camera);
-	damage_texts_.draw(graphics, camera);
-	map_->draw(graphics, camera);
-	front_particle_system_.draw(graphics, camera);
+		bat_->draw(graphics, camera_->get());
+	entity_particle_system_.draw(graphics, camera_->get());
+	pickups_.draw(graphics, camera_->get());
+	player_->draw(graphics, camera_->get());
+	damage_texts_.draw(graphics, camera_->get());
+	map_->draw(graphics, camera_->get());
+	front_particle_system_.draw(graphics, camera_->get());
 
-	player_->drawHUD(graphics, camera);
+	player_->drawHUD(graphics, camera_->get());
 
 	text_->draw(graphics);
 
