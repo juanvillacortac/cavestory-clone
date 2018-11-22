@@ -8,7 +8,6 @@
 
 using std::optional;
 
-
 namespace {
 	struct CollisionInfo {
 		units::Game position;

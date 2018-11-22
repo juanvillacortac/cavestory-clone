@@ -23,6 +23,9 @@ class Map {
 
 		void drawBackground(Graphics& graphics, SDL_Rect& camera) const;
 		void draw(Graphics& graphics, SDL_Rect& camera) const;
+
+		units::Tile rows() { return num_rows_; }
+		units::Tile cols() { return num_cols_; }
 	private:
 		class Tile {
 			public:
@@ -39,6 +42,9 @@ class Map {
 
 		std::vector<std::vector<std::shared_ptr<Sprite>>> bkg_tiles_;
 		std::vector<std::vector<Tile>> tiles_;
+
+		units::Tile num_rows_;
+		units::Tile num_cols_;
 };
 
 #endif // MAP_H_
