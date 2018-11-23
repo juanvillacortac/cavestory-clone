@@ -84,8 +84,8 @@ vector<CollisionTile> Map::getCollidingTiles(
 Map* Map::createTestMap(Graphics& graphics) {
 	Map* map = new Map();
 
-	map->num_rows_ = 15; // 15 * 32 = 480
-	map->num_cols_ = 20; // 20 * 32 = 640
+	map->num_rows_ = 30; // 15 * 32 = 480
+	map->num_cols_ = 40; // 20 * 32 = 640
 
 	units::Tile num_rows = map->num_rows_;
 	units::Tile num_cols = map->num_cols_;
@@ -103,39 +103,80 @@ Map* Map::createTestMap(Graphics& graphics) {
 				num_cols, shared_ptr<Sprite>()
 				));
 
-	Tile wall_tile(TileType().set(WALL), shared_ptr<Sprite>(new Sprite(
-				graphics,
-				"PrtCave",
-				units::tileToPixel(1), 0,
-				units::tileToPixel(1), units::tileToPixel(1)
-				)));
+	map->tiles = {
+		{ 33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34 },
+		{ 49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50 },
+		{ 33,34,33,34,33,34,33,34,33,34,33,34,36,65,66,65,66,65,66,65,66,65,66,65,66,65,66,65,66,65,66,65,66,65,66,65,66,37,33,34 },
+		{ 49,50,49,50,49,50,49,50,49,50,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,35,49,50 },
+		{ 33,34,33,34,33,34,33,34,33,34,38,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,33,34 },
+		{ 49,50,49,50,49,50,49,50,49,50,54,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,35,49,50 },
+		{ 33,34,33,34,33,34,33,34,33,34,38,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,33,34 },
+		{ 49,50,49,50,49,50,49,50,49,50,54,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,35,49,50 },
+		{ 33,34,33,34,33,34,33,34,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,33,34 },
+		{ 49,50,49,50,49,50,49,50,54,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,22,49,50 },
+		{ 33,34,33,34,33,34,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,33,34,33,34 },
+		{ 49,50,49,50,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,18,17,18,21,22,49,50,49,50 },
+		{ 33,34,3,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,22,33,34,33,34,33,34,33,34,33,34 },
+		{ 49,50,38,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,22,49,50,49,50,49,50,49,50,49,50,49,50 },
+		{ 33,34,54,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,35,33,34,33,34,33,34,33,34,33,34,33,34,33,34 },
+		{ 49,50,54,0,0,65,66,65,66,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,49,50,49,50,49,50,49,50,49,50,49,50,49,50 },
+		{ 33,34,54,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,5,6,33,34,33,34,33,34,33,34,33,34,33,34 },
+		{ 49,50,52,0,0,0,0,0,0,0,2,2,2,2,2,2,2,0,0,0,0,0,65,0,0,0,0,0,5,6,49,50,49,50,49,50,49,50,49,50 },
+		{ 33,34,33,19,20,0,0,0,0,0,2,3,4,66,5,6,2,0,0,0,0,0,0,0,0,0,0,0,0,51,33,34,33,34,33,34,33,34,33,34 },
+		{ 49,50,49,50,49,38,0,0,0,0,65,0,0,0,0,0,66,0,0,0,0,0,0,0,0,0,0,0,0,0,37,50,49,50,49,50,49,50,49,50 },
+		{ 33,34,33,34,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,66,5,6,33,34,33,34,33,34 },
+		{ 49,50,49,50,38,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,6,49,50,49,50 },
+		{ 33,34,33,34,19,20,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,37,34,33,34 },
+		{ 49,50,49,50,49,50,19,20,0,0,0,17,2,2,2,17,18,17,18,17,18,17,18,17,18,0,0,0,0,0,0,0,0,0,0,0,0,37,49,50 },
+		{ 33,34,33,34,33,34,33,34,19,22,2,33,2,33,2,33,2,33,2,33,2,33,2,33,2,19,20,0,0,0,0,0,0,0,0,0,0,51,33,34 },
+		{ 49,50,49,50,49,50,49,50,49,2,49,2,49,2,49,2,49,2,49,2,49,2,49,2,49,50,49,19,20,21,22,19,20,0,0,0,0,53,49,50 },
+		{ 33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,19,20,21,22,34,33,34 },
+		{ 49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50 },
+		{ 33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34,33,34 },
+		{ 49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50,49,50 }
+	};
 
-	Tile rock_tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
-				graphics,
-				"PrtCave",
-				units::tileToPixel(0), units::tileToPixel(1),
-				units::tileToPixel(1), units::tileToPixel(1)
-				)));
+	map->bkg_tiles = {
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,44,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,44,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,44,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,45,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,45,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,44,0,0,45,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,45,0,0,45,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,46,0,0,46,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,45,0,0,0,0,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,46,0,0,0,0,0,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,0,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,0,32,0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,0,32,0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,0,48,0,48,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+		{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+	};
 
-	// Chains stuff
-	shared_ptr<Sprite> chain_top(new Sprite(
-				graphics,
-				"PrtCave",
-				units::tileToPixel(11), units::tileToPixel(2),
-				units::tileToPixel(1), units::tileToPixel(1)
-				));
-	shared_ptr<Sprite> chain_body(new Sprite(
-				graphics,
-				"PrtCave",
-				units::tileToPixel(12), units::tileToPixel(2),
-				units::tileToPixel(1), units::tileToPixel(1)
-				));
-	shared_ptr<Sprite> chain_bottom(new Sprite(
-				graphics,
-				"PrtCave",
-				units::tileToPixel(13), units::tileToPixel(2),
-				units::tileToPixel(1), units::tileToPixel(1)
-				));
+	Tile block_wall(TileType().set(WALL), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(1), 0,
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+
+	// slope tiles
 
 	enum {
 		LTT, // Left Top Tall
@@ -166,7 +207,296 @@ Map* Map::createTestMap(Graphics& graphics) {
 				);
 	}
 
-	for (units::Tile col = 0; col < num_cols; col++) {
+	// rock_wall
+
+	enum {
+		A,
+		B,
+		C,
+		D,
+		AA,
+		BB,
+		CC,
+		DD,
+		NUM_WALLS
+	};
+
+	Tile rock_wall[NUM_WALLS];
+
+	rock_wall[A] = Tile(TileType().set(WALL), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(0), units::tileToPixel(2),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	rock_wall[B] = Tile(TileType().set(WALL), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(1), units::tileToPixel(2),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	rock_wall[C] = Tile(TileType().set(WALL), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(0), units::tileToPixel(3),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	rock_wall[D] = Tile(TileType().set(WALL), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(1), units::tileToPixel(3),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	rock_wall[AA] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(0), units::tileToPixel(1),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	rock_wall[BB] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(1), units::tileToPixel(1),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	rock_wall[CC] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(0), units::tileToPixel(4),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	rock_wall[DD] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(1), units::tileToPixel(4),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+
+	// bounding_rock_wall
+
+	Tile bounding_rock_wall[NUM_WALLS];
+
+	bounding_rock_wall[A] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(3), units::tileToPixel(2),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	bounding_rock_wall[B] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(4), units::tileToPixel(2),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	bounding_rock_wall[C] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(3), units::tileToPixel(3),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	bounding_rock_wall[D] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(4), units::tileToPixel(3),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	bounding_rock_wall[AA] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(2), units::tileToPixel(2),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	bounding_rock_wall[BB] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(5), units::tileToPixel(2),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	bounding_rock_wall[CC] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(2), units::tileToPixel(3),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+	bounding_rock_wall[DD] = Tile(TileType().set(EMPTY), shared_ptr<Sprite>(new Sprite(
+					graphics,
+					"PrtCave",
+					units::tileToPixel(5), units::tileToPixel(3),
+					units::tileToPixel(1), units::tileToPixel(1)
+					)));
+
+	for (size_t i = 0; i < map->tiles.size(); i++) {
+		for (size_t j = 0; j < map->tiles[i].size(); j++) {
+			int x = map->tiles[i][j];
+
+			switch (x) {
+				// block wall
+				case 2:
+					map->tiles_[i][j] = block_wall;
+					break;
+
+				// slopes
+				case 3:
+					map->tiles_[i][j] = slope_tile[LTT];
+					break;
+				case 4:
+					map->tiles_[i][j] = slope_tile[LTS];
+					break;
+				case 5:
+					map->tiles_[i][j] = slope_tile[RTS];
+					break;
+				case 19:
+					map->tiles_[i][j] = slope_tile[LBT];
+					break;
+				case 20:
+					map->tiles_[i][j] = slope_tile[LBS];
+					break;
+				case 21:
+					map->tiles_[i][j] = slope_tile[RBS];
+					break;
+				case 22:
+					map->tiles_[i][j] = slope_tile[RBT];
+					break;
+				case 6:
+					map->tiles_[i][j] = slope_tile[RTT];
+					break;
+
+				// rock_wall
+				case 33:
+					map->tiles_[i][j] = rock_wall[A];
+					break;
+				case 34:
+					map->tiles_[i][j] = rock_wall[B];
+					break;
+				case 49:
+					map->tiles_[i][j] = rock_wall[C];
+					break;
+				case 50:
+					map->tiles_[i][j] = rock_wall[D];
+					break;
+				case 17:
+					map->tiles_[i][j] = rock_wall[AA];
+					break;
+				case 18:
+					map->tiles_[i][j] = rock_wall[BB];
+					break;
+				case 65:
+					map->tiles_[i][j] = rock_wall[CC];
+					break;
+				case 66:
+					map->tiles_[i][j] = rock_wall[DD];
+					break;
+
+				// bounding_rock_wall
+				case 36:
+					map->tiles_[i][j] = bounding_rock_wall[A];
+					break;
+				case 37:
+					map->tiles_[i][j] = bounding_rock_wall[B];
+					break;
+				case 52:
+					map->tiles_[i][j] = bounding_rock_wall[C];
+					break;
+				case 53:
+					map->tiles_[i][j] = bounding_rock_wall[D];
+					break;
+				case 35:
+					map->tiles_[i][j] = bounding_rock_wall[AA];
+					break;
+				case 38:
+					map->tiles_[i][j] = bounding_rock_wall[BB];
+					break;
+				case 51:
+					map->tiles_[i][j] = bounding_rock_wall[CC];
+					break;
+				case 54:
+					map->tiles_[i][j] = bounding_rock_wall[DD];
+					break;
+			}
+		}
+	}
+
+	// chain bkg
+
+	vector<shared_ptr<Sprite>> chain(3);
+
+	chain = {
+		shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"PrtCave",
+				units::tileToPixel(11), units::tileToPixel(2),
+				units::tileToPixel(1), units::tileToPixel(1)
+				)),
+		shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"PrtCave",
+				units::tileToPixel(12), units::tileToPixel(2),
+				units::tileToPixel(1), units::tileToPixel(1)
+				)),
+		shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"PrtCave",
+				units::tileToPixel(13), units::tileToPixel(2),
+				units::tileToPixel(1), units::tileToPixel(1)
+				))
+	};
+
+	// bars bkg
+
+	vector<shared_ptr<Sprite>> bars(3);
+
+	bars = {
+		shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"PrtCave",
+				units::tileToPixel(15), units::tileToPixel(0),
+				units::tileToPixel(1), units::tileToPixel(1)
+				)),
+		shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"PrtCave",
+				units::tileToPixel(15), units::tileToPixel(1),
+				units::tileToPixel(1), units::tileToPixel(1)
+				)),
+		shared_ptr<Sprite>(new Sprite(
+				graphics,
+				"PrtCave",
+				units::tileToPixel(15), units::tileToPixel(2),
+				units::tileToPixel(1), units::tileToPixel(1)
+				))
+	};
+
+	for (size_t i = 0; i < map->bkg_tiles.size(); i++) {
+		for (size_t j = 0; j < map->bkg_tiles[i].size(); j++) {
+			int x = map->bkg_tiles[i][j];
+
+			switch (x) {
+				// chains
+				case 44:
+					map->bkg_tiles_[i][j] = chain[0];
+					break;
+				case 45:
+					map->bkg_tiles_[i][j] = chain[1];
+					break;
+				case 46:
+					map->bkg_tiles_[i][j] = chain[2];
+					break;
+
+				// bars
+				case 16:
+					map->bkg_tiles_[i][j] = bars[0];
+					break;
+				case 32:
+					map->bkg_tiles_[i][j] = bars[1];
+					break;
+				case 48:
+					map->bkg_tiles_[i][j] = bars[2];
+					break;
+			}
+		}
+	}
+
+	/*for (units::Tile col = 0; col < num_cols; col++) {
 		for (units::Tile row = 12; row < num_rows; row++) {
 			map->tiles_[row][col] = wall_tile;
 		}
@@ -218,7 +548,7 @@ Map* Map::createTestMap(Graphics& graphics) {
 
 	map->bkg_tiles_[8][12] = chain_top;
 	map->bkg_tiles_[9][12] = chain_body;
-	map->bkg_tiles_[10][12] = chain_bottom;
+	map->bkg_tiles_[10][12] = chain_bottom;*/
 
 	return map;
 }

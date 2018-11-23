@@ -56,16 +56,16 @@ void Game::eventLoop() {
 	player_.reset(new Player(
 				graphics,
 				particle_tools,
-				units::tileToGame(kScreenWidth - 1) / 2,
-				units::tileToGame(kScreenHeight - 1) / 2
+				units::tileToGame(13),
+				units::tileToGame(13)
 				));
 
 	damage_texts_.addDamageable(player_);
 
 	bat_.reset(new Bat(
 				graphics,
-				units::tileToGame(15),
-				units::tileToGame((kScreenWidth / 2) - 3)
+				units::tileToGame(28),
+				units::tileToGame(22)
 				));
 
 	damage_texts_.addDamageable(bat_);
@@ -167,8 +167,8 @@ void Game::eventLoop() {
 			int size = rand() % 3;
 
 			int
-				dorito_x = units::tileToGame(kScreenWidth) / 2,
-				dorito_y = units::tileToGame(kScreenHeight) / 2;
+				dorito_x = units::tileToGame(13),
+				dorito_y = units::tileToGame(13);
 
 			switch (size) {
 				case 0:
@@ -213,13 +213,13 @@ void Game::eventLoop() {
 			player_.reset(new Player(
 						graphics,
 						particle_tools,
-						units::tileToGame(kScreenWidth - 1) / 2,
-						units::tileToGame(kScreenHeight - 1) / 2
+						units::tileToGame(13),
+						units::tileToGame(13)
 						));
 			damage_texts_.addDamageable(player_);
 			bat_.reset(new Bat(
-						graphics, units::tileToGame(15),
-						units::tileToGame((kScreenWidth / 2) - 3)
+						graphics, units::tileToGame(28),
+						units::tileToGame(22)
 					  ));
 			damage_texts_.addDamageable(bat_);
 		}

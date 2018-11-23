@@ -40,6 +40,9 @@ class Map {
 
 		std::unique_ptr<Backdrop> backdrop_;
 
+		std::vector<std::vector<int>> bkg_tiles;
+		std::vector<std::vector<int>> tiles;
+
 		std::vector<std::vector<std::shared_ptr<Sprite>>> bkg_tiles_;
 		std::vector<std::vector<Tile>> tiles_;
 

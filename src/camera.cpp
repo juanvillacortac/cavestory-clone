@@ -8,8 +8,8 @@ Camera::Camera(units::Tile width, units::Tile height) :
 	camera = {
 		0,
 		0,
-		(int)units::tileToPixel(width),
-		(int)units::tileToPixel(height)
+		(int)units::tileToPixel(width_),
+		(int)units::tileToPixel(height_)
 	};
 }
 
@@ -24,9 +24,9 @@ void Camera::update(units::Game x, units::Game y, units::Tile map_rows, units::T
 		camera.y = 0;
 	}
 	if ( camera.x > units::tileToPixel(map_cols) - camera.w ) {
-		camera.x = units::tileToPixel(width_) - camera.w;
+		camera.x = units::tileToPixel(map_cols) - camera.w;
 	}
 	if( camera.y > units::tileToPixel(map_rows) - camera.h ) {
-		camera.y = units::tileToPixel(height_) - camera.h;
+		camera.y = units::tileToPixel(map_rows) - camera.h;
 	}
 }
