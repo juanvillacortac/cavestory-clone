@@ -20,6 +20,7 @@
 #include <optional>
 
 struct Graphics;
+struct Camera;
 struct Map;
 struct Projectile;
 struct ParticleTools;
@@ -155,15 +156,15 @@ class Player : public Damageable,
 		void update(units::MS elapsed_time_ms, const Map& map);
 		void draw(Graphics& graphics, SDL_Rect& camera);
 
-		void startMovingLeft();
-		void startMovingRight();
+		void startMovingLeft(Camera& camera);
+		void startMovingRight(Camera& camera);
 		void stopMoving();
 
 		void startJump();
 		void stopJump();
 
-		void lookUp();
-		void lookDown();
+		void lookUp(Camera& camera);
+		void lookDown(Camera& camera);
 		void lookHorizontal();
 
 		void startFire();

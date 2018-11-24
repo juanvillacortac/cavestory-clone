@@ -51,14 +51,14 @@ void Game::eventLoop() {
 		graphics
 	};
 
-	camera_.reset(new Camera(kScreenWidth, kScreenHeight));
-
 	player_.reset(new Player(
 				graphics,
 				particle_tools,
 				units::tileToGame(13),
 				units::tileToGame(13)
 				));
+
+	camera_.init(player_->center_x(), player_->center_y(), kScreenWidth, kScreenHeight);
 
 	damage_texts_.addDamageable(player_);
 
@@ -124,10 +124,10 @@ void Game::eventLoop() {
 			player_->stopMoving();
 		}
 		else if (input.isKeyHeld(SDL_SCANCODE_LEFT) || input.getJoyAxis(0) < -8000) {
-			player_->startMovingLeft();
+			player_->startMovingLeft(camera_);
 		}
 		else if (input.isKeyHeld(SDL_SCANCODE_RIGHT) || input.getJoyAxis(0) > 8000) {
-			player_->startMovingRight();
+			player_->startMovingRight(camera_);
 		}
 		else {
 			player_->stopMoving();
@@ -138,10 +138,10 @@ void Game::eventLoop() {
 			player_->lookHorizontal();
 		}
 		else if (input.isKeyHeld(SDL_SCANCODE_UP) || input.getJoyAxis(1) < -8000) {
-			player_->lookUp();
+			player_->lookUp(camera_);
 		}
 		else if (input.isKeyHeld(SDL_SCANCODE_DOWN) || input.getJoyAxis(1) > 8000) {
-			player_->lookDown();
+			player_->lookDown(camera_);
 		} else {
 			player_->lookHorizontal();
 		}
@@ -251,7 +251,9 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 
 	player_->update(elapsed_time_ms, *map_);
 
-	camera_->update(player_->center_x(), player_->center_y(), map_->rows(), map_->cols());
+	camera_.update(
+			player_->center_x(), player_->center_y(),
+			map_->rows(), map_->cols());
 
 	if (bat_) {
 		if (!bat_->update(elapsed_time_ms, player_->center_x())) {
@@ -287,17 +289,17 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 void Game::draw(Graphics& graphics) {
 	graphics.clear();
 
-	map_->drawBackground(graphics, camera_->get());
+	map_->drawBackground(graphics, camera_.get());
 	if (bat_)
-		bat_->draw(graphics, camera_->get());
-	entity_particle_system_.draw(graphics, camera_->get());
-	pickups_.draw(graphics, camera_->get());
-	player_->draw(graphics, camera_->get());
-	damage_texts_.draw(graphics, camera_->get());
-	map_->draw(graphics, camera_->get());
-	front_particle_system_.draw(graphics, camera_->get());
+		bat_->draw(graphics, camera_.get());
+	entity_particle_system_.draw(graphics, camera_.get());
+	pickups_.draw(graphics, camera_.get());
+	player_->draw(graphics, camera_.get());
+	damage_texts_.draw(graphics, camera_.get());
+	map_->draw(graphics, camera_.get());
+	front_particle_system_.draw(graphics, camera_.get());
 
-	player_->drawHUD(graphics, camera_->get());
+	player_->drawHUD(graphics, camera_.get());
 
 	text_->draw(graphics);
 

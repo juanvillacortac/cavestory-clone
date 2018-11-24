@@ -6,6 +6,7 @@
 #include "damage_texts.h"
 #include "particle_system.h"
 #include "pickups.h"
+#include "camera.h"
 
 #include <memory>
 
@@ -15,7 +16,6 @@ struct Bat;
 struct Map;
 struct TTFText;
 struct ExperienceHUD;
-struct Camera;
 
 class Game {
 	private:
@@ -29,7 +29,7 @@ class Game {
 
 		std::shared_ptr<TTFText> text_;
 
-		std::unique_ptr<Camera> camera_;
+		Camera camera_;
 
 		ParticleSystem front_particle_system_, entity_particle_system_;
 
