@@ -33,5 +33,5 @@ void TTFText::draw(Graphics& graphics) {
 	SDL_Rect destination_rectangle;
 	destination_rectangle.x = units::gameToPixel(x_);
 	destination_rectangle.y = units::gameToPixel(y_);
-	graphics.blitSurface(text_texture_, NULL, &destination_rectangle);
+	graphics.render(text_texture_, NULL, &destination_rectangle);
 }

@@ -28,7 +28,7 @@ class Graphics {
 		SDL_Texture* surfaceToTexture(SDL_Surface* surface);
 		SurfaceID loadImage(const std::string& file_name, bool black_to_alpha = false);
 
-		void blitSurface(
+		void render(
 				SurfaceID source,
 				SDL_Rect* source_rectangle,
 				SDL_Rect* destination_rectangle);

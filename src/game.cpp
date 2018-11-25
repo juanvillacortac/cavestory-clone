@@ -252,6 +252,7 @@ void Game::update(units::MS elapsed_time_ms, Graphics& graphics) {
 	player_->update(elapsed_time_ms, *map_);
 
 	camera_.update(
+			elapsed_time_ms,
 			player_->center_x(), player_->center_y(),
 			map_->rows(), map_->cols());
 

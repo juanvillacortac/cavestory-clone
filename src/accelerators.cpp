@@ -1,5 +1,4 @@
 #include "accelerators.h"
-#include "kinematics.h"
 
 #include <algorithm>
 

@@ -3,10 +3,6 @@
 
 #include <SDL2/SDL.h>
 
-namespace {
-	const int kBitsPerPixel = 32;
-}
-
 Graphics::Graphics() {
 	window_ = SDL_CreateWindow("Cave Story Clone - SDL2",
 			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -15,8 +11,14 @@ Graphics::Graphics() {
 			0);
 
 	// TODO: fix weird graphics when is used SDL_RENDERER_ACCELERATED
-	renderer_ = SDL_CreateRenderer(window_, -1,
-			SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE);
+	renderer_ = SDL_CreateRenderer(
+			window_, -1,
+			SDL_RENDERER_ACCELERATED |
+			SDL_RENDERER_PRESENTVSYNC |
+			SDL_RENDERER_TARGETTEXTURE
+			);
+
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 
 	SDL_RenderSetLogicalSize(renderer_, units::tileToPixel(Game::kScreenWidth),
 			units::tileToPixel(Game::kScreenHeight));
@@ -66,7 +68,7 @@ Graphics::SurfaceID Graphics::loadImage(const std::string& file_name, bool black
 	return spr_sheets_[file_path];
 }
 
-void Graphics::blitSurface(
+void Graphics::render(
 		SurfaceID source,
 		SDL_Rect* source_rectangle,
 		SDL_Rect* destination_rectangle) {

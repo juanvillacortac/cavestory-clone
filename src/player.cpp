@@ -248,14 +248,14 @@ Player::SpriteState Player::getSpriteState() {
 }
 
 void Player::lookUp(Camera& camera) {
-	camera.lookUp(3, 0.05f);
+	camera.lookUp(2);
 	intended_vertical_facing_ = UP;
 	interacting_ = false;
 }
 
 void Player::lookDown(Camera& camera) {
 	if (!on_ground())
-		camera.lookDown(3, 0.065f);
+		camera.lookDown(4);
 	if (intended_vertical_facing_ == DOWN)
 		return;
 	intended_vertical_facing_ = DOWN;
@@ -267,6 +267,7 @@ void Player::lookHorizontal() {
 }
 
 void Player::startMovingLeft(Camera& camera) {
+	//camera.lookLeft(3);
 	if (on_ground() && acceleration_x_ == 0) { walking_animation_.reset(); }
 	acceleration_x_ = -1;
 	horizontal_facing_ = LEFT;
@@ -274,6 +275,7 @@ void Player::startMovingLeft(Camera& camera) {
 }
 
 void Player::startMovingRight(Camera& camera) {
+	//camera.lookRight(3);
 	if (on_ground() && acceleration_x_ == 0) { walking_animation_.reset(); }
 	acceleration_x_ = 1;
 	horizontal_facing_ = RIGHT;

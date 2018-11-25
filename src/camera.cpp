@@ -2,8 +2,13 @@
 #include "accelerators.h"
 #include "map.h"
 
+#include <iostream>
+
 namespace {
-	units::Velocity kVelocity = 0.05f;
+	const units::Acceleration kAcceleration = 0.00083007812f;
+	const units::Velocity kVelocity = 0.05f;
+
+	const ConstantAccelerator kAccelerator(kAcceleration, kVelocity);
 }
 
 void Camera::init(units::Game x, units::Game y, units::Tile width, units::Tile height) {
@@ -22,17 +27,15 @@ void Camera::init(units::Game x, units::Game y, units::Tile width, units::Tile h
 }
 
 void Camera::update(
+		units::MS elapsed_time,
 		units::Game x, units::Game y,
 		units::Tile map_rows, units::Tile map_cols) {
-	kinematics_x.position = units::gameToPixel((x + units::kHalfTile) - units::tileToGame(width_) / 2);
-	kinematics_y.position = units::gameToPixel((y + units::kHalfTile) - units::tileToGame(height_) / 2);
 
+	kinematics_x.position = units::gameToPixel(x - units::tileToGame(width_) / 2);
+	kinematics_y.position = units::gameToPixel(y - units::tileToGame(height_) / 2);
 
-	kinematics_x.velocity = kVelocity;
-	kinematics_y.velocity = kVelocity;
-
-	camera.x += (kinematics_x.position - camera.x) * kinematics_x.velocity;
-	camera.y += (kinematics_y.position - camera.y) * kinematics_y.velocity;
+	updateX(elapsed_time);
+	updateY(elapsed_time);
 
 	if ( camera.x < 0 ) {
 		camera.x = 0;
@@ -48,22 +51,38 @@ void Camera::update(
 	}
 }
 
-void Camera::lookUp(units::Tile tiles, float velocity) {
-	kinematics_y.velocity = velocity;
+void Camera::updateX(units::MS elapsed_time) {
+	const Accelerator* accelerator;
+
+	accelerator = &kAccelerator;
+
+	accelerator->updateVelocity(kinematics_x, elapsed_time);
+
+	camera.x += (kinematics_x.position - camera.x) * kinematics_x.velocity;
+}
+
+void Camera::updateY(units::MS elapsed_time) {
+	const Accelerator* accelerator;
+
+	accelerator = &kAccelerator;
+
+	accelerator->updateVelocity(kinematics_y, elapsed_time);
+
+	camera.y += (kinematics_y.position - camera.y) * kinematics_y.velocity;
+}
+
+void Camera::lookUp(units::Tile tiles) {
 	camera.y -= units::tileToPixel(tiles) * kinematics_y.velocity;
 }
 
-void Camera::lookDown(units::Tile tiles, float velocity) {
-	kinematics_y.velocity = velocity;
+void Camera::lookDown(units::Tile tiles) {
 	camera.y += units::tileToPixel(tiles) * kinematics_y.velocity;
 }
 
-void Camera::lookLeft(units::Tile tiles, float velocity) {
-	kinematics_x.velocity = velocity;
+void Camera::lookLeft(units::Tile tiles) {
 	camera.x -= units::tileToPixel(tiles) * kinematics_x.velocity;
 }
 
-void Camera::lookRight(units::Tile tiles, float velocity) {
-	kinematics_x.velocity = velocity;
+void Camera::lookRight(units::Tile tiles) {
 	camera.x += units::tileToPixel(tiles) * kinematics_x.velocity;
 }

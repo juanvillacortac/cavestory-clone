@@ -2,6 +2,7 @@
 #define ACCELERATORS_H_
 
 #include "units.h"
+#include "kinematics.h"
 
 struct Kinematics;
 
@@ -19,6 +20,16 @@ struct ZeroAccelerator : Accelerator {
 	void updateVelocity(Kinematics&, units::MS) const {}
 
 	static const ZeroAccelerator kZero;
+};
+
+struct ResetAccelerator : Accelerator {
+	ResetAccelerator() {}
+
+	void updateVelocity(Kinematics& kinematics, units::MS) const {
+		kinematics.velocity = 0.0f;
+	};
+
+	static const ResetAccelerator Reset;
 };
 
 struct ConstantAccelerator : Accelerator {

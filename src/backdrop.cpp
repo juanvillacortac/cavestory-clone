@@ -25,7 +25,7 @@ void FixedBackdrop::draw(Graphics& graphics, SDL_Rect& camera) const {
 			destination_rectangle.x = units::tileToPixel(x);
 			destination_rectangle.y = units::tileToPixel(y);
 
-			graphics.blitSurface(surface_id_, NULL, &destination_rectangle);
+			graphics.render(surface_id_, NULL, &destination_rectangle);
 		}
 	}
 }
@@ -50,7 +50,7 @@ void DinamicBackdrop::draw(Graphics& graphics, SDL_Rect& camera) const {
 			destination_rectangle.x = units::tileToPixel(x) - (camera.x / profundity_);
 			destination_rectangle.y = units::tileToPixel(y) - (camera.y / profundity_);
 
-			graphics.blitSurface(surface_id_, NULL, &destination_rectangle);
+			graphics.render(surface_id_, NULL, &destination_rectangle);
 		}
 	}
 }
