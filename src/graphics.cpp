@@ -3,11 +3,16 @@
 
 #include <SDL2/SDL.h>
 
+namespace {
+	const units::Pixel kScreenWidth = units::tileToPixel(Game::kScreenWidth);
+	const units::Pixel kScreenHeight = units::tileToPixel(Game::kScreenHeight);
+}
+
 Graphics::Graphics() {
 	window_ = SDL_CreateWindow("Cave Story Clone - SDL2",
 			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-			units::tileToPixel(Game::kScreenWidth),
-			units::tileToPixel(Game::kScreenHeight),
+			kScreenWidth,
+			kScreenHeight,
 			0);
 
 	// TODO: fix weird graphics when is used SDL_RENDERER_ACCELERATED
@@ -20,8 +25,7 @@ Graphics::Graphics() {
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 
-	SDL_RenderSetLogicalSize(renderer_, units::tileToPixel(Game::kScreenWidth),
-			units::tileToPixel(Game::kScreenHeight));
+	SDL_RenderSetLogicalSize(renderer_, kScreenWidth, ScreenHeight);
 
 	SDL_ShowCursor(SDL_DISABLE);
 }
