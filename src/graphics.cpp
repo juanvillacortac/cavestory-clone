@@ -25,7 +25,10 @@ Graphics::Graphics() {
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 
-	SDL_RenderSetLogicalSize(renderer_, kScreenWidth, ScreenHeight);
+	SDL_RenderSetLogicalSize(renderer_, kScreenWidth, kScreenHeight);
+
+
+	SDL_RenderSetIntegerScale(renderer_, SDL_TRUE);
 
 	SDL_ShowCursor(SDL_DISABLE);
 }

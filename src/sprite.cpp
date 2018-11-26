@@ -17,6 +17,7 @@ Sprite::Sprite(
 
 void Sprite::draw(Graphics& graphics, units::Game x, units::Game y, SDL_Rect* camera) {
 	SDL_Rect destination_rectangle;
+
 	if (!camera) {
 		destination_rectangle.x = units::gameToPixel(x);
 		destination_rectangle.y = units::gameToPixel(y);
@@ -24,5 +25,6 @@ void Sprite::draw(Graphics& graphics, units::Game x, units::Game y, SDL_Rect* ca
 		destination_rectangle.x = units::gameToPixel(x) - camera->x;
 		destination_rectangle.y = units::gameToPixel(y) - camera->y;
 	}
+
 	graphics.render(spr_sheet_, &source_rect_, &destination_rectangle);
 }
