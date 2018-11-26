@@ -15,7 +15,6 @@ Graphics::Graphics() {
 			kScreenHeight,
 			0);
 
-	// TODO: fix weird graphics when is used SDL_RENDERER_ACCELERATED
 	renderer_ = SDL_CreateRenderer(
 			window_, -1,
 			SDL_RENDERER_ACCELERATED |
@@ -23,12 +22,18 @@ Graphics::Graphics() {
 			SDL_RENDERER_TARGETTEXTURE
 			);
 
+	backbuffer_ = SDL_CreateTexture(
+			renderer_,
+			SDL_PIXELFORMAT_RGBA8888,
+			SDL_TEXTUREACCESS_TARGET,
+			kScreenWidth, kScreenHeight
+			);
+
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 
 	SDL_RenderSetLogicalSize(renderer_, kScreenWidth, kScreenHeight);
 
-
-	SDL_RenderSetIntegerScale(renderer_, SDL_TRUE);
+	//SDL_RenderSetIntegerScale(renderer_, SDL_TRUE);
 
 	SDL_ShowCursor(SDL_DISABLE);
 }
@@ -90,6 +95,8 @@ void Graphics::render(
 		destination_rectangle->h = h;
 	}
 
+	SDL_SetRenderTarget(renderer_, backbuffer_);
+
 	SDL_RenderCopy(renderer_, source, source_rectangle, destination_rectangle);
 }
 
@@ -98,6 +105,8 @@ void Graphics::clear() {
 }
 
 void Graphics::flip() {
+	SDL_SetRenderTarget(renderer_, NULL);
+	SDL_RenderCopy(renderer_, backbuffer_, NULL, NULL);
 	SDL_RenderPresent(renderer_); 
 }
 

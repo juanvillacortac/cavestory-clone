@@ -18,6 +18,7 @@ class Graphics {
 
 		SDL_Window* window_;
 		SDL_Renderer* renderer_;
+		SDL_Texture* backbuffer_;
 
 		bool windowed = true;
 	public:
