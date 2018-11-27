@@ -8,7 +8,7 @@
 
 namespace units {
 	typedef float Game; // Float for extra precision. Intrinsic units of position.
-	typedef float Pixel; // Integer for dicrete units. Pixels values can be + or -.
+	typedef int Pixel; // Integer for dicrete units. Pixels values can be + or -.
 	typedef unsigned int Tile; // Also discreted, but non-negative.
 	typedef unsigned int Frame; // Discrete. Non-negative.
 
