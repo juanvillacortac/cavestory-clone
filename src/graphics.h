@@ -20,7 +20,7 @@ class Graphics {
 		SDL_Renderer* renderer_;
 		SDL_Texture* backbuffer_;
 
-		bool windowed = true;
+		bool windowed;
 	public:
 		typedef SDL_Texture* SurfaceID;
 		Graphics();

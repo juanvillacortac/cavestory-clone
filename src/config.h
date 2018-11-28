@@ -7,7 +7,16 @@ namespace config {
 		ORIGINAL
 	};
 
+	enum ScaleType {
+		INT,
+		FLOAT
+	};
+
 	GraphicsQuality getGraphicsQuality();
+
+	ScaleType getScaleType();
+
+	bool getFullscreen();
 }
 
 #endif // CONFIG_H_

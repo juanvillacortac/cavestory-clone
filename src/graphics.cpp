@@ -33,7 +33,11 @@ Graphics::Graphics() {
 
 	SDL_RenderSetLogicalSize(renderer_, kScreenWidth, kScreenHeight);
 
-	//SDL_RenderSetIntegerScale(renderer_, SDL_TRUE);
+	if (config::getScaleType() == config::INT)
+		SDL_RenderSetIntegerScale(renderer_, SDL_TRUE);
+
+	windowed = config::getFullscreen();
+	setFullscreen();
 
 	SDL_ShowCursor(SDL_DISABLE);
 }
