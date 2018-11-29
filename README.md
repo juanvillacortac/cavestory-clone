@@ -12,7 +12,7 @@ In the file `config.cpp` you can change the following values:
  - Graphic Quality (getGraphicsQuality) = `ORIGINAL | HIGH` (Cave Story + graphics)
  - Scale Type (getScaleType) = `INT | FLOAT`
  - Fullscreen (getFullscreen) = *bool value*
-  - You can also change this option in runtime by pressing F4.
+   - You can also change this option in runtime by pressing F4.
 
 
 ***Note:** this project is for educational purposes only, Cave Story and Cave Story + are intellectual property of [Pixel](http://studiopixel.sakura.ne.jp/).*
