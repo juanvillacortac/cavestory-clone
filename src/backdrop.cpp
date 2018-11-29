@@ -18,8 +18,8 @@ FixedBackdrop::FixedBackdrop(
 }
 
 void FixedBackdrop::draw(Graphics& graphics, SDL_Rect& camera) const {
-	for (units::Tile x = 0; x < 20*2; x += kBackgroundSize) {
-		for (units::Tile y = 0; y < 15 *2; y += kBackgroundSize) {
+	for (units::Tile x = 0; x < cols_; x += kBackgroundSize) {
+		for (units::Tile y = 0; y < rows_; y += kBackgroundSize) {
 			SDL_Rect destination_rectangle;
 
 			destination_rectangle.x = units::tileToPixel(x);
@@ -44,7 +44,7 @@ DinamicBackdrop::DinamicBackdrop(
 
 void DinamicBackdrop::draw(Graphics& graphics, SDL_Rect& camera) const {
 	for (units::Tile x = 0; x < cols_; x += kBackgroundSize) {
-		for (units::Tile y = 0; y < cols_; y += kBackgroundSize) {
+		for (units::Tile y = 0; y < rows_; y += kBackgroundSize) {
 			SDL_Rect destination_rectangle;
 
 			destination_rectangle.x = units::tileToPixel(x) - (camera.x / profundity_);

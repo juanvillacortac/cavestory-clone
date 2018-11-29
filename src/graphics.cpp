@@ -105,7 +105,11 @@ void Graphics::render(
 }
 
 void Graphics::clear() {
-	SDL_RenderClear(renderer_); 
+	SDL_SetRenderTarget(renderer_, backbuffer_);
+	SDL_RenderClear(renderer_);
+
+	SDL_SetRenderTarget(renderer_, NULL);
+	SDL_RenderClear(renderer_);
 }
 
 void Graphics::flip() {
@@ -119,7 +123,9 @@ void Graphics::setFullscreen() {
 
 	if (windowed) {
 		SDL_SetWindowFullscreen(window_, 0);
+		SDL_CaptureMouse(SDL_FALSE);
 	} else {
 		SDL_SetWindowFullscreen(window_, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		SDL_CaptureMouse(SDL_TRUE);
 	}
 }

@@ -90,7 +90,7 @@ Map* Map::createTestMap(Graphics& graphics) {
 	units::Tile num_rows = map->num_rows_;
 	units::Tile num_cols = map->num_cols_;
 
-	map->backdrop_.reset(new DinamicBackdrop("bkBlue", graphics, num_rows, num_cols, 4));
+	map->backdrop_.reset(new DinamicBackdrop("bkBlue", graphics, num_rows, num_cols, 2));
 
 	// tiles_ && bkg_tiles_ are num_rows x num_cols in size
 	map->tiles_ = vector<vector<Tile>>(

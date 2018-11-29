@@ -8,6 +8,8 @@
 
 class Backdrop {
 	public:
+		virtual ~Backdrop() {}
+
 		virtual void draw(Graphics& graphics, SDL_Rect& camera) const = 0;
 };
 
@@ -17,6 +19,8 @@ class FixedBackdrop : public Backdrop {
 
 		units::Tile rows_, cols_;
 	public:
+		~FixedBackdrop() {}
+
 		FixedBackdrop(
 				const std::string& path,
 				Graphics& graphics,
@@ -32,6 +36,8 @@ class DinamicBackdrop : public Backdrop {
 
 		float profundity_;
 	public:
+		~DinamicBackdrop() {}
+
 		DinamicBackdrop(
 				const std::string& path,
 				Graphics& graphics,
