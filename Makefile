@@ -38,7 +38,7 @@ DEBUG ?= 1
 BINDIR=.
 
 # What you run to play the game!
-EXECUTABLE=$(BINDIR)/cavestory
+EXECUTABLE=cavestory
 
 # If files named all/clean/run exist in the directory, then
 # Make will not run these commands (because they will be "Up-to-Date")
@@ -64,7 +64,7 @@ endif
 # re-link when an object or dependency has changed.
 $(EXECUTABLE): $(OBJECTS)
 	@mkdir -p $(BINDIR)
-	$(CC) $(LDFLAGS) -o $(EXECUTABLE) $(OBJECTS) $(LDLIBS)
+	$(CC) $(LDFLAGS) -o $(BINDIR)/$(EXECUTABLE) $(OBJECTS) $(LDLIBS)
 
 # The rule for how to compile an .o (object) file from a .cc (C++ source) file
 # "-c" creates a .o file
@@ -79,12 +79,12 @@ $(OBJDIR)/%.o: %.cpp
 # Deletes all .o/.d files and the executable. This helps when you want to
 # force recompilation.
 clean:
-	rm -rf $(OBJDIR) $(EXECUTABLE)
+	rm -rf $(OBJDIR) $(BINDIR)/$(EXECUTABLE)
 
 # Just a nice way of running the game. (Since you have to be in the bindir for
 # the content to load properly)
 run:
-	cd $(BINDIR) && $(EXECUTABLE)
+	$(BINDIR)/$(EXECUTABLE)
 
 ctags:
 	ctags -R $(SRCDIR)/
